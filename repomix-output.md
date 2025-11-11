@@ -38,10 +38,66 @@ The content is organized as follows:
 # Directory Structure
 ```
 docs/
+  figma/
+    jam/
+      holo.work — agente (heurística v1).jam
+      holo.work — agente (heurística v1).jam:Zone.Identifier
+      holo.work — agente (heurística v1).pdf:Zone.Identifier
+      holo.work — agente (heurística v1).png:Zone.Identifier
+      holo.work — arquitetura.jam
+      holo.work — arquitetura.jam:Zone.Identifier
+      holo.work — arquitetura.pdf:Zone.Identifier
+      holo.work — arquitetura.png:Zone.Identifier
+      holo.work — deploy.jam
+      holo.work — deploy.jam:Zone.Identifier
+      holo.work — deploy.pdf:Zone.Identifier
+      holo.work — deploy.png:Zone.Identifier
+      holo.work — endpoints.jam
+      holo.work — endpoints.jam:Zone.Identifier
+      holo.work — endpoints.pdf:Zone.Identifier
+      holo.work — endpoints.png:Zone.Identifier
+      holo.work — estados de presença.jam
+      holo.work — estados de presença.jam:Zone.Identifier
+      holo.work — estados de presença.pdf:Zone.Identifier
+      holo.work — estados de presença.png:Zone.Identifier
+      holo.work — fluxo principal.jam
+      holo.work — fluxo principal.jam:Zone.Identifier
+      holo.work — fluxo principal.pdf:Zone.Identifier
+      holo.work — fluxo principal.png:Zone.Identifier
+      holo.work — ingestão iot.jam
+      holo.work — ingestão iot.jam:Zone.Identifier
+      holo.work — ingestão iot.pdf:Zone.Identifier
+      holo.work — ingestão iot.png:Zone.Identifier
+    pdf/
+      holo.work — agente (heurística v1).pdf
+      holo.work — arquitetura.pdf
+      holo.work — deploy.pdf
+      holo.work — endpoints.pdf
+      holo.work — estados de presença.pdf
+      holo.work — fluxo principal.pdf
+      holo.work — ingestão iot.pdf
+    png/
+      holo.work — agente (heurística v1).png
+      holo.work — arquitetura.png
+      holo.work — deploy.png
+      holo.work — endpoints.png
+      holo.work — estados de presença.png
+      holo.work — fluxo principal.png
+      holo.work — ingestão iot.png
+  mermaid/
+    agent.mmd
+    arq.mmd
+    deploy.mmd
+    endpoints.mmd
+    erd.mmd
+    flow.mmd
+    iot.mmd
+    states.mmd
   DEPLOY.md
   e2e.sh
   ENV.md
   FIAP_PACKAGE.md
+  PDF-Turing-HoloWork-GS2-2025.pdf
   pitch-script.md
   PRD.md
   todo.md
@@ -65,6 +121,7 @@ worker/
   src/
     access.ts
     agent.ts
+    assets.ts
     auth.ts
     db.ts
     index.ts
@@ -83,6 +140,7 @@ worker/
 AGENTS.md
 CHANGELOG.md
 LICENSE
+p.md
 package.json
 README.md
 tsconfig.json
@@ -90,47 +148,428 @@ tsconfig.json
 
 # Files
 
-## File: docs/DEPLOY.md
-````markdown
-# Deploy Guide
+## File: docs/figma/jam/holo.work — agente (heurística v1).jam:Zone.Identifier
+````
+[ZoneTransfer]
+ZoneId=3
+HostUrl=about:internet
+````
 
-## Prereqs
-- Cloudflare account with Workers + D1 + KV enabled
-- `wrangler` (v4+) installed locally
-- D1 + KV resources already created (see `worker/wrangler.toml` bindings)
+## File: docs/figma/jam/holo.work — agente (heurística v1).pdf:Zone.Identifier
+````
+[ZoneTransfer]
+ZoneId=3
+HostUrl=about:internet
+````
 
-## Steps
-1. **Secrets**
-   ```bash
-   npx wrangler secret put JWT_SECRET --config worker/wrangler.toml
-   npx wrangler secret put PEPPER --config worker/wrangler.toml
-   # optional
-   npx wrangler secret put ZAI_API_KEY --config worker/wrangler.toml
-   ```
-2. **Database schema + seed**
-   ```bash
-   npx wrangler d1 execute holo_work --config worker/wrangler.toml --file=sql/schema.sql --remote
-   npx wrangler d1 execute holo_work --config worker/wrangler.toml --file=sql/seed.sql --remote
-   ```
-3. **Publish Worker**
-   ```bash
-   npx wrangler publish --config worker/wrangler.toml
-   ```
-4. **Static UI**
-   - Option A (Pages): deploy `ui/` as a Pages project; set API origin to the Worker subdomain and ensure CORS (already `*`).
-   - Option B (Worker): serve `ui` via Wrangler Assets or add a static handler to `worker/src/index.ts`.
-5. **Smoke tests**
-   ```bash
-   curl https://<worker-domain>/health
-   curl https://<worker-domain>/api/rooms
-   ```
-6. **IoT simulator (prod)**
-   ```bash
-   INGEST_URL="https://<worker-domain>/api/iot/ingest" \
-   DEVICE_ID="device-holo-01" \
-   DEVICE_SECRET="DEVSECRET123" \
-   python3 scripts/iot_sim.py
-   ```
+## File: docs/figma/jam/holo.work — agente (heurística v1).png:Zone.Identifier
+````
+[ZoneTransfer]
+ZoneId=3
+HostUrl=about:internet
+````
+
+## File: docs/figma/jam/holo.work — arquitetura.jam:Zone.Identifier
+````
+[ZoneTransfer]
+ZoneId=3
+HostUrl=about:internet
+````
+
+## File: docs/figma/jam/holo.work — arquitetura.pdf:Zone.Identifier
+````
+[ZoneTransfer]
+ZoneId=3
+HostUrl=about:internet
+````
+
+## File: docs/figma/jam/holo.work — arquitetura.png:Zone.Identifier
+````
+[ZoneTransfer]
+ZoneId=3
+HostUrl=about:internet
+````
+
+## File: docs/figma/jam/holo.work — deploy.jam:Zone.Identifier
+````
+[ZoneTransfer]
+ZoneId=3
+HostUrl=about:internet
+````
+
+## File: docs/figma/jam/holo.work — deploy.pdf:Zone.Identifier
+````
+[ZoneTransfer]
+ZoneId=3
+HostUrl=about:internet
+````
+
+## File: docs/figma/jam/holo.work — deploy.png:Zone.Identifier
+````
+[ZoneTransfer]
+ZoneId=3
+HostUrl=about:internet
+````
+
+## File: docs/figma/jam/holo.work — endpoints.jam:Zone.Identifier
+````
+[ZoneTransfer]
+ZoneId=3
+HostUrl=about:internet
+````
+
+## File: docs/figma/jam/holo.work — endpoints.pdf:Zone.Identifier
+````
+[ZoneTransfer]
+ZoneId=3
+HostUrl=about:internet
+````
+
+## File: docs/figma/jam/holo.work — endpoints.png:Zone.Identifier
+````
+[ZoneTransfer]
+ZoneId=3
+HostUrl=about:internet
+````
+
+## File: docs/figma/jam/holo.work — estados de presença.jam:Zone.Identifier
+````
+[ZoneTransfer]
+ZoneId=3
+HostUrl=about:internet
+````
+
+## File: docs/figma/jam/holo.work — estados de presença.pdf:Zone.Identifier
+````
+[ZoneTransfer]
+ZoneId=3
+HostUrl=about:internet
+````
+
+## File: docs/figma/jam/holo.work — estados de presença.png:Zone.Identifier
+````
+[ZoneTransfer]
+ZoneId=3
+HostUrl=about:internet
+````
+
+## File: docs/figma/jam/holo.work — fluxo principal.jam:Zone.Identifier
+````
+[ZoneTransfer]
+ZoneId=3
+HostUrl=about:internet
+````
+
+## File: docs/figma/jam/holo.work — fluxo principal.pdf:Zone.Identifier
+````
+[ZoneTransfer]
+ZoneId=3
+HostUrl=about:internet
+````
+
+## File: docs/figma/jam/holo.work — fluxo principal.png:Zone.Identifier
+````
+[ZoneTransfer]
+ZoneId=3
+HostUrl=about:internet
+````
+
+## File: docs/figma/jam/holo.work — ingestão iot.jam:Zone.Identifier
+````
+[ZoneTransfer]
+ZoneId=3
+HostUrl=about:internet
+````
+
+## File: docs/figma/jam/holo.work — ingestão iot.pdf:Zone.Identifier
+````
+[ZoneTransfer]
+ZoneId=3
+HostUrl=about:internet
+````
+
+## File: docs/figma/jam/holo.work — ingestão iot.png:Zone.Identifier
+````
+[ZoneTransfer]
+ZoneId=3
+HostUrl=about:internet
+````
+
+## File: worker/src/assets.ts
+````typescript
+export const routes = (app: any) => {
+  app.get('/api/assets/avatar', async (c: any) => {
+    const seed = (c.req.query('seed') || 'seed').toString()
+    const s = Math.min(1024, Math.max(16, parseInt(c.req.query('s') || '128')))
+    let h = 2166136261
+    for (let i=0;i<seed.length;i++) { h ^= seed.charCodeAt(i); h += (h<<1)+(h<<4)+(h<<7)+(h<<8)+(h<<24) }
+    const rnd = () => { h ^= h<<13; h ^= h>>>17; h ^= h<<5; return ((h>>>0)%1000)/1000 }
+    const n = 8, px = Math.floor(s/n)
+    const palette = ['#0d0d0d','#f5f5f5',`hsl(${Math.floor(rnd()*360)} 70% 55%)`, `hsl(${Math.floor(rnd()*360)} 70% 45%)`]
+    let cells = ''
+    for (let y=0;y<n;y++){
+      for (let x=0;x<Math.ceil(n/2);x++){
+        const v = rnd()
+        const cidx = v<0.15?0: v<0.3?1: v<0.65?2:3
+        const col = palette[cidx]
+        const xx = x*px, xx2 = (n-1-x)*px, yy=y*px
+        cells += `<rect x="${xx}" y="${yy}" width="${px}" height="${px}" fill="${col}"/>`
+        if (x!==n-1-x) cells += `<rect x="${xx2}" y="${yy}" width="${px}" height="${px}" fill="${col}"/>`
+      }
+    }
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${s}" height="${s}" shape-rendering="crispEdges" viewBox="0 0 ${s} ${s}"><rect width="100%" height="100%" fill="#111"/>${cells}</svg>`
+    return new Response(svg, {headers:{'content-type':'image/svg+xml','cache-control':'public, max-age=604800'}})
+  })
+}
+````
+
+## File: docs/mermaid/agent.mmd
+````
+%% regra do agente — decisão simplificada
+flowchart TD
+  R[inputs:\nlatest readings\n+ recent checkins] --> N{noise_db > 65\nAND energy < 3?}
+  N -- yes --> S1[prompt: mover para sala com menor ruído]
+  N -- no --> T{t_c > 27\nAND mood <= 2?}
+  T -- yes --> S2[prompt: pausa 5min + água]
+  T -- no --> L{lux < 200?}
+  L -- yes --> S3[note: ajustar iluminação]
+  L -- no --> P{2 users focus >30min\nmesmo room e tasks relacionadas?}
+  P -- yes --> S4[sugerir pairing]
+  P -- no --> SX[sem sugestão]
+````
+
+## File: docs/mermaid/arq.mmd
+````
+%% arquitetura — visão macro
+flowchart LR
+  subgraph client["ui (pwa html/css/js)"]
+    A[login\nrooms map\nchat/tasks\ncheck-ins]
+    SW[service worker\ncache + offline]
+  end
+
+  subgraph edge["cloudflare"]
+    B[api worker (ts)\nrest + jwt + rate limit]
+    KV[(kv\nsessions/rate/agent-cache)]
+    D1[(d1 sqlite)]
+  end
+
+  subgraph iot["iot_sim (python)"]
+    IOT[periodic POST\n/readings ingest]
+  end
+
+  A <--->|fetch /api/*| B
+  SW --- A
+  B <--> D1
+  B <--> KV
+  IOT -->|X-Device-Secret| B
+````
+
+## File: docs/mermaid/deploy.mmd
+````
+%% deploy — visão mínima
+flowchart LR
+  DEV[dev machine] -->|wrangler dev| EDGE[worker (local)]
+  DEV -->|wrangler d1 execute| D1L[(d1 local)]
+  DEV -->|wrangler kv:key put|get| KVL[(kv local)]
+  DEV -->|wrangler deploy| CF[worker (prod)]
+  CF --> D1P[(d1 prod)]
+  CF --> KVP[(kv prod)]
+  IOTSIM[iot_sim] --> CF
+````
+
+## File: docs/mermaid/endpoints.mmd
+````
+%% mapa de endpoints — agrupados
+graph TD
+  subgraph auth
+    A1[POST /auth/register]
+    A2[POST /auth/login]
+    A3[GET /auth/me]
+  end
+  subgraph rooms
+    R1[GET /rooms]
+    R2[POST /rooms (admin)]
+    R3[GET /rooms/:id]
+    R4[POST /rooms/:id/join]
+  end
+  subgraph messages
+    M1[GET /rooms/:id/messages]
+    M2[POST /rooms/:id/messages]
+  end
+  subgraph tasks
+    T1[GET /rooms/:id/tasks]
+    T2[POST /rooms/:id/tasks]
+    T3[PUT /tasks/:id]
+  end
+  subgraph checkins
+    C1[POST /rooms/:id/checkins]
+    C2[GET /rooms/:id/checkins]
+  end
+  subgraph iot
+    D1_[POST /devices (admin)]
+    I1[POST /iot/ingest]
+    I2[GET /rooms/:id/readings]
+  end
+  subgraph agent
+    G1[GET /rooms/:id/suggestions]
+  end
+````
+
+## File: docs/mermaid/erd.mmd
+````
+%% erd — d1/sqlite
+erDiagram
+  USERS {
+    text id PK
+    text email UK
+    text pass_hash
+    text role
+    integer created_at
+  }
+
+  ROOMS {
+    text id PK
+    text name
+    text slug UK
+    text map_seed
+    integer created_at
+  }
+
+  ROOM_MEMBERS {
+    text user_id FK
+    text room_id FK
+    integer joined_at
+  }
+
+  MESSAGES {
+    text id PK
+    text room_id FK
+    text user_id FK
+    text body
+    integer created_at
+  }
+
+  TASKS {
+    text id PK
+    text room_id FK
+    text title
+    text status
+    text assignee_id
+    integer created_at
+  }
+
+  CHECKINS {
+    text id PK
+    text user_id FK
+    text room_id FK
+    int  mood
+    int  energy
+    text status
+    integer created_at
+  }
+
+  DEVICES {
+    text id PK
+    text room_id FK
+    text name
+    text kind
+    text secret
+    integer created_at
+  }
+
+  READINGS {
+    text id PK
+    text device_id FK
+    float t_c
+    float noise_db
+    float lux
+    integer created_at
+  }
+
+  SUGGESTIONS {
+    text id PK
+    text room_id FK
+    text user_id
+    text kind
+    text text
+    integer created_at
+  }
+
+  USERS ||--o{ ROOM_MEMBERS : joins
+  ROOMS ||--o{ ROOM_MEMBERS : has
+  USERS ||--o{ MESSAGES : writes
+  ROOMS ||--o{ MESSAGES : contains
+  ROOMS ||--o{ TASKS : has
+  USERS ||--o{ TASKS : assigned_to
+  USERS ||--o{ CHECKINS : makes
+  ROOMS ||--o{ CHECKINS : in
+  ROOMS ||--o{ DEVICES : has
+  DEVICES ||--o{ READINGS : produce
+  ROOMS ||--o{ SUGGESTIONS : for
+  USERS ||--o{ SUGGESTIONS : target_optional
+````
+
+## File: docs/mermaid/flow.mmd
+````
+%% fluxo principal — navegação do usuário
+sequenceDiagram
+  autonumber
+  participant C as client (pwa)
+  participant API as worker /api
+  participant DB as d1
+  participant KV as kv
+
+  C->>API: POST /auth/login {email, pass}
+  API->>DB: verify user + argon2id(pass)
+  DB-->>API: user ok
+  API->>KV: set session (jwt) + rate key
+  API-->>C: 200 {jwt}
+
+  C->>API: GET /rooms
+  API->>DB: select rooms
+  API-->>C: rooms list
+
+  C->>API: GET /rooms/:id/messages?cursor=...
+  API->>DB: page messages
+  API-->>C: messages page
+
+  C->>API: POST /rooms/:id/checkins {mood,energy,status}
+  API->>DB: insert checkin
+  API-->>C: 204
+
+  C->>API: GET /rooms/:id/suggestions
+  API->>DB: fetch latest readings + checkins
+  API->>KV: read agent-cache (optional)
+  API-->>C: [{kind,text}]
+````
+
+## File: docs/mermaid/iot.mmd
+````
+%% ingestão iot — validação + persistência
+sequenceDiagram
+  autonumber
+  participant DEV as iot_sim
+  participant API as worker /api/iot/ingest
+  participant DB as d1
+
+  DEV->>API: POST /iot/ingest {device_id,t_c,noise_db,lux,ts}\nHeader: X-Device-Secret
+  API->>DB: select devices.id,secret where id=device_id
+  DB-->>API: secret
+  API->>API: compare secrets + rate check
+  API->>DB: insert readings(...)
+  API-->>DEV: 202 accepted
+````
+
+## File: docs/mermaid/states.mmd
+````
+%% estados de presença — client
+stateDiagram-v2
+  [*] --> afk
+  afk --> solo: activity detected
+  solo --> focus: toggle focus
+  focus --> pair: invite/accept
+  pair --> solo: end session
+  any --> afk: idle timeout
 ````
 
 ## File: docs/e2e.sh
@@ -665,34 +1104,6 @@ CREATE TABLE IF NOT EXISTS events (
   payload TEXT,
   created_at INTEGER NOT NULL
 );
-````
-
-## File: sql/seed.sql
-````sql
-PRAGMA foreign_keys = OFF;
-BEGIN TRANSACTION;
-DELETE FROM users;
-DELETE FROM rooms;
-DELETE FROM room_members;
-DELETE FROM messages;
-DELETE FROM tasks;
-DELETE FROM checkins;
-DELETE FROM devices;
-DELETE FROM readings;
-DELETE FROM suggestions;
-DELETE FROM events;
-INSERT INTO users (id, email, pass_hash, role, created_at)
-VALUES ('user-admin', 'admin@holo.work', 'pbkdf2$200000$kutwS1jQDWsYX0xQex7HSQ==$eMuaYN6F3q9ZAUVDt4U2JBDD7SxXkgkVlrJ12jFckO0=', 'admin', strftime('%s','now')*1000);
-INSERT INTO rooms (id, name, slug, map_seed, created_at)
-VALUES
-  ('room-holo', 'Holo Hub', 'holo-hub', 'grid:16x16:hub', strftime('%s','now')*1000),
-  ('room-lab', 'Lab Norte', 'lab-norte', 'grid:16x16:lab', strftime('%s','now')*1000);
-INSERT INTO room_members (user_id, room_id, joined_at) VALUES
-  ('user-admin', 'room-holo', strftime('%s','now')*1000),
-  ('user-admin', 'room-lab', strftime('%s','now')*1000);
-INSERT INTO devices (id, room_id, name, kind, secret_hash, created_at)
-VALUES ('device-holo-01', 'room-holo', 'Env Beacon 01', 'environment', '92ae2a030fb7b169cf2612db1e8a4819fb03b9356f714be39c2a4ffe2d127f71', strftime('%s','now')*1000);
-COMMIT;
 ````
 
 ## File: ui/css/style.css
@@ -2746,6 +3157,174 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ````
 
+## File: p.md
+````markdown
+nice. deploy is mostly green. couple fixes + the pixel-asset flow:
+
+### 0) upgrade + bindings
+
+```
+npm i -g wrangler@4.47.0
+```
+
+drop the kv id into `worker/wrangler.toml` → `kv_namespaces` (id was printed: `077d828e...ae1`). keep `DB` binding name as `holo_work`. 
+
+### 1) secrets / tokens (dev + prod)
+
+local dev: set in `worker/.dev.vars`. prod: use wrangler secrets.
+
+```
+# randoms
+openssl rand -base64 48 | tr -d '\n'   # use as JWT_SECRET
+openssl rand -base64 48 | tr -d '\n'   # use as PEPPER
+
+# prod
+npx wrangler secret put JWT_SECRET --config worker/wrangler.toml
+npx wrangler secret put PEPPER --config worker/wrangler.toml
+# optional ai
+npx wrangler secret put GEMINI_API_KEY --config worker/wrangler.toml
+npx wrangler secret put OPENROUTER_API_KEY --config worker/wrangler.toml
+```
+
+readme notes using `dev-pepper` locally so the seeded admin hash matches. so: set `PEPPER=dev-pepper` in `.dev.vars` for local runs. 
+
+### 2) seed error (remote txn)
+
+remote `d1 execute` choked on `BEGIN TRANSACTION` in `sql/seed.sql`. fast fixes:
+
+* **easiest**: run seed **locally** (no `--remote`) with config flag:
+
+```
+npx wrangler d1 execute holo_work --config worker/wrangler.toml --file=sql/schema.sql
+npx wrangler d1 execute holo_work --config worker/wrangler.toml --file=sql/seed.sql
+```
+
+(readme shows local apply) 
+
+* **or** make `sql/seed.nobegin.sql` (same file without `BEGIN/COMMIT`) and execute that with `--remote`. the current seed has `BEGIN TRANSACTION; ... COMMIT;`. 
+
+### 3) 404 on `/api/assets/avatar`
+
+route isn’t implemented yet; ui already calls it. add a tiny deterministic svg “pixel” identicon so we’ve got avatars for chat/presença and tiles later.
+
+**worker/src/index.ts** (add before the default 404):
+
+```ts
+if (url.pathname === "/api/assets/avatar") {
+  const seed = (url.searchParams.get("seed") || "anon").trim();
+  const s = Math.max(16, Math.min(512, +(url.searchParams.get("s")||"128")));
+  // 5x5 mirror grid → svg
+  const h = new Uint32Array(5);
+  let x=2166136261; for (let i=0;i<seed.length;i++) { x ^= seed.charCodeAt(i); x = Math.imul(x,16777619); }
+  for (let i=0;i<5;i++){ x ^= x<<13; x ^= x>>>17; x ^= x<<5; h[i]=x>>>0; }
+  const cell = Math.floor(s/5);
+  const fg = `hsl(${h[0]%360} 70% 45%)`, bg = "#0f1220";
+  let rects = `<rect width="${s}" height="${s}" fill="${bg}"/>`;
+  for (let r=0;r<5;r++){
+    for (let c=0;c<3;c++){
+      const bit = (h[r]>>(c*3))&1;
+      if (!bit) continue;
+      const x1=c*cell, x2=(4-c)*cell, y=r*cell;
+      const rr = `<rect x="%x" y="${y}" width="${cell}" height="${cell}" rx="${Math.floor(cell*0.15)}" fill="${fg}"/>`;
+      rects += rr.replace("%x", String(x1)) + rr.replace("%x", String(x2));
+    }
+  }
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${s} ${s}" width="${s}" height="${s}">${rects}</svg>`;
+  return new Response(svg, { headers: { "content-type": "image/svg+xml", "cache-control":"public, max-age=31536000" }});
+}
+```
+
+now the `/api/assets/avatar?seed=foo&s=128` calls in the log will return images. route exists in prd as “optional assets”, so this wires it for real. (prd/docs mention assets endpoint as optional; deploy doc shows static-ui note.) 
+
+### 4) pixel art pipeline (tiles/sprites)
+
+minimal, fast, reversible:
+
+* folder: `ui/assets/tiles/`
+
+  * `floor.png` `wall.png` `desk.png` `plant.png` etc, all **16×16** or **32×32**.
+* atlas json (optional v1): `ui/assets/tiles/atlas.json` → name → x,y,w,h if packing later.
+* render: keep the current 2d canvas map; load tiles once, draw by indices from a `map_seed` (string like `grid:16x16:hub`) → translate to a 2d int grid. map_seed already sits in `rooms.map_seed`. 
+
+quick asset sources:
+
+* aseprite export → 16×16 pngs
+* kenney roguelike packs (cc0) → trim to 16×16
+
+### 5) gemini/openrouter generate (v1 dev-mode)
+
+wire a **dev-only** passthrough (rate-limited per ip in kv) for prototyping npc avatars/backgrounds:
+
+**worker/src/index.ts** (sketch):
+
+```ts
+if (url.pathname==="/api/assets/generate" && req.method==="POST") {
+  if (env.OPENROUTER_API_KEY) {
+    const body = await req.json();
+    const r = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      method:"POST",
+      headers:{ "authorization":`Bearer ${env.OPENROUTER_API_KEY}`, "content-type":"application/json" },
+      body: JSON.stringify({
+        model: "google/gemini-2.5-flash-image-preview",
+        messages:[{role:"user", content: body.prompt }],
+        modalities: ["image","text"],
+        image_config: { aspect_ratio: "1:1" }
+      })
+    });
+    const j = await r.json();
+    return Response.json(j);
+  }
+  if (env.GEMINI_API_KEY) {
+    const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:streamGenerateContent?key=${env.GEMINI_API_KEY}`, {
+      method:"POST", headers:{ "content-type":"application/json" },
+      body: JSON.stringify({ contents:[{role:"user", parts:[{text: (await req.json()).prompt}]}], generationConfig:{ responseModalities:["IMAGE","TEXT"], imageConfig:{ image_size:"1K" }}})
+    });
+    return new Response(await r.text(), { headers:{ "content-type":"application/json" }});
+  }
+  return new Response("image gen not configured", { status: 501 });
+}
+```
+
+policy: v1 dev → only for us; v2 → same but rate-limited and behind a feature flag; v3 → byo key path; v4 → paid tier with our key + byok fallback. matches the staged plan. (deploy doc already has secrets step; extend it to include these two keys.) 
+
+### 6) end-to-end checklist
+
+1. wrangler 4.47.0, bindings up to date.
+2. local seed without `--remote` **or** remote seed without the transaction block.
+3. secrets: set local `.dev.vars` (`PEPPER=dev-pepper`, `JWT_SECRET=<rand>`). prod via `wrangler secret`. 
+4. add `/api/assets/avatar` route (above).
+5. drop initial tiles in `ui/assets/tiles/*`, load them in `room.js` to render the map.
+6. optional: `/api/assets/generate` for image-gen dev mode (kv rate limit later).
+
+### 7) sanity probes
+
+```
+curl http://127.0.0.1:8787/api/rooms
+curl -I "http://127.0.0.1:8787/api/assets/avatar?seed=dan&s=128"
+```
+
+deploy guide smoke calls are already listed. 
+
+small `docs/ASSETS.md` with tile specs + palette so art stays coherent with the ui grid.
+
+---
+
+arq
+https://www.figma.com/board/RnpSFs6Rj2zN0iZb2tXIOD/holo.work-%E2%80%94-arquitetura?node-id=0-1&p=f&t=VWsvSS78qQ1gCTcg-0
+flow
+https://www.figma.com/board/NNopmsqV4eYfyfd5nySpRw/holo.work-%E2%80%94-fluxo-principal?node-id=0-1&p=f&t=iG38V2JQwoyfJE1M-0
+iot_ingestion
+https://www.figma.com/board/mylZk4aj3JyOLpGGkBRlSu/holo.work-%E2%80%94-ingest%C3%A3o-iot?node-id=0-1&p=f&t=2DMRjlxAXgXkMxgB-0
+agent flow
+https://www.figma.com/board/3xvZqC9J1M4GLaLdsNPxiQ/holo.work-%E2%80%94-agente--heur%C3%ADstica-v1-?node-id=0-1&p=f&t=vpBNqo9dF7BoIBS6-0
+endpoints
+https://www.figma.com/board/z6YClh3FALBOUO9w3RJStd/holo.work-%E2%80%94-endpoints?node-id=0-1&p=f&t=pnMyQjh6VPEO661z-0
+states
+https://www.figma.com/board/jNwcCSkh9w1BCVxbgYzbte/holo.work-%E2%80%94-estados-de-presen%C3%A7a?node-id=0-1&p=f&t=a47lx0mnsAQObMfl-0
+deploy
+https://www.figma.com/board/QAiEky9luSHOt6u4moFLea/holo.work-%E2%80%94-deploy?node-id=0-1&p=f&t=t7kQnDRCOIKkI5cD-0
+````
+
 ## File: package.json
 ````json
 {
@@ -2778,6 +3357,97 @@ SOFTWARE.
     "wrangler": "^4.46.0"
   }
 }
+````
+
+## File: tsconfig.json
+````json
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ES2020",
+    "lib": ["ES2020", "WebWorker"],
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "types": ["@cloudflare/workers-types"],
+    "resolveJsonModule": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": "."
+  },
+  "include": ["worker/src", "worker/test"]
+}
+````
+
+## File: docs/DEPLOY.md
+````markdown
+# Deploy Guide
+
+## Prereqs
+- Cloudflare account with Workers + D1 + KV enabled
+- `wrangler` (v4+) installed locally
+- D1 + KV resources already created (see `worker/wrangler.toml` bindings)
+
+## Steps
+1. **Secrets**
+   ```bash
+   npx wrangler secret put JWT_SECRET --config worker/wrangler.toml
+   npx wrangler secret put PEPPER --config worker/wrangler.toml
+   # optional
+   npx wrangler secret put ZAI_API_KEY --config worker/wrangler.toml
+   ```
+2. **Database schema + seed**
+   ```bash
+   npx wrangler d1 execute holo_work --config worker/wrangler.toml --file=sql/schema.sql --remote
+   npx wrangler d1 execute holo_work --config worker/wrangler.toml --file=sql/seed.sql --remote
+   ```
+3. **Publish Worker**
+   ```bash
+   npx wrangler deploy --config worker/wrangler.toml
+   ```
+4. **Static UI**
+   - Option A (Pages): deploy `ui/` as a Pages project; set API origin to the Worker subdomain and ensure CORS (already `*`).
+   - Option B (Worker): serve `ui` via Wrangler Assets or add a static handler to `worker/src/index.ts`.
+5. **Smoke tests**
+   ```bash
+   curl https://<worker-domain>/health
+   curl https://<worker-domain>/api/rooms
+   ```
+6. **IoT simulator (prod)**
+   ```bash
+   INGEST_URL="https://<worker-domain>/api/iot/ingest" \
+   DEVICE_ID="device-holo-01" \
+   DEVICE_SECRET="DEVSECRET123" \
+   python3 scripts/iot_sim.py
+   ```
+````
+
+## File: sql/seed.sql
+````sql
+PRAGMA foreign_keys = OFF;
+DELETE FROM users;
+DELETE FROM rooms;
+DELETE FROM room_members;
+DELETE FROM messages;
+DELETE FROM tasks;
+DELETE FROM checkins;
+DELETE FROM devices;
+DELETE FROM readings;
+DELETE FROM suggestions;
+DELETE FROM events;
+INSERT INTO users (id, email, pass_hash, role, created_at)
+VALUES ('user-admin', 'admin@holo.work', 'pbkdf2$200000$kutwS1jQDWsYX0xQex7HSQ==$eMuaYN6F3q9ZAUVDt4U2JBDD7SxXkgkVlrJ12jFckO0=', 'admin', strftime('%s','now')*1000);
+INSERT INTO rooms (id, name, slug, map_seed, created_at)
+VALUES
+  ('room-holo', 'Holo Hub', 'holo-hub', 'grid:16x16:hub', strftime('%s','now')*1000),
+  ('room-lab', 'Lab Norte', 'lab-norte', 'grid:16x16:lab', strftime('%s','now')*1000);
+INSERT INTO room_members (user_id, room_id, joined_at) VALUES
+  ('user-admin', 'room-holo', strftime('%s','now')*1000),
+  ('user-admin', 'room-lab', strftime('%s','now')*1000);
+INSERT INTO devices (id, room_id, name, kind, secret_hash, created_at)
+VALUES ('device-holo-01', 'room-holo', 'Env Beacon 01', 'environment', '92ae2a030fb7b169cf2612db1e8a4819fb03b9356f714be39c2a4ffe2d127f71', strftime('%s','now')*1000);
 ````
 
 ## File: README.md
@@ -2831,26 +3501,29 @@ docs/     # PRD, checklist, evidence scripts
 
 ## Status
 Track ongoing build in `docs/todo.md`. Major changes recorded in `CHANGELOG.md`.
-````
 
-## File: tsconfig.json
-````json
-{
-  "compilerOptions": {
-    "target": "ES2020",
-    "module": "ES2020",
-    "lib": ["ES2020", "WebWorker"],
-    "moduleResolution": "Bundler",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "types": ["@cloudflare/workers-types"],
-    "resolveJsonModule": true,
-    "allowImportingTsExtensions": true,
-    "noEmit": true,
-    "forceConsistentCasingInFileNames": true,
-    "baseUrl": "."
-  },
-  "include": ["worker/src", "worker/test"]
-}
+## Google Docs
+https://docs.google.com/document/d/1F9tRff_lB-MnmA13ewMS0pY-iBQUIUU8DEj7wG71gXE/edit?tab=t.0#heading=h.5vb5hai8clmd
+
+## Figma
+#### arq
+https://www.figma.com/board/RnpSFs6Rj2zN0iZb2tXIOD/holo.work-%E2%80%94-arquitetura?node-id=0-1&p=f&t=VWsvSS78qQ1gCTcg-0
+
+#### flow
+https://www.figma.com/board/NNopmsqV4eYfyfd5nySpRw/holo.work-%E2%80%94-fluxo-principal?node-id=0-1&p=f&t=iG38V2JQwoyfJE1M-0
+
+#### iot_ingestion
+https://www.figma.com/board/mylZk4aj3JyOLpGGkBRlSu/holo.work-%E2%80%94-ingest%C3%A3o-iot?node-id=0-1&p=f&t=2DMRjlxAXgXkMxgB-0
+
+#### agent flow
+https://www.figma.com/board/3xvZqC9J1M4GLaLdsNPxiQ/holo.work-%E2%80%94-agente--heur%C3%ADstica-v1-?node-id=0-1&p=f&t=vpBNqo9dF7BoIBS6-0
+
+#### endpoints
+https://www.figma.com/board/z6YClh3FALBOUO9w3RJStd/holo.work-%E2%80%94-endpoints?node-id=0-1&p=f&t=pnMyQjh6VPEO661z-0
+
+#### states
+https://www.figma.com/board/jNwcCSkh9w1BCVxbgYzbte/holo.work-%E2%80%94-estados-de-presen%C3%A7a?node-id=0-1&p=f&t=a47lx0mnsAQObMfl-0
+
+#### deploy
+https://www.figma.com/board/QAiEky9luSHOt6u4moFLea/holo.work-%E2%80%94-deploy?node-id=0-1&p=f&t=t7kQnDRCOIKkI5cD-0
 ````
