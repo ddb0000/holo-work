@@ -49,46 +49,56 @@ export async function verifyPassword(password: string, pepper: string, hash: str
 }
 
 export async function handleRegister(ctx: HandlerContext): Promise<Response> {
-  const body = await readJson<{ email?: string; password?: string }>(ctx.request);
-  const email = body.email?.trim().toLowerCase();
-  const password = body.password?.trim();
-  ensure(email && email.includes('@'), 400, 'Valid email required');
-  ensure(password && password.length >= 6, 400, 'Password must be at least 6 chars');
+  try {
+    const body = await readJson<{ email?: string; password?: string }>(ctx.request);
+    const email = body.email?.trim().toLowerCase();
+    const password = body.password?.trim();
+    ensure(email && email.includes('@'), 400, 'Valid email required');
+    ensure(password && password.length >= 6, 400, 'Password must be at least 6 chars');
 
-  const existing = await first<{ id: string }>(ctx.env.DB, 'SELECT id FROM users WHERE email = ?', [email]);
-  ensure(!existing, 409, 'Email already registered');
+    const existing = await first<{ id: string }>(ctx.env.DB, 'SELECT id FROM users WHERE email = ?', [email]);
+    ensure(!existing, 409, 'Email already registered');
 
-  const id = crypto.randomUUID();
-  const passHash = await hashPassword(password!, ctx.env.PEPPER);
-  const createdAt = Date.now();
-  await ctx.env.DB
-    .prepare('INSERT INTO users (id, email, pass_hash, role, created_at) VALUES (?, ?, ?, ?, ?)')
-    .bind(id, email, passHash, 'user', createdAt)
-    .run();
+    const id = crypto.randomUUID();
+    const passHash = await hashPassword(password!, ctx.env.PEPPER);
+    const createdAt = Date.now();
+    await ctx.env.DB
+      .prepare('INSERT INTO users (id, email, pass_hash, role, created_at) VALUES (?, ?, ?, ?, ?)')
+      .bind(id, email, passHash, 'user', createdAt)
+      .run();
 
-  const user: AuthUser = { id, email, role: 'user' };
-  const jwt = await issueJwt(user, ctx.env);
-  return jsonResponse({ user, jwt });
+    const user: AuthUser = { id, email, role: 'user' };
+    const jwt = await issueJwt(user, ctx.env);
+    return jsonResponse({ user, jwt });
+  } catch (err) {
+    console.error('[register]', err);
+    throw err;
+  }
 }
 
 export async function handleLogin(ctx: HandlerContext): Promise<Response> {
-  const body = await readJson<{ email?: string; password?: string }>(ctx.request);
-  const email = body.email?.trim().toLowerCase();
-  const password = body.password?.trim();
-  ensure(email && password, 400, 'Email and password required');
+  try {
+    const body = await readJson<{ email?: string; password?: string }>(ctx.request);
+    const email = body.email?.trim().toLowerCase();
+    const password = body.password?.trim();
+    ensure(email && password, 400, 'Email and password required');
 
-  const record = await first<{ id: string; email: string; role: 'user' | 'admin'; pass_hash: string }>(
-    ctx.env.DB,
-    'SELECT id, email, role, pass_hash FROM users WHERE email = ?',
-    [email]
-  );
-  ensure(record, 401, 'Invalid credentials');
-  const valid = await verifyPassword(password!, ctx.env.PEPPER, record!.pass_hash);
-  ensure(valid, 401, 'Invalid credentials');
+    const record = await first<{ id: string; email: string; role: 'user' | 'admin'; pass_hash: string }>(
+      ctx.env.DB,
+      'SELECT id, email, role, pass_hash FROM users WHERE email = ?',
+      [email]
+    );
+    ensure(record, 401, 'Invalid credentials');
+    const valid = await verifyPassword(password!, ctx.env.PEPPER, record!.pass_hash);
+    ensure(valid, 401, 'Invalid credentials');
 
-  const user: AuthUser = { id: record!.id, email: record!.email, role: record!.role };
-  const jwt = await issueJwt(user, ctx.env);
-  return jsonResponse({ user, jwt });
+    const user: AuthUser = { id: record!.id, email: record!.email, role: record!.role };
+    const jwt = await issueJwt(user, ctx.env);
+    return jsonResponse({ user, jwt });
+  } catch (err) {
+    console.error('[login]', err);
+    throw err;
+  }
 }
 
 export async function handleMe(ctx: HandlerContext): Promise<Response> {
@@ -130,9 +140,9 @@ async function signJwt(payload: JwtPayload, secret: string): Promise<string> {
   const encodedHeader = base64UrlEncode(headerBytes);
   const encodedPayload = base64UrlEncode(payloadBytes);
   const data = `${encodedHeader}.${encodedPayload}`;
-  const keyBuffer = encodeText(secret).buffer as ArrayBuffer;
+  const keyBuffer = toArrayBuffer(encodeText(secret));
   const key = await crypto.subtle.importKey('raw', keyBuffer, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
-  const dataBuffer = encodeText(data).buffer as ArrayBuffer;
+  const dataBuffer = toArrayBuffer(encodeText(data));
   const signature = await crypto.subtle.sign('HMAC', key, dataBuffer);
   return `${data}.${base64UrlEncode(new Uint8Array(signature))}`;
 }
@@ -142,10 +152,10 @@ async function verifyJwt(token: string, secret: string): Promise<JwtPayload | nu
   if (segments.length !== 3) return null;
   const [encodedHeader, encodedPayload, encodedSignature] = segments;
   const data = `${encodedHeader}.${encodedPayload}`;
-  const keyBuffer = encodeText(secret).buffer as ArrayBuffer;
+  const keyBuffer = toArrayBuffer(encodeText(secret));
   const key = await crypto.subtle.importKey('raw', keyBuffer, { name: 'HMAC', hash: 'SHA-256' }, false, ['verify']);
-  const signatureBuffer = decodeBase64Url(encodedSignature).buffer as ArrayBuffer;
-  const dataBuffer = encodeText(data).buffer as ArrayBuffer;
+  const signatureBuffer = toArrayBuffer(decodeBase64Url(encodedSignature));
+  const dataBuffer = toArrayBuffer(encodeText(data));
   const valid = await crypto.subtle.verify('HMAC', key, signatureBuffer, dataBuffer);
   if (!valid) return null;
   try {
@@ -161,8 +171,9 @@ async function verifyJwt(token: string, secret: string): Promise<JwtPayload | nu
 }
 
 function toArrayBuffer(bytes: Uint8Array): ArrayBuffer {
-  const view = bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength);
-  return view as ArrayBuffer;
+  const ab = new ArrayBuffer(bytes.byteLength)
+  new Uint8Array(ab).set(bytes)
+  return ab
 }
 
 async function deriveKey(password: string, pepper: string, salt: Uint8Array, iterations: number): Promise<Uint8Array> {

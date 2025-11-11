@@ -17,6 +17,7 @@ import {
 } from './rooms';
 import { handleCreateDevice, handleListDevices, handleIngest, handleGetReadings } from './iot';
 import { handleGetSuggestions } from './agent';
+import { handleAvatar, handleTile, handleAtlas } from './assets';
 
 interface Route {
   method: string;
@@ -47,6 +48,9 @@ const routes: Route[] = [
   { method: 'POST', pattern: '/api/devices', handler: handleCreateDevice, auth: 'user' },
   { method: 'GET', pattern: '/api/devices', handler: handleListDevices, auth: 'user' },
   { method: 'POST', pattern: '/api/iot/ingest', handler: handleIngest, auth: 'optional', skipRateLimit: true },
+  { method:'GET', pattern:'/api/assets/avatar', handler: handleAvatar, auth:'optional', skipRateLimit: true },
+  { method:'GET', pattern:'/api/assets/tile', handler: handleTile, auth:'optional', skipRateLimit: true },
+  { method:'GET', pattern:'/api/assets/atlas', handler: handleAtlas, auth:'optional', skipRateLimit: true },
 ];
 
 const corsHeaders = {

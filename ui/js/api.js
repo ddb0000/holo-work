@@ -1,9 +1,8 @@
 const TOKEN_KEY = 'holo_jwt';
 let memoryToken = null;
 
-const DEFAULT_API_BASE =
-  window.__HOLO_API__ ||
-  (location.port === '4173' || location.port === '4174' ? 'http://127.0.0.1:8787' : '');
+// fallback if config.js hasn't loaded yet
+const getAPIBase = () => window.__CONFIG__?.API_BASE || 'https://holo-work.dbarcelloz.workers.dev'
 
 export function getToken() {
   if (memoryToken) return memoryToken;
@@ -57,11 +56,12 @@ export async function apiFetch(path, options = {}) {
 
 function buildUrl(path) {
   if (path.startsWith('http')) return path;
-  if (!DEFAULT_API_BASE) return path;
+  const base = getAPIBase()
+  if (!base) return path;
   if (path.startsWith('/')) {
-    return `${DEFAULT_API_BASE}${path}`;
+    return `${base}${path}`;
   }
-  return `${DEFAULT_API_BASE}/${path}`;
+  return `${base}/${path}`;
 }
 
 export function formToJSON(form) {

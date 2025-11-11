@@ -6,7 +6,7 @@
   "main": "worker/src/index.ts",
   "scripts": {
     "dev": "wrangler dev --config worker/wrangler.toml",
-    "deploy": "wrangler publish --config worker/wrangler.toml",
+    "deploy": "wrangler deploy --config worker/wrangler.toml",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest watch"
