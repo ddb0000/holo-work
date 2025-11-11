@@ -8,11 +8,6 @@ routes = [
   { pattern = "holowork.knocis.xyz/*", zone_name = "knocis.xyz" }
 ]
 
-[vars]
-JWT_TTL_MINUTES = "15"
-JWT_SECRET = "prod-jwt-secret-change-me"
-PEPPER = "prod-pepper-change-me"
-
 [[d1_databases]]
 binding = "DB"
 database_name = "holo_work"

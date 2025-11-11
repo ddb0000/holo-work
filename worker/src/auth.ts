@@ -28,12 +28,28 @@ interface JwtPayload {
 }
 
 export async function hashPassword(password: string, pepper: string): Promise<string> {
-  const salt = crypto.getRandomValues(new Uint8Array(SALT_LENGTH));
-  const derived = await deriveKey(password, pepper, salt, PBKDF2_ITERATIONS);
-  return ['pbkdf2', PBKDF2_ITERATIONS, toBase64(salt), toBase64(derived)].join('$');
+  // Use simple SHA-256 instead of PBKDF2 for now
+  const combined = password + pepper;
+  const bytes = encodeText(combined);
+  const ab = toArrayBuffer(bytes);
+  const digest = await crypto.subtle.digest('SHA-256', ab);
+  const hash = toBase64(new Uint8Array(digest));
+  return `sha256:${hash}`;
 }
 
 export async function verifyPassword(password: string, pepper: string, hash: string): Promise<boolean> {
+  // Handle new SHA-256 format
+  if (hash.startsWith('sha256:')) {
+    const stored = hash.slice(7);
+    const combined = password + pepper;
+    const bytes = encodeText(combined);
+    const ab = toArrayBuffer(bytes);
+    const digest = await crypto.subtle.digest('SHA-256', ab);
+    const computed = toBase64(new Uint8Array(digest));
+    return computed === stored;
+  }
+  
+  // Handle old PBKDF2 format for backward compat
   const parts = hash.split('$');
   if (parts.length !== 4 || parts[0] !== 'pbkdf2') {
     return false;
