@@ -1,0 +1,17 @@
+name = "holo-work"
+main = "src/index.ts"
+compatibility_date = "2025-11-10"
+compatibility_flags = ["nodejs_compat"]
+workers_dev = true
+
+[vars]
+JWT_TTL_MINUTES = "15"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "holo_work"
+database_id = "4911f880-cd22-4064-bfce-f17a5aac42eb"
+
+[[kv_namespaces]]
+binding = "KV"
+id = "5584069c6e5943b5a08621671e70ed3a"

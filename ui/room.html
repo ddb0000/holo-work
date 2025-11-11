@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>holo.work — sala</title>
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <main>
+      <section class="card" style="margin-bottom:1.5rem;">
+        <header style="display:flex; gap:1rem; align-items:center;">
+          <h2 style="flex:1;">Sala</h2>
+          <select id="roomSelect" style="flex:2;"></select>
+          <button id="logoutBtn" style="background:#f43f5e;">Sair</button>
+        </header>
+        <form id="checkinForm" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:1rem; margin-top:1rem;">
+          <div class="input-group">
+            <label>Mood</label>
+            <input type="range" min="1" max="5" step="1" name="mood" value="3" />
+          </div>
+          <div class="input-group">
+            <label>Energia</label>
+            <input type="range" min="1" max="5" step="1" name="energy" value="3" />
+          </div>
+          <div class="input-group">
+            <label>Status</label>
+            <select name="status">
+              <option value="focus">Focus</option>
+              <option value="solo">Solo</option>
+              <option value="pair">Pair</option>
+              <option value="afk">AFK</option>
+            </select>
+          </div>
+          <button type="submit">Check-in</button>
+        </form>
+        <p id="roomStatus" style="margin-top:0.75rem; color:var(--muted);"></p>
+      </section>
+
+      <section class="room-layout">
+        <div class="map-card">
+          <canvas id="roomGrid"></canvas>
+          <h4 style="margin-top:1rem;">Presenças recentes</h4>
+          <div id="presenceList" class="presence-list"></div>
+        </div>
+        <div class="card">
+          <div class="tabs">
+            <button data-tab="chat" class="active">Chat</button>
+            <button data-tab="tasks">Tasks</button>
+            <button data-tab="ambiente">Ambiente</button>
+            <button data-tab="sugestoes">Sugestões</button>
+          </div>
+          <div id="chat" class="panel active">
+            <div id="chatList" class="chat-list"></div>
+            <form id="messageForm" style="margin-top:1rem; display:flex; gap:0.5rem;">
+              <input id="messageBody" type="text" placeholder="Compartilhe algo" required style="flex:1;" />
+              <button type="submit">Enviar</button>
+            </form>
+          </div>
+          <div id="tasks" class="panel">
+            <div id="tasksList" class="task-list"></div>
+            <form id="taskForm" style="margin-top:1rem; display:flex; gap:0.5rem;">
+              <input name="title" type="text" placeholder="Nova task" required style="flex:1;" />
+              <button type="submit">Adicionar</button>
+            </form>
+          </div>
+          <div id="ambiente" class="panel">
+            <div id="metricList" class="metric-list"></div>
+          </div>
+          <div id="sugestoes" class="panel">
+            <div id="suggestionList" class="suggestion-list"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script type="module" src="./js/room.js"></script>
+  </body>
+</html>

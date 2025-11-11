@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>holo.work — admin local</title>
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <main>
+      <section class="card" style="margin-bottom:1.5rem;">
+        <h1>Admin local</h1>
+        <p id="gateNotice">Carregando...</p>
+        <button id="backBtn" style="background:#94a3b8;">Voltar</button>
+      </section>
+      <section class="admin-grid">
+        <form id="roomAdminForm" class="card">
+          <h3>Nova sala</h3>
+          <div class="input-group">
+            <label>Nome</label>
+            <input type="text" name="name" placeholder="Focus Lab" required />
+          </div>
+          <div class="input-group">
+            <label>Map seed</label>
+            <input type="text" name="map_seed" placeholder="grid:16x16:lab" />
+          </div>
+          <button type="submit">Criar sala</button>
+        </form>
+        <form id="deviceForm" class="card">
+          <h3>Emitir device</h3>
+          <div class="input-group">
+            <label>Sala</label>
+            <select name="room_id" id="deviceRoom"></select>
+          </div>
+          <div class="input-group">
+            <label>Nome</label>
+            <input type="text" name="name" placeholder="Beacon 01" required />
+          </div>
+          <button type="submit">Gerar device</button>
+          <p id="secretBox" style="margin-top:1rem; color:var(--accent);"></p>
+        </form>
+        <div class="card">
+          <h3>Devices ativos</h3>
+          <div id="deviceList" class="task-list"></div>
+        </div>
+      </section>
+    </main>
+    <script type="module" src="./js/admin.js"></script>
+  </body>
+</html>

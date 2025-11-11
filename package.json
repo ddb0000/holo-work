@@ -1,0 +1,30 @@
+{
+  "name": "holo-work",
+  "version": "0.1.0",
+  "description": "Hybrid workspace hub with presence, chat, tasks, IoT comfort data, and actionable agent nudges. Cloudflare Workers + D1 + KV.",
+  "type": "module",
+  "main": "worker/src/index.ts",
+  "scripts": {
+    "dev": "wrangler dev --config worker/wrangler.toml",
+    "deploy": "wrangler publish --config worker/wrangler.toml",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest watch"
+  },
+  "keywords": [
+    "cloudflare",
+    "workers",
+    "iot",
+    "agent",
+    "collaboration"
+  ],
+  "author": "Daniel Alexandre Barcellos de Brito",
+  "license": "MIT",
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240208.0",
+    "@types/node": "^24.10.0",
+    "typescript": "^5.4.0",
+    "vitest": "^1.3.1",
+    "wrangler": "^4.46.0"
+  }
+}

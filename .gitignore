@@ -1,0 +1,8 @@
+node_modules/
+.wrangler/
+dist/
+.vscode/
+.DS_Store
+*.log
+coverage/
+.venv/
