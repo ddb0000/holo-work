@@ -1,0 +1,30 @@
+%% fluxo principal — navegação do usuário
+sequenceDiagram
+  autonumber
+  participant C as client (pwa)
+  participant API as worker /api
+  participant DB as d1
+  participant KV as kv
+
+  C->>API: POST /auth/login {email, pass}
+  API->>DB: verify user + argon2id(pass)
+  DB-->>API: user ok
+  API->>KV: set session (jwt) + rate key
+  API-->>C: 200 {jwt}
+
+  C->>API: GET /rooms
+  API->>DB: select rooms
+  API-->>C: rooms list
+
+  C->>API: GET /rooms/:id/messages?cursor=...
+  API->>DB: page messages
+  API-->>C: messages page
+
+  C->>API: POST /rooms/:id/checkins {mood,energy,status}
+  API->>DB: insert checkin
+  API-->>C: 204
+
+  C->>API: GET /rooms/:id/suggestions
+  API->>DB: fetch latest readings + checkins
+  API->>KV: read agent-cache (optional)
+  API-->>C: [{kind,text}]

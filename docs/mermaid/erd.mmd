@@ -1,0 +1,90 @@
+%% erd — d1/sqlite
+erDiagram
+  USERS {
+    text id PK
+    text email UK
+    text pass_hash
+    text role
+    integer created_at
+  }
+
+  ROOMS {
+    text id PK
+    text name
+    text slug UK
+    text map_seed
+    integer created_at
+  }
+
+  ROOM_MEMBERS {
+    text user_id FK
+    text room_id FK
+    integer joined_at
+  }
+
+  MESSAGES {
+    text id PK
+    text room_id FK
+    text user_id FK
+    text body
+    integer created_at
+  }
+
+  TASKS {
+    text id PK
+    text room_id FK
+    text title
+    text status
+    text assignee_id
+    integer created_at
+  }
+
+  CHECKINS {
+    text id PK
+    text user_id FK
+    text room_id FK
+    int  mood
+    int  energy
+    text status
+    integer created_at
+  }
+
+  DEVICES {
+    text id PK
+    text room_id FK
+    text name
+    text kind
+    text secret
+    integer created_at
+  }
+
+  READINGS {
+    text id PK
+    text device_id FK
+    float t_c
+    float noise_db
+    float lux
+    integer created_at
+  }
+
+  SUGGESTIONS {
+    text id PK
+    text room_id FK
+    text user_id
+    text kind
+    text text
+    integer created_at
+  }
+
+  USERS ||--o{ ROOM_MEMBERS : joins
+  ROOMS ||--o{ ROOM_MEMBERS : has
+  USERS ||--o{ MESSAGES : writes
+  ROOMS ||--o{ MESSAGES : contains
+  ROOMS ||--o{ TASKS : has
+  USERS ||--o{ TASKS : assigned_to
+  USERS ||--o{ CHECKINS : makes
+  ROOMS ||--o{ CHECKINS : in
+  ROOMS ||--o{ DEVICES : has
+  DEVICES ||--o{ READINGS : produce
+  ROOMS ||--o{ SUGGESTIONS : for
+  USERS ||--o{ SUGGESTIONS : target_optional

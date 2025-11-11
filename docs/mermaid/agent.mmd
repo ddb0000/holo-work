@@ -1,0 +1,11 @@
+%% regra do agente — decisão simplificada
+flowchart TD
+  R[inputs:\nlatest readings\n+ recent checkins] --> N{noise_db > 65\nAND energy < 3?}
+  N -- yes --> S1[prompt: mover para sala com menor ruído]
+  N -- no --> T{t_c > 27\nAND mood <= 2?}
+  T -- yes --> S2[prompt: pausa 5min + água]
+  T -- no --> L{lux < 200?}
+  L -- yes --> S3[note: ajustar iluminação]
+  L -- no --> P{2 users focus >30min\nmesmo room e tasks relacionadas?}
+  P -- yes --> S4[sugerir pairing]
+  P -- no --> SX[sem sugestão]

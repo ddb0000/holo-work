@@ -1,0 +1,9 @@
+%% deploy — visão mínima
+flowchart LR
+  DEV[dev machine] -->|wrangler dev| EDGE[worker (local)]
+  DEV -->|wrangler d1 execute| D1L[(d1 local)]
+  DEV -->|wrangler kv:key put|get| KVL[(kv local)]
+  DEV -->|wrangler deploy| CF[worker (prod)]
+  CF --> D1P[(d1 prod)]
+  CF --> KVP[(kv prod)]
+  IOTSIM[iot_sim] --> CF

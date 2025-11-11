@@ -1,0 +1,34 @@
+%% mapa de endpoints — agrupados
+graph TD
+  subgraph auth
+    A1[POST /auth/register]
+    A2[POST /auth/login]
+    A3[GET /auth/me]
+  end
+  subgraph rooms
+    R1[GET /rooms]
+    R2[POST /rooms (admin)]
+    R3[GET /rooms/:id]
+    R4[POST /rooms/:id/join]
+  end
+  subgraph messages
+    M1[GET /rooms/:id/messages]
+    M2[POST /rooms/:id/messages]
+  end
+  subgraph tasks
+    T1[GET /rooms/:id/tasks]
+    T2[POST /rooms/:id/tasks]
+    T3[PUT /tasks/:id]
+  end
+  subgraph checkins
+    C1[POST /rooms/:id/checkins]
+    C2[GET /rooms/:id/checkins]
+  end
+  subgraph iot
+    D1_[POST /devices (admin)]
+    I1[POST /iot/ingest]
+    I2[GET /rooms/:id/readings]
+  end
+  subgraph agent
+    G1[GET /rooms/:id/suggestions]
+  end

@@ -1,0 +1,22 @@
+%% arquitetura — visão macro
+flowchart LR
+  subgraph client["ui (pwa html/css/js)"]
+    A[login\nrooms map\nchat/tasks\ncheck-ins]
+    SW[service worker\ncache + offline]
+  end
+
+  subgraph edge["cloudflare"]
+    B[api worker (ts)\nrest + jwt + rate limit]
+    KV[(kv\nsessions/rate/agent-cache)]
+    D1[(d1 sqlite)]
+  end
+
+  subgraph iot["iot_sim (python)"]
+    IOT[periodic POST\n/readings ingest]
+  end
+
+  A <--->|fetch /api/*| B
+  SW --- A
+  B <--> D1
+  B <--> KV
+  IOT -->|X-Device-Secret| B

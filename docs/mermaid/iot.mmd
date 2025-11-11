@@ -1,0 +1,13 @@
+%% ingestão iot — validação + persistência
+sequenceDiagram
+  autonumber
+  participant DEV as iot_sim
+  participant API as worker /api/iot/ingest
+  participant DB as d1
+
+  DEV->>API: POST /iot/ingest {device_id,t_c,noise_db,lux,ts}\nHeader: X-Device-Secret
+  API->>DB: select devices.id,secret where id=device_id
+  DB-->>API: secret
+  API->>API: compare secrets + rate check
+  API->>DB: insert readings(...)
+  API-->>DEV: 202 accepted

@@ -1,0 +1,8 @@
+%% estados de presença — client
+stateDiagram-v2
+  [*] --> afk
+  afk --> solo: activity detected
+  solo --> focus: toggle focus
+  focus --> pair: invite/accept
+  pair --> solo: end session
+  any --> afk: idle timeout
