@@ -48,6 +48,9 @@ docs/     # PRD, checklist, evidence scripts
 ## Status
 Track ongoing build in `docs/todo.md`. Major changes recorded in `CHANGELOG.md`.
 
+## Google Docs
+https://docs.google.com/document/d/1F9tRff_lB-MnmA13ewMS0pY-iBQUIUU8DEj7wG71gXE/edit?tab=t.0#heading=h.5vb5hai8clmd
+
 ## Figma
 #### arq
 https://www.figma.com/board/RnpSFs6Rj2zN0iZb2tXIOD/holo.work-%E2%80%94-arquitetura?node-id=0-1&p=f&t=VWsvSS78qQ1gCTcg-0
