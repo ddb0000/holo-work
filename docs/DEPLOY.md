@@ -20,7 +20,7 @@
    ```
 3. **Publish Worker**
    ```bash
-   npx wrangler publish --config worker/wrangler.toml
+   npx wrangler deploy --config worker/wrangler.toml
    ```
 4. **Static UI**
    - Option A (Pages): deploy `ui/` as a Pages project; set API origin to the Worker subdomain and ensure CORS (already `*`).
