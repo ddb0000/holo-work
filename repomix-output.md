@@ -2308,7 +2308,8 @@ JWT_SECRET, PEPPER, ZAI_API_KEY
 ````markdown
 # Changelog
 
-## 2025-02-10
+## devlog
+### 11-nov-25
 - bootstrap repo layout (worker/ui/sql/scripts/docs)
 - add base docs + checklist + config files
 - add D1 schema/seed, worker auth/rooms/iot/agent routes, rate-limit + JSON guards
@@ -2670,195 +2671,6 @@ INSERT INTO room_members (user_id, room_id, joined_at) VALUES
   ('user-admin', 'room-lab', strftime('%s','now')*1000);
 INSERT INTO devices (id, room_id, name, kind, secret_hash, created_at)
 VALUES ('device-holo-01', 'room-holo', 'Env Beacon 01', 'environment', '92ae2a030fb7b169cf2612db1e8a4819fb03b9356f714be39c2a4ffe2d127f71', strftime('%s','now')*1000);
-````
-
-## File: ui/css/style.css
-````css
-:root {
-  --bg: #0b0b0c;
-  --bg-1: #111114;
-  --bg-2: #17171b;
-  --fg: #e8e8ef;
-  --fg-muted: #b4b4c3;
-  --muted: #7d7d8c;
-  --border: #2a2a33;
-  --plum-core: #422d41;
-  --accent: #22e3b3;
-  --accent-2: #7aa2ff;
-  --accent-3: #b58cff;
-  --ring: color-mix(in oklab, var(--accent) 20%, transparent);
-  --grid-line: color-mix(in oklab, var(--accent-2) 18%, transparent);
-  --card-bg: #1a1a21;
-  --panel-bg: #15151a;
-  --elev: 0 20px 45px rgba(0,0,0,.45), 0 0 0 1px var(--border);
-  --success: #30e39a;
-  --warning: #f6c56a;
-  --danger:  #ff6b7a;
-}
-* { box-sizing: border-box; }
-html, body { height: 100%; }
-body {
-  margin: 0;
-  min-height: 100vh;
-  color: var(--fg);
-  background:
-    radial-gradient(1200px 600px at 50% -10%, var(--plum-core) 0%, transparent 60%),
-    radial-gradient(1000px 800px at 120% 0%, #13212a 0%, transparent 50%),
-    var(--bg);
-  background-color: var(--bg);
-  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
-a {
-  color: var(--accent-2);
-  text-decoration: none;
-  transition: color .15s ease, opacity .15s ease;
-}
-a:hover { color: var(--accent); }
-main {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
-}
-.card {
-  background: var(--card-bg);
-  border-radius: 16px;
-  border: 1px solid var(--border);
-  box-shadow: var(--elev);
-  padding: 2rem;
-}
-button, input, select, textarea {
-  font: inherit;
-  padding: 0.65rem 0.85rem;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  background: var(--panel-bg);
-  color: var(--fg);
-  outline: none;
-  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease, background .15s ease;
-}
-input:focus, select:focus, textarea:focus { box-shadow: 0 0 0 3px var(--ring); border-color: var(--accent-2); }
-button {
-  background: linear-gradient(180deg, color-mix(in oklab, var(--accent) 92%, #0a0a0a) 0%, var(--accent) 100%);
-  color: #0b0b0c;
-  border: none;
-  cursor: pointer;
-}
-button:hover { transform: translateY(-1px); box-shadow: 0 10px 28px color-mix(in oklab, var(--accent) 35%, transparent); }
-button:active { transform: translateY(0); }
-.login-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 2rem;
-}
-.input-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  color: var(--fg-muted);
-}
-.tabs {
-  display: flex;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-}
-.tabs button {
-  flex: 1;
-  background: var(--panel-bg);
-  color: var(--muted);
-  border: 1px solid var(--border);
-}
-.tabs button.active {
-  background: linear-gradient(180deg, color-mix(in oklab, var(--accent-2) 85%, #0a0a0a) 0%, var(--accent-2) 100%);
-  color: #0b0b0c;
-}
-.panel { display: none; }
-.panel.active { display: block; }
-.room-layout {
-  display: grid;
-  grid-template-columns: 420px 1fr;
-  gap: 1.5rem;
-}
-.map-card {
-  background: var(--card-bg);
-  border-radius: 16px;
-  border: 1px solid var(--border);
-  padding: 1rem;
-  min-height: 500px;
-}
-#roomGrid {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  border: 1px dashed var(--border);
-  border-radius: 12px;
-  background:
-    repeating-linear-gradient(90deg, var(--grid-line) 0, var(--grid-line) 1px, transparent 1px, transparent calc(100% / 16)),
-    repeating-linear-gradient(0deg, var(--grid-line) 0, var(--grid-line) 1px, transparent 1px, transparent calc(100% / 16));
-}
-.presence-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 1rem;
-}
-.presence-dot {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: color-mix(in oklab, var(--accent-2) 18%, transparent);
-  color: var(--accent-2);
-  font-weight: 600;
-  border: 1px solid var(--border);
-}
-.chat-list, .task-list, .suggestion-list, .metric-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  max-height: 320px;
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: var(--border) transparent;
-}
-.message {
-  padding: 0.75rem;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: color-mix(in oklab, #ffffff 3%, var(--card-bg));
-}
-.metric-card {
-  display: flex;
-  justify-content: space-between;
-  padding: 0.75rem 1rem;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: color-mix(in oklab, var(--accent-3) 8%, transparent);
-}
-.admin-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-  gap: 1.5rem;
-}
-.notice {
-  padding: 1rem;
-  border-radius: 12px;
-  border: 1px solid color-mix(in oklab, var(--warning) 45%, var(--border));
-  background: color-mix(in oklab, var(--warning) 12%, var(--panel-bg));
-  color: color-mix(in oklab, var(--warning) 90%, #000);
-}
-hr {
-  border: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--border), transparent);
-  margin: 1.25rem 0;
-}
-.small { color: var(--fg-muted); font-size: .9rem; }
-@media (prefers-reduced-motion: reduce) {
-  * { transition: none !important; }
-}
 ````
 
 ## File: ui/js/api.js
@@ -3459,6 +3271,194 @@ async function handleHealth(ctx: HandlerContext): Promise<Response> {
     "vitest": "^1.3.1",
     "wrangler": "^4.46.0"
   }
+}
+````
+
+## File: ui/css/style.css
+````css
+:root {
+  --bg: #0b0b0c;
+  --bg-1: #111114;
+  --bg-2: #17171b;
+  --fg: #e8e8ef;
+  --fg-muted: #b4b4c3;
+  --muted: #7d7d8c;
+  --border: #2a2a33;
+  --plum-core: #422d41;
+  --accent: #22e3b3;
+  --accent-2: #7aa2ff;
+  --accent-3: #b58cff;
+  --ring: color-mix(in oklab, var(--accent) 20%, transparent);
+  --grid-line: color-mix(in oklab, var(--accent-2) 18%, transparent);
+  --card-bg: #1a1a21;
+  --panel-bg: #15151a;
+  --elev: 0 20px 45px rgba(0,0,0,.45), 0 0 0 1px var(--border);
+  --success: #30e39a;
+  --warning: #f6c56a;
+  --danger:  #ff6b7a;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--fg);
+  background:
+    radial-gradient(1200px 600px at 50% -10%, var(--plum-core) 0%, transparent 60%),
+    radial-gradient(1000px 800px at 120% 0%, #13212a 0%, transparent 50%),
+    var(--bg);
+  background-color: var(--bg);
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+a {
+  color: var(--accent-2);
+  text-decoration: none;
+  transition: color .15s ease, opacity .15s ease;
+}
+a:hover { color: var(--accent); }
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+.card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  box-shadow: var(--elev);
+  padding: 2rem;
+}
+button, input, select, textarea {
+  font: inherit;
+  padding: 0.65rem 0.85rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--panel-bg);
+  color: var(--fg);
+  outline: none;
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease, background .15s ease;
+}
+input:focus, select:focus, textarea:focus { box-shadow: 0 0 0 3px var(--ring); border-color: var(--accent-2); }
+button {
+  background: linear-gradient(180deg, color-mix(in oklab, var(--accent) 92%, #0a0a0a) 0%, var(--accent) 100%);
+  color: #0b0b0c;
+  border: none;
+  cursor: pointer;
+}
+button:hover { transform: translateY(-1px); box-shadow: 0 10px 28px color-mix(in oklab, var(--accent) 35%, transparent); }
+button:active { transform: translateY(0); }
+.login-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+}
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  color: var(--fg-muted);
+}
+.tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.tabs button {
+  flex: 1;
+  background: var(--panel-bg);
+  color: var(--muted);
+  border: 1px solid var(--border);
+}
+.tabs button.active {
+  background: linear-gradient(180deg, color-mix(in oklab, var(--accent-2) 85%, #0a0a0a) 0%, var(--accent-2) 100%);
+  color: #0b0b0c;
+}
+.panel { display: none; }
+.panel.active { display: block; }
+.room-layout {
+  display: grid;
+  gap: 1.5rem;
+}
+.map-card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  padding: 1rem;
+  min-height: 500px;
+}
+#roomGrid {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+  background:
+    repeating-linear-gradient(90deg, var(--grid-line) 0, var(--grid-line) 1px, transparent 1px, transparent calc(100% / 16)),
+    repeating-linear-gradient(0deg, var(--grid-line) 0, var(--grid-line) 1px, transparent 1px, transparent calc(100% / 16));
+}
+.presence-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+.presence-dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: color-mix(in oklab, var(--accent-2) 18%, transparent);
+  color: var(--accent-2);
+  font-weight: 600;
+  border: 1px solid var(--border);
+}
+.chat-list, .task-list, .suggestion-list, .metric-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-height: 320px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+.message {
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: color-mix(in oklab, #ffffff 3%, var(--card-bg));
+}
+.metric-card {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: color-mix(in oklab, var(--accent-3) 8%, transparent);
+}
+.admin-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 1.5rem;
+}
+.notice {
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid color-mix(in oklab, var(--warning) 45%, var(--border));
+  background: color-mix(in oklab, var(--warning) 12%, var(--panel-bg));
+  color: color-mix(in oklab, var(--warning) 90%, #000);
+}
+hr {
+  border: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+  margin: 1.25rem 0;
+}
+.small { color: var(--fg-muted); font-size: .9rem; }
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
 }
 ````
 
