@@ -8,6 +8,7 @@
 - [x] Author `wrangler.toml` (main entry, compatibility date, bindings for DB/KV) per AGENTS spec.
 - [x] Run `wrangler d1 create holo_work` and `wrangler kv namespace create KV`, capture IDs into config.
 
+
 ## 2. Database
 - [x] Apply `/sql/schema.sql` via `wrangler d1 execute`.
 - [x] Create `/sql/seed.sql` with admin user (`admin@holo.work` / "admin" dev pw), two rooms, one device + shared secret.
