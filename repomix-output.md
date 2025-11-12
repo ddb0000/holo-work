@@ -112,6 +112,7 @@ ui/
   js/
     admin.js
     api.js
+    config.js
     index.js
     room.js
   admin.html
@@ -293,34 +294,6 @@ HostUrl=about:internet
 [ZoneTransfer]
 ZoneId=3
 HostUrl=about:internet
-````
-
-## File: worker/src/assets.ts
-````typescript
-export const routes = (app: any) => {
-  app.get('/api/assets/avatar', async (c: any) => {
-    const seed = (c.req.query('seed') || 'seed').toString()
-    const s = Math.min(1024, Math.max(16, parseInt(c.req.query('s') || '128')))
-    let h = 2166136261
-    for (let i=0;i<seed.length;i++) { h ^= seed.charCodeAt(i); h += (h<<1)+(h<<4)+(h<<7)+(h<<8)+(h<<24) }
-    const rnd = () => { h ^= h<<13; h ^= h>>>17; h ^= h<<5; return ((h>>>0)%1000)/1000 }
-    const n = 8, px = Math.floor(s/n)
-    const palette = ['#0d0d0d','#f5f5f5',`hsl(${Math.floor(rnd()*360)} 70% 55%)`, `hsl(${Math.floor(rnd()*360)} 70% 45%)`]
-    let cells = ''
-    for (let y=0;y<n;y++){
-      for (let x=0;x<Math.ceil(n/2);x++){
-        const v = rnd()
-        const cidx = v<0.15?0: v<0.3?1: v<0.65?2:3
-        const col = palette[cidx]
-        const xx = x*px, xx2 = (n-1-x)*px, yy=y*px
-        cells += `<rect x="${xx}" y="${yy}" width="${px}" height="${px}" fill="${col}"/>`
-        if (x!==n-1-x) cells += `<rect x="${xx2}" y="${yy}" width="${px}" height="${px}" fill="${col}"/>`
-      }
-    }
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${s}" height="${s}" shape-rendering="crispEdges" viewBox="0 0 ${s} ${s}"><rect width="100%" height="100%" fill="#111"/>${cells}</svg>`
-    return new Response(svg, {headers:{'content-type':'image/svg+xml','cache-control':'public, max-age=604800'}})
-  })
-}
 ````
 
 ## File: docs/mermaid/agent.mmd
@@ -893,76 +866,6 @@ jwt no header Authorization. rate-limit por ip em kv. argon2id para hash.
 ---
 ````
 
-## File: docs/todo.md
-````markdown
-# Execução v1 Checklist
-
-## 0. Repo hygiene
-- [x] Create repo `holo.work` with `/worker`, `/ui`, `/sql`, `/scripts`, `/docs` scaffolding.
-- [x] Add MIT `LICENSE`, succinct `README`, project `.gitignore`, and `.editorconfig` with LF/ts defaults.
-
-## 1. Infra
-- [x] Author `wrangler.toml` (main entry, compatibility date, bindings for DB/KV) per AGENTS spec.
-- [x] Run `wrangler d1 create holo_work` and `wrangler kv namespace create KV`, capture IDs into config.
-
-## 2. Database
-- [x] Apply `/sql/schema.sql` via `wrangler d1 execute`.
-- [x] Create `/sql/seed.sql` with admin user (`admin@holo.work` / "admin" dev pw), two rooms, one device + shared secret.
-
-## 3. Auth
-- [ ] Implement Argon2id hash/verify with `PEPPER` (currently using PBKDF2-SHA256 as a temporary fallback while we wire deterministic WASM support), short helper tests.
-- [x] Implement JWT issue/verify (15 min TTL) + middleware.
-- [x] Ship `/auth/register`, `/auth/login`, `/auth/me` routes with validation + rate-limit hooks.
-
-## 4. Rooms/Core
-- [x] CRUD for rooms (admin create, anyone list/join) with ownership guard.
-- [x] Chat: GET last N messages + POST with html-escape + basic flood control.
-- [x] Tasks: GET/POST/PUT with assignee + status tracking.
-- [x] Check-ins: POST mood/energy/status slider payload + GET last 30 min per room.
-
-## 5. IoT
-- [x] Admin POST to issue device id + secret (persist hashed secret) and list existing devices.
-- [x] `/iot/ingest` POST verifying `X-Device-Secret`, storing readings (temp/noise/lux) keyed by room, limited to 15 min retention.
-- [x] `/rooms/:id/readings` GET returning sliding-window telemetry.
-
-## 6. Agent
-- [x] Implement `computeSuggestions(room_id)` per spec (15 min readings + 30 min check-ins, dedupe within 10 min window, idempotent insert).
-- [x] Expose suggestions GET route and ensure ingest/check-in paths trigger compute when new data arrives.
-
-## 7. UI
-- [x] `index.html`: login form → fetch auth → store JWT in memory + `sessionStorage`.
-- [x] `room.html`: 16x16 grid map + presence dots, tabs para chat/tasks/ambiente/sugestões, check-in slider + status select.
-- [x] `admin.html`: `?local=1` guard, forms p/ criar rooms/devices + lista de secrets (local only).
-- [x] Shared ES modules (API client/state) + CSS utilitário leve (sem frameworks).
-
-## 8. Scripts
-- [x] `scripts/iot_sim.py` using stdlib `urllib` to read `INGEST_URL`, `DEVICE_ID`, `DEVICE_SECRET`, and send payload every 5 s (temp 20-32 °C etc.).
-
-## 9. Security
-- [x] Central JSON validator + body size cap, sanitize chat HTML, enforce 60 rpm/IP via KV counter.
-- [x] Ensure secrets never logged; use environment vars `JWT_SECRET`, `PEPPER`, optional `ZAI_API_KEY` stub (ver README + `docs/ENV.md`, `.dev.vars` para dev).
-
-## 10. Tests & Evidence
-- [x] Unit tests for hash/verify and `computeSuggestions` helpers.
-- [x] `./docs/e2e.sh` curl flow: register → login → create room → post message → ingest → read suggestions; script grava em `./docs/evidencias.txt`.
-
-## 11. Deploy
-- [x] `wrangler publish` playbook em `docs/DEPLOY.md` (bindings, secrets, schema, smoke). `wrangler dev` validado local.
-- [x] Serve `/ui` via Pages ou worker assets (detalhado em README/DEPLOY).
-
-## 12. Fiap package
-- [x] Checklist em `docs/FIAP_PACKAGE.md` (zip, PDF mapping, TXT com RM/nome/pitch-link).
-
-## 13. Pitch script
-- [x] Roteiro (`docs/pitch-script.md`) cobre problema/demo/arquitetura/ODS/CTA.
-
-## 14. Env checklist
-- [x] `docs/ENV.md` + README explicam secrets (`JWT_SECRET`, `PEPPER`, `ZAI_API_KEY` opcional) e uso de `.dev.vars`.
-
-## 15. Definition of Done
-- [x] Local demo + IoT sim verificados; docs de deploy/tests/pacote asseguram handoff cloud + zip.
-````
-
 ## File: scripts/iot_sim.py
 ````python
 from __future__ import annotations
@@ -1106,162 +1009,6 @@ CREATE TABLE IF NOT EXISTS events (
 );
 ````
 
-## File: ui/css/style.css
-````css
-:root {
-  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
-  color: #101828;
-  background: #f5f5f7;
-  --card-bg: #ffffff;
-  --accent: #6366f1;
-  --muted: #475467;
-  --border: #e4e7ec;
-}
-* {
-  box-sizing: border-box;
-}
-body {
-  margin: 0;
-  min-height: 100vh;
-  background: radial-gradient(circle at top, #eef2ff 0%, #f8fafc 55%, #ffffff 100%);
-}
-a {
-  color: var(--accent);
-}
-main {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
-}
-.card {
-  background: var(--card-bg);
-  border-radius: 16px;
-  border: 1px solid var(--border);
-  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08);
-  padding: 2rem;
-}
-button, input, select, textarea {
-  font: inherit;
-  padding: 0.65rem 0.85rem;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-}
-button {
-  background: var(--accent);
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
-}
-.login-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 2rem;
-}
-.input-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-}
-.tabs {
-  display: flex;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-}
-.tabs button {
-  flex: 1;
-  background: #f4f4ff;
-  color: var(--muted);
-  border: 1px solid transparent;
-}
-.tabs button.active {
-  background: var(--accent);
-  color: #fff;
-}
-.panel {
-  display: none;
-}
-.panel.active {
-  display: block;
-}
-.room-layout {
-  display: grid;
-  grid-template-columns: 420px 1fr;
-  gap: 1.5rem;
-}
-.map-card {
-  background: var(--card-bg);
-  border-radius: 16px;
-  border: 1px solid var(--border);
-  padding: 1rem;
-  min-height: 500px;
-}
-#roomGrid {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  border: 1px dashed var(--border);
-  border-radius: 12px;
-  background: repeating-linear-gradient(90deg, rgba(99, 102, 241, 0.08) 0, rgba(99, 102, 241, 0.08) 1px, transparent 1px, transparent calc(100% / 16)),
-    repeating-linear-gradient(0deg, rgba(99, 102, 241, 0.08) 0, rgba(99, 102, 241, 0.08) 1px, transparent 1px, transparent calc(100% / 16));
-}
-.presence-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 1rem;
-}
-.presence-dot {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: rgba(99, 102, 241, 0.15);
-  color: var(--accent);
-  font-weight: 600;
-}
-.chat-list,
-.task-list,
-.suggestion-list,
-.metric-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  max-height: 320px;
-  overflow-y: auto;
-}
-.message {
-  padding: 0.75rem;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-}
-.metric-card {
-  display: flex;
-  justify-content: space-between;
-  padding: 0.75rem 1rem;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: rgba(99, 102, 241, 0.05);
-}
-.admin-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-  gap: 1.5rem;
-}
-.notice {
-  padding: 1rem;
-  border-radius: 12px;
-  border: 1px solid #fee4bc;
-  background: #fff7ed;
-  color: #9a3412;
-}
-````
-
 ## File: ui/js/admin.js
 ````javascript
 import { apiFetch, ensureAuth } from './api.js';
@@ -1337,71 +1084,22 @@ async function loadDevices() {
 }
 ````
 
-## File: ui/js/api.js
+## File: ui/js/config.js
 ````javascript
-const TOKEN_KEY = 'holo_jwt';
-let memoryToken = null;
-const DEFAULT_API_BASE =
-  window.__HOLO_API__ ||
-  (location.port === '4173' || location.port === '4174' ? 'http://127.0.0.1:8787' : '');
-export function getToken() {
-  if (memoryToken) return memoryToken;
-  memoryToken = sessionStorage.getItem(TOKEN_KEY);
-  return memoryToken;
-}
-export function setToken(token) {
-  memoryToken = token;
-  if (token) {
-    sessionStorage.setItem(TOKEN_KEY, token);
-  } else {
-    sessionStorage.removeItem(TOKEN_KEY);
+(function(){
+  const h = location.hostname
+  let api
+  if (location.search.includes('local=1')) {
+    api = 'http://localhost:8787'
   }
-}
-export function ensureAuth() {
-  if (!getToken()) {
-    window.location.href = 'index.html';
+  else if (h.includes('pages.dev') || h.includes('pages')) {
+    api = 'https://holo-work.dbarcelloz.workers.dev'
   }
-}
-export async function apiFetch(path, options = {}) {
-  const headers = new Headers(options.headers || {});
-  const token = getToken();
-  if (token) {
-    headers.set('authorization', `Bearer ${token}`);
+  else {
+    api = 'https://holo-work.dbarcelloz.workers.dev'
   }
-  if (options.body && !headers.has('content-type')) {
-    headers.set('content-type', 'application/json');
-  }
-  const url = buildUrl(path);
-  const response = await fetch(url, { ...options, headers });
-  if (response.status === 401) {
-    setToken(null);
-    window.location.href = 'index.html';
-    return null;
-  }
-  if (!response.ok) {
-    let details;
-    try {
-      details = await response.json();
-    } catch (err) {
-      details = { error: response.statusText };
-    }
-    throw new Error(details.error || 'Request failed');
-  }
-  if (response.status === 204) return null;
-  return response.json();
-}
-function buildUrl(path) {
-  if (path.startsWith('http')) return path;
-  if (!DEFAULT_API_BASE) return path;
-  if (path.startsWith('/')) {
-    return `${DEFAULT_API_BASE}${path}`;
-  }
-  return `${DEFAULT_API_BASE}/${path}`;
-}
-export function formToJSON(form) {
-  const data = new FormData(form);
-  return Object.fromEntries(data.entries());
-}
+  window.__CONFIG__ = { API_BASE: api }
+})()
 ````
 
 ## File: ui/js/index.js
@@ -1703,194 +1401,6 @@ function setupTabs() {
 }
 ````
 
-## File: ui/admin.html
-````html
-<!DOCTYPE html>
-<html lang="pt-BR">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>holo.work — admin local</title>
-    <link rel="stylesheet" href="./css/style.css" />
-  </head>
-  <body>
-    <main>
-      <section class="card" style="margin-bottom:1.5rem;">
-        <h1>Admin local</h1>
-        <p id="gateNotice">Carregando...</p>
-        <button id="backBtn" style="background:#94a3b8;">Voltar</button>
-      </section>
-      <section class="admin-grid">
-        <form id="roomAdminForm" class="card">
-          <h3>Nova sala</h3>
-          <div class="input-group">
-            <label>Nome</label>
-            <input type="text" name="name" placeholder="Focus Lab" required />
-          </div>
-          <div class="input-group">
-            <label>Map seed</label>
-            <input type="text" name="map_seed" placeholder="grid:16x16:lab" />
-          </div>
-          <button type="submit">Criar sala</button>
-        </form>
-        <form id="deviceForm" class="card">
-          <h3>Emitir device</h3>
-          <div class="input-group">
-            <label>Sala</label>
-            <select name="room_id" id="deviceRoom"></select>
-          </div>
-          <div class="input-group">
-            <label>Nome</label>
-            <input type="text" name="name" placeholder="Beacon 01" required />
-          </div>
-          <button type="submit">Gerar device</button>
-          <p id="secretBox" style="margin-top:1rem; color:var(--accent);"></p>
-        </form>
-        <div class="card">
-          <h3>Devices ativos</h3>
-          <div id="deviceList" class="task-list"></div>
-        </div>
-      </section>
-    </main>
-    <script type="module" src="./js/admin.js"></script>
-  </body>
-</html>
-````
-
-## File: ui/index.html
-````html
-<!DOCTYPE html>
-<html lang="pt-BR">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>holo.work — login</title>
-    <link rel="stylesheet" href="./css/style.css" />
-  </head>
-  <body>
-    <main>
-      <section class="card">
-        <h1>holo.work</h1>
-        <p>Hub híbrido com presença, chat, tasks, IoT e agente que cuida do ritmo.</p>
-        <div class="login-grid">
-          <form id="loginForm">
-            <div class="input-group">
-              <label for="email">Email</label>
-              <input id="email" name="email" type="email" placeholder="dev@holo.work" required />
-            </div>
-            <div class="input-group">
-              <label for="password">Senha</label>
-              <input id="password" name="password" type="password" placeholder="••••••" required />
-            </div>
-            <div style="display:flex; gap:0.75rem; margin-top:1rem;">
-              <button type="submit" style="flex:1;">Entrar</button>
-              <button type="button" id="registerBtn" style="flex:1; background:#0ea5e9;">Registrar</button>
-            </div>
-            <p class="notice" style="margin-top:1rem;">
-              Use admin@holo.work / admin (PEPPER=dev-pepper) para seed local.
-            </p>
-          </form>
-          <div>
-            <h3>Como funciona?</h3>
-            <p>
-              1) Faz login → 2) Escolhe sala → 3) Marca presença, conversa e acompanha tarefas.
-              O simulador IoT injeta temperatura, ruído e luz; o agente sugere pausas, pairing e ajustes.
-            </p>
-            <p>
-              Depois de logar, compartilhe o token entre abas (sessionStorage). Para sair, limpe o token em
-              <code>sessionStorage</code> ou clique em "sair" no header da sala.
-            </p>
-          </div>
-        </div>
-        <p id="status" style="margin-top:1rem; color:var(--accent);"></p>
-      </section>
-    </main>
-    <script type="module" src="./js/index.js"></script>
-  </body>
-</html>
-````
-
-## File: ui/room.html
-````html
-<!DOCTYPE html>
-<html lang="pt-BR">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>holo.work — sala</title>
-    <link rel="stylesheet" href="./css/style.css" />
-  </head>
-  <body>
-    <main>
-      <section class="card" style="margin-bottom:1.5rem;">
-        <header style="display:flex; gap:1rem; align-items:center;">
-          <h2 style="flex:1;">Sala</h2>
-          <select id="roomSelect" style="flex:2;"></select>
-          <button id="logoutBtn" style="background:#f43f5e;">Sair</button>
-        </header>
-        <form id="checkinForm" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:1rem; margin-top:1rem;">
-          <div class="input-group">
-            <label>Mood</label>
-            <input type="range" min="1" max="5" step="1" name="mood" value="3" />
-          </div>
-          <div class="input-group">
-            <label>Energia</label>
-            <input type="range" min="1" max="5" step="1" name="energy" value="3" />
-          </div>
-          <div class="input-group">
-            <label>Status</label>
-            <select name="status">
-              <option value="focus">Focus</option>
-              <option value="solo">Solo</option>
-              <option value="pair">Pair</option>
-              <option value="afk">AFK</option>
-            </select>
-          </div>
-          <button type="submit">Check-in</button>
-        </form>
-        <p id="roomStatus" style="margin-top:0.75rem; color:var(--muted);"></p>
-      </section>
-      <section class="room-layout">
-        <div class="map-card">
-          <canvas id="roomGrid"></canvas>
-          <h4 style="margin-top:1rem;">Presenças recentes</h4>
-          <div id="presenceList" class="presence-list"></div>
-        </div>
-        <div class="card">
-          <div class="tabs">
-            <button data-tab="chat" class="active">Chat</button>
-            <button data-tab="tasks">Tasks</button>
-            <button data-tab="ambiente">Ambiente</button>
-            <button data-tab="sugestoes">Sugestões</button>
-          </div>
-          <div id="chat" class="panel active">
-            <div id="chatList" class="chat-list"></div>
-            <form id="messageForm" style="margin-top:1rem; display:flex; gap:0.5rem;">
-              <input id="messageBody" type="text" placeholder="Compartilhe algo" required style="flex:1;" />
-              <button type="submit">Enviar</button>
-            </form>
-          </div>
-          <div id="tasks" class="panel">
-            <div id="tasksList" class="task-list"></div>
-            <form id="taskForm" style="margin-top:1rem; display:flex; gap:0.5rem;">
-              <input name="title" type="text" placeholder="Nova task" required style="flex:1;" />
-              <button type="submit">Adicionar</button>
-            </form>
-          </div>
-          <div id="ambiente" class="panel">
-            <div id="metricList" class="metric-list"></div>
-          </div>
-          <div id="sugestoes" class="panel">
-            <div id="suggestionList" class="suggestion-list"></div>
-          </div>
-        </div>
-      </section>
-    </main>
-    <script type="module" src="./js/room.js"></script>
-  </body>
-</html>
-````
-
 ## File: worker/src/access.ts
 ````typescript
 import { Env } from './types';
@@ -2007,175 +1517,6 @@ export async function handleGetSuggestions(ctx: HandlerContext): Promise<Respons
 }
 ````
 
-## File: worker/src/auth.ts
-````typescript
-import { HandlerContext, AuthUser, Env } from './types';
-import {
-  readJson,
-  jsonResponse,
-  HttpError,
-  ensure,
-  encodeText,
-  base64UrlEncode,
-  decodeBase64Url,
-  getUserRecord,
-  toBase64,
-  fromBase64,
-  timingSafeEqual,
-} from './utils';
-import { first } from './db';
-const SALT_LENGTH = 16;
-const PBKDF2_ITERATIONS = 200000;
-const PBKDF2_LENGTH = 32;
-const textEncoder = new TextEncoder();
-interface JwtPayload {
-  sub: string;
-  email: string;
-  role: 'user' | 'admin';
-  exp: number;
-  iat: number;
-}
-export async function hashPassword(password: string, pepper: string): Promise<string> {
-  const salt = crypto.getRandomValues(new Uint8Array(SALT_LENGTH));
-  const derived = await deriveKey(password, pepper, salt, PBKDF2_ITERATIONS);
-  return ['pbkdf2', PBKDF2_ITERATIONS, toBase64(salt), toBase64(derived)].join('$');
-}
-export async function verifyPassword(password: string, pepper: string, hash: string): Promise<boolean> {
-  const parts = hash.split('$');
-  if (parts.length !== 4 || parts[0] !== 'pbkdf2') {
-    return false;
-  }
-  const iterations = Number(parts[1]);
-  if (!Number.isSafeInteger(iterations) || iterations <= 0) {
-    return false;
-  }
-  const salt = fromBase64(parts[2]);
-  const expected = fromBase64(parts[3]);
-  const actual = await deriveKey(password, pepper, salt, iterations);
-  return timingSafeEqual(actual, expected);
-}
-export async function handleRegister(ctx: HandlerContext): Promise<Response> {
-  const body = await readJson<{ email?: string; password?: string }>(ctx.request);
-  const email = body.email?.trim().toLowerCase();
-  const password = body.password?.trim();
-  ensure(email && email.includes('@'), 400, 'Valid email required');
-  ensure(password && password.length >= 6, 400, 'Password must be at least 6 chars');
-  const existing = await first<{ id: string }>(ctx.env.DB, 'SELECT id FROM users WHERE email = ?', [email]);
-  ensure(!existing, 409, 'Email already registered');
-  const id = crypto.randomUUID();
-  const passHash = await hashPassword(password!, ctx.env.PEPPER);
-  const createdAt = Date.now();
-  await ctx.env.DB
-    .prepare('INSERT INTO users (id, email, pass_hash, role, created_at) VALUES (?, ?, ?, ?, ?)')
-    .bind(id, email, passHash, 'user', createdAt)
-    .run();
-  const user: AuthUser = { id, email, role: 'user' };
-  const jwt = await issueJwt(user, ctx.env);
-  return jsonResponse({ user, jwt });
-}
-export async function handleLogin(ctx: HandlerContext): Promise<Response> {
-  const body = await readJson<{ email?: string; password?: string }>(ctx.request);
-  const email = body.email?.trim().toLowerCase();
-  const password = body.password?.trim();
-  ensure(email && password, 400, 'Email and password required');
-  const record = await first<{ id: string; email: string; role: 'user' | 'admin'; pass_hash: string }>(
-    ctx.env.DB,
-    'SELECT id, email, role, pass_hash FROM users WHERE email = ?',
-    [email]
-  );
-  ensure(record, 401, 'Invalid credentials');
-  const valid = await verifyPassword(password!, ctx.env.PEPPER, record!.pass_hash);
-  ensure(valid, 401, 'Invalid credentials');
-  const user: AuthUser = { id: record!.id, email: record!.email, role: record!.role };
-  const jwt = await issueJwt(user, ctx.env);
-  return jsonResponse({ user, jwt });
-}
-export async function handleMe(ctx: HandlerContext): Promise<Response> {
-  ensure(ctx.user, 401, 'Unauthorized');
-  const dbUser = await getUserRecord(ctx.env, ctx.user!.id);
-  ensure(dbUser, 401, 'User not found');
-  return jsonResponse({ user: { id: dbUser!.id, email: dbUser!.email, role: dbUser!.role } });
-}
-export async function authenticateRequest(request: Request, env: Env): Promise<AuthUser | null> {
-  const authHeader = request.headers.get('authorization');
-  if (!authHeader) {
-    return null;
-  }
-  const [, token] = authHeader.split(' ');
-  if (!token) return null;
-  const payload = await verifyJwt(token, env.JWT_SECRET);
-  if (!payload) return null;
-  return { id: payload.sub, email: payload.email, role: payload.role };
-}
-async function issueJwt(user: AuthUser, env: Env): Promise<string> {
-  const ttl = Number(env.JWT_TTL_MINUTES ?? '15');
-  const now = Math.floor(Date.now() / 1000);
-  const payload: JwtPayload = {
-    sub: user.id,
-    email: user.email,
-    role: user.role,
-    iat: now,
-    exp: now + ttl * 60,
-  };
-  return signJwt(payload, env.JWT_SECRET);
-}
-async function signJwt(payload: JwtPayload, secret: string): Promise<string> {
-  const header = { alg: 'HS256', typ: 'JWT' };
-  const headerBytes = encodeText(JSON.stringify(header));
-  const payloadBytes = encodeText(JSON.stringify(payload));
-  const encodedHeader = base64UrlEncode(headerBytes);
-  const encodedPayload = base64UrlEncode(payloadBytes);
-  const data = `${encodedHeader}.${encodedPayload}`;
-  const keyBuffer = encodeText(secret).buffer as ArrayBuffer;
-  const key = await crypto.subtle.importKey('raw', keyBuffer, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
-  const dataBuffer = encodeText(data).buffer as ArrayBuffer;
-  const signature = await crypto.subtle.sign('HMAC', key, dataBuffer);
-  return `${data}.${base64UrlEncode(new Uint8Array(signature))}`;
-}
-async function verifyJwt(token: string, secret: string): Promise<JwtPayload | null> {
-  const segments = token.split('.');
-  if (segments.length !== 3) return null;
-  const [encodedHeader, encodedPayload, encodedSignature] = segments;
-  const data = `${encodedHeader}.${encodedPayload}`;
-  const keyBuffer = encodeText(secret).buffer as ArrayBuffer;
-  const key = await crypto.subtle.importKey('raw', keyBuffer, { name: 'HMAC', hash: 'SHA-256' }, false, ['verify']);
-  const signatureBuffer = decodeBase64Url(encodedSignature).buffer as ArrayBuffer;
-  const dataBuffer = encodeText(data).buffer as ArrayBuffer;
-  const valid = await crypto.subtle.verify('HMAC', key, signatureBuffer, dataBuffer);
-  if (!valid) return null;
-  try {
-    const payload = JSON.parse(new TextDecoder().decode(decodeBase64Url(encodedPayload)));
-    if (!payload.exp || payload.exp < Math.floor(Date.now() / 1000)) {
-      return null;
-    }
-    return payload as JwtPayload;
-  } catch (err) {
-    console.error('jwt parse failed', err);
-    return null;
-  }
-}
-function toArrayBuffer(bytes: Uint8Array): ArrayBuffer {
-  const view = bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength);
-  return view as ArrayBuffer;
-}
-async function deriveKey(password: string, pepper: string, salt: Uint8Array, iterations: number): Promise<Uint8Array> {
-  const keyMaterial = await crypto.subtle.importKey('raw', toArrayBuffer(encodeText(password + pepper)), 'PBKDF2', false, [
-    'deriveBits',
-  ]);
-  const bits = await crypto.subtle.deriveBits(
-    {
-      name: 'PBKDF2',
-      hash: 'SHA-256',
-      salt: toArrayBuffer(salt),
-      iterations,
-    },
-    keyMaterial,
-    PBKDF2_LENGTH * 8
-  );
-  return new Uint8Array(bits);
-}
-````
-
 ## File: worker/src/db.ts
 ````typescript
 export async function first<T>(db: D1Database, query: string, bindings: unknown[] = []): Promise<T | null> {
@@ -2188,141 +1529,6 @@ export async function all<T>(db: D1Database, query: string, bindings: unknown[] 
 }
 export async function run(db: D1Database, query: string, bindings: unknown[] = []) {
   return db.prepare(query).bind(...bindings).run();
-}
-````
-
-## File: worker/src/index.ts
-````typescript
-import { Env, Handler, HandlerContext } from './types';
-import { consumeRateLimit } from './kv';
-import { jsonResponse, errorResponse, HttpError, getIp } from './utils';
-import { handleRegister, handleLogin, handleMe, authenticateRequest } from './auth';
-import {
-  handleListRooms,
-  handleGetRoom,
-  handleCreateRoom,
-  handleJoinRoom,
-  handleListMessages,
-  handlePostMessage,
-  handleListTasks,
-  handleCreateTask,
-  handleUpdateTask,
-  handlePostCheckin,
-  handleGetCheckins,
-} from './rooms';
-import { handleCreateDevice, handleListDevices, handleIngest, handleGetReadings } from './iot';
-import { handleGetSuggestions } from './agent';
-interface Route {
-  method: string;
-  pattern: string;
-  handler: Handler;
-  auth?: 'optional' | 'user';
-  skipRateLimit?: boolean;
-}
-const routes: Route[] = [
-  { method: 'GET', pattern: '/health', handler: handleHealth, auth: 'optional', skipRateLimit: true },
-  { method: 'POST', pattern: '/api/auth/register', handler: handleRegister, auth: 'optional' },
-  { method: 'POST', pattern: '/api/auth/login', handler: handleLogin, auth: 'optional' },
-  { method: 'GET', pattern: '/api/auth/me', handler: handleMe, auth: 'user' },
-  { method: 'GET', pattern: '/api/rooms', handler: handleListRooms, auth: 'optional' },
-  { method: 'GET', pattern: '/api/rooms/:roomId', handler: handleGetRoom, auth: 'optional' },
-  { method: 'POST', pattern: '/api/rooms', handler: handleCreateRoom, auth: 'user' },
-  { method: 'POST', pattern: '/api/rooms/:roomId/join', handler: handleJoinRoom, auth: 'user' },
-  { method: 'GET', pattern: '/api/rooms/:roomId/messages', handler: handleListMessages, auth: 'user' },
-  { method: 'POST', pattern: '/api/rooms/:roomId/messages', handler: handlePostMessage, auth: 'user' },
-  { method: 'GET', pattern: '/api/rooms/:roomId/tasks', handler: handleListTasks, auth: 'user' },
-  { method: 'POST', pattern: '/api/rooms/:roomId/tasks', handler: handleCreateTask, auth: 'user' },
-  { method: 'PUT', pattern: '/api/tasks/:taskId', handler: handleUpdateTask, auth: 'user' },
-  { method: 'POST', pattern: '/api/rooms/:roomId/checkins', handler: handlePostCheckin, auth: 'user' },
-  { method: 'GET', pattern: '/api/rooms/:roomId/checkins', handler: handleGetCheckins, auth: 'user' },
-  { method: 'GET', pattern: '/api/rooms/:roomId/readings', handler: handleGetReadings, auth: 'user' },
-  { method: 'GET', pattern: '/api/rooms/:roomId/suggestions', handler: handleGetSuggestions, auth: 'user' },
-  { method: 'POST', pattern: '/api/devices', handler: handleCreateDevice, auth: 'user' },
-  { method: 'GET', pattern: '/api/devices', handler: handleListDevices, auth: 'user' },
-  { method: 'POST', pattern: '/api/iot/ingest', handler: handleIngest, auth: 'optional', skipRateLimit: true },
-];
-const corsHeaders = {
-  'access-control-allow-origin': '*',
-  'access-control-allow-methods': 'GET,POST,PUT,OPTIONS',
-  'access-control-allow-headers': 'content-type,authorization,x-device-secret',
-};
-export default {
-  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-    if (request.method === 'OPTIONS') {
-      return new Response(null, { status: 204, headers: corsHeaders });
-    }
-    try {
-      const url = new URL(request.url);
-      const match = findRoute(request.method, url.pathname);
-      if (!match) {
-        return withCors(errorResponse('Not Found', 404));
-      }
-      if (!match.route.skipRateLimit) {
-        const ip = getIp(request);
-        const rate = await consumeRateLimit(env, `rate:${ip}`, 60, 60);
-        if (!rate.allowed) {
-          return withCors(errorResponse('Too many requests', 429));
-        }
-      }
-      const user = await authenticateRequest(request, env);
-      if (match.route.auth === 'user' && !user) {
-        return withCors(errorResponse('Unauthorized', 401));
-      }
-      const ctxPayload: HandlerContext = {
-        env,
-        request,
-        params: match.params,
-        user: user ?? null,
-        waitUntil: (promise) => ctx.waitUntil(promise),
-      };
-      const response = await match.route.handler(ctxPayload);
-      return withCors(response);
-    } catch (err) {
-      if (err instanceof HttpError) {
-        return withCors(errorResponse(err.message, err.status, err.details));
-      }
-      console.error('Unhandled worker error', err);
-      return withCors(errorResponse('Internal Error', 500));
-    }
-  },
-};
-function withCors(response: Response): Response {
-  const headers = new Headers(response.headers);
-  Object.entries(corsHeaders).forEach(([key, value]) => headers.set(key, value));
-  return new Response(response.body, { status: response.status, headers });
-}
-function findRoute(method: string, pathname: string) {
-  for (const route of routes) {
-    if (route.method !== method) continue;
-    const params = matchPath(route.pattern, pathname);
-    if (params) {
-      return { route, params };
-    }
-  }
-  return null;
-}
-function matchPath(pattern: string, pathname: string): Record<string, string> | null {
-  const patternParts = trim(pattern).split('/');
-  const pathParts = trim(pathname).split('/');
-  if (patternParts.length !== pathParts.length) return null;
-  const params: Record<string, string> = {};
-  for (let i = 0; i < patternParts.length; i += 1) {
-    const expected = patternParts[i];
-    const actual = pathParts[i];
-    if (expected.startsWith(':')) {
-      params[expected.slice(1)] = decodeURIComponent(actual);
-    } else if (expected !== actual) {
-      return null;
-    }
-  }
-  return params;
-}
-function trim(path: string): string {
-  const clean = path.replace(/^\/+|\/+$|\s+/g, '');
-  return clean ? clean : '';
-}
-async function handleHealth(ctx: HandlerContext): Promise<Response> {
-  return jsonResponse({ ok: true });
 }
 ````
 
@@ -2937,27 +2143,6 @@ JWT_SECRET=dev-jwt-secret-please-change
 PEPPER=dev-pepper
 ````
 
-## File: worker/wrangler.toml
-````toml
-name = "holo-work"
-main = "src/index.ts"
-compatibility_date = "2025-11-10"
-compatibility_flags = ["nodejs_compat"]
-workers_dev = true
-
-[vars]
-JWT_TTL_MINUTES = "15"
-
-[[d1_databases]]
-binding = "DB"
-database_name = "holo_work"
-database_id = "4911f880-cd22-4064-bfce-f17a5aac42eb"
-
-[[kv_namespaces]]
-binding = "KV"
-id = "5584069c6e5943b5a08621671e70ed3a"
-````
-
 ## File: .editorconfig
 ````
 root = true
@@ -3325,40 +2510,6 @@ deploy
 https://www.figma.com/board/QAiEky9luSHOt6u4moFLea/holo.work-%E2%80%94-deploy?node-id=0-1&p=f&t=t7kQnDRCOIKkI5cD-0
 ````
 
-## File: package.json
-````json
-{
-  "name": "holo-work",
-  "version": "0.1.0",
-  "description": "Hybrid workspace hub with presence, chat, tasks, IoT comfort data, and actionable agent nudges. Cloudflare Workers + D1 + KV.",
-  "type": "module",
-  "main": "worker/src/index.ts",
-  "scripts": {
-    "dev": "wrangler dev --config worker/wrangler.toml",
-    "deploy": "wrangler publish --config worker/wrangler.toml",
-    "typecheck": "tsc --noEmit",
-    "test": "vitest run",
-    "test:watch": "vitest watch"
-  },
-  "keywords": [
-    "cloudflare",
-    "workers",
-    "iot",
-    "agent",
-    "collaboration"
-  ],
-  "author": "Daniel Alexandre Barcellos de Brito",
-  "license": "MIT",
-  "devDependencies": {
-    "@cloudflare/workers-types": "^4.20240208.0",
-    "@types/node": "^24.10.0",
-    "typescript": "^5.4.0",
-    "vitest": "^1.3.1",
-    "wrangler": "^4.46.0"
-  }
-}
-````
-
 ## File: tsconfig.json
 ````json
 {
@@ -3424,6 +2575,77 @@ https://www.figma.com/board/QAiEky9luSHOt6u4moFLea/holo.work-%E2%80%94-deploy?no
    ```
 ````
 
+## File: docs/todo.md
+````markdown
+# Execução v1 Checklist
+
+## 0. Repo hygiene
+- [x] Create repo `holo.work` with `/worker`, `/ui`, `/sql`, `/scripts`, `/docs` scaffolding.
+- [x] Add MIT `LICENSE`, succinct `README`, project `.gitignore`, and `.editorconfig` with LF/ts defaults.
+
+## 1. Infra
+- [x] Author `wrangler.toml` (main entry, compatibility date, bindings for DB/KV) per AGENTS spec.
+- [x] Run `wrangler d1 create holo_work` and `wrangler kv namespace create KV`, capture IDs into config.
+
+
+## 2. Database
+- [x] Apply `/sql/schema.sql` via `wrangler d1 execute`.
+- [x] Create `/sql/seed.sql` with admin user (`admin@holo.work` / "admin" dev pw), two rooms, one device + shared secret.
+
+## 3. Auth
+- [ ] Implement Argon2id hash/verify with `PEPPER` (currently using PBKDF2-SHA256 as a temporary fallback while we wire deterministic WASM support), short helper tests.
+- [x] Implement JWT issue/verify (15 min TTL) + middleware.
+- [x] Ship `/auth/register`, `/auth/login`, `/auth/me` routes with validation + rate-limit hooks.
+
+## 4. Rooms/Core
+- [x] CRUD for rooms (admin create, anyone list/join) with ownership guard.
+- [x] Chat: GET last N messages + POST with html-escape + basic flood control.
+- [x] Tasks: GET/POST/PUT with assignee + status tracking.
+- [x] Check-ins: POST mood/energy/status slider payload + GET last 30 min per room.
+
+## 5. IoT
+- [x] Admin POST to issue device id + secret (persist hashed secret) and list existing devices.
+- [x] `/iot/ingest` POST verifying `X-Device-Secret`, storing readings (temp/noise/lux) keyed by room, limited to 15 min retention.
+- [x] `/rooms/:id/readings` GET returning sliding-window telemetry.
+
+## 6. Agent
+- [x] Implement `computeSuggestions(room_id)` per spec (15 min readings + 30 min check-ins, dedupe within 10 min window, idempotent insert).
+- [x] Expose suggestions GET route and ensure ingest/check-in paths trigger compute when new data arrives.
+
+## 7. UI
+- [x] `index.html`: login form → fetch auth → store JWT in memory + `sessionStorage`.
+- [x] `room.html`: 16x16 grid map + presence dots, tabs para chat/tasks/ambiente/sugestões, check-in slider + status select.
+- [x] `admin.html`: `?local=1` guard, forms p/ criar rooms/devices + lista de secrets (local only).
+- [x] Shared ES modules (API client/state) + CSS utilitário leve (sem frameworks).
+
+## 8. Scripts
+- [x] `scripts/iot_sim.py` using stdlib `urllib` to read `INGEST_URL`, `DEVICE_ID`, `DEVICE_SECRET`, and send payload every 5 s (temp 20-32 °C etc.).
+
+## 9. Security
+- [x] Central JSON validator + body size cap, sanitize chat HTML, enforce 60 rpm/IP via KV counter.
+- [x] Ensure secrets never logged; use environment vars `JWT_SECRET`, `PEPPER`, optional `ZAI_API_KEY` stub (ver README + `docs/ENV.md`, `.dev.vars` para dev).
+
+## 10. Tests & Evidence
+- [x] Unit tests for hash/verify and `computeSuggestions` helpers.
+- [x] `./docs/e2e.sh` curl flow: register → login → create room → post message → ingest → read suggestions; script grava em `./docs/evidencias.txt`.
+
+## 11. Deploy
+- [x] `wrangler publish` playbook em `docs/DEPLOY.md` (bindings, secrets, schema, smoke). `wrangler dev` validado local.
+- [x] Serve `/ui` via Pages ou worker assets (detalhado em README/DEPLOY).
+
+## 12. Fiap package
+- [x] Checklist em `docs/FIAP_PACKAGE.md` (zip, PDF mapping, TXT com RM/nome/pitch-link).
+
+## 13. Pitch script
+- [x] Roteiro (`docs/pitch-script.md`) cobre problema/demo/arquitetura/ODS/CTA.
+
+## 14. Env checklist
+- [x] `docs/ENV.md` + README explicam secrets (`JWT_SECRET`, `PEPPER`, `ZAI_API_KEY` opcional) e uso de `.dev.vars`.
+
+## 15. Definition of Done
+- [x] Local demo + IoT sim verificados; docs de deploy/tests/pacote asseguram handoff cloud + zip.
+````
+
 ## File: sql/seed.sql
 ````sql
 PRAGMA foreign_keys = OFF;
@@ -3448,6 +2670,1010 @@ INSERT INTO room_members (user_id, room_id, joined_at) VALUES
   ('user-admin', 'room-lab', strftime('%s','now')*1000);
 INSERT INTO devices (id, room_id, name, kind, secret_hash, created_at)
 VALUES ('device-holo-01', 'room-holo', 'Env Beacon 01', 'environment', '92ae2a030fb7b169cf2612db1e8a4819fb03b9356f714be39c2a4ffe2d127f71', strftime('%s','now')*1000);
+````
+
+## File: ui/css/style.css
+````css
+:root {
+  --bg: #0b0b0c;
+  --bg-1: #111114;
+  --bg-2: #17171b;
+  --fg: #e8e8ef;
+  --fg-muted: #b4b4c3;
+  --muted: #7d7d8c;
+  --border: #2a2a33;
+  --plum-core: #422d41;
+  --accent: #22e3b3;
+  --accent-2: #7aa2ff;
+  --accent-3: #b58cff;
+  --ring: color-mix(in oklab, var(--accent) 20%, transparent);
+  --grid-line: color-mix(in oklab, var(--accent-2) 18%, transparent);
+  --card-bg: #1a1a21;
+  --panel-bg: #15151a;
+  --elev: 0 20px 45px rgba(0,0,0,.45), 0 0 0 1px var(--border);
+  --success: #30e39a;
+  --warning: #f6c56a;
+  --danger:  #ff6b7a;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--fg);
+  background:
+    radial-gradient(1200px 600px at 50% -10%, var(--plum-core) 0%, transparent 60%),
+    radial-gradient(1000px 800px at 120% 0%, #13212a 0%, transparent 50%),
+    var(--bg);
+  background-color: var(--bg);
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+a {
+  color: var(--accent-2);
+  text-decoration: none;
+  transition: color .15s ease, opacity .15s ease;
+}
+a:hover { color: var(--accent); }
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+.card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  box-shadow: var(--elev);
+  padding: 2rem;
+}
+button, input, select, textarea {
+  font: inherit;
+  padding: 0.65rem 0.85rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--panel-bg);
+  color: var(--fg);
+  outline: none;
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease, background .15s ease;
+}
+input:focus, select:focus, textarea:focus { box-shadow: 0 0 0 3px var(--ring); border-color: var(--accent-2); }
+button {
+  background: linear-gradient(180deg, color-mix(in oklab, var(--accent) 92%, #0a0a0a) 0%, var(--accent) 100%);
+  color: #0b0b0c;
+  border: none;
+  cursor: pointer;
+}
+button:hover { transform: translateY(-1px); box-shadow: 0 10px 28px color-mix(in oklab, var(--accent) 35%, transparent); }
+button:active { transform: translateY(0); }
+.login-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+}
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  color: var(--fg-muted);
+}
+.tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.tabs button {
+  flex: 1;
+  background: var(--panel-bg);
+  color: var(--muted);
+  border: 1px solid var(--border);
+}
+.tabs button.active {
+  background: linear-gradient(180deg, color-mix(in oklab, var(--accent-2) 85%, #0a0a0a) 0%, var(--accent-2) 100%);
+  color: #0b0b0c;
+}
+.panel { display: none; }
+.panel.active { display: block; }
+.room-layout {
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  gap: 1.5rem;
+}
+.map-card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  padding: 1rem;
+  min-height: 500px;
+}
+#roomGrid {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+  background:
+    repeating-linear-gradient(90deg, var(--grid-line) 0, var(--grid-line) 1px, transparent 1px, transparent calc(100% / 16)),
+    repeating-linear-gradient(0deg, var(--grid-line) 0, var(--grid-line) 1px, transparent 1px, transparent calc(100% / 16));
+}
+.presence-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+.presence-dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: color-mix(in oklab, var(--accent-2) 18%, transparent);
+  color: var(--accent-2);
+  font-weight: 600;
+  border: 1px solid var(--border);
+}
+.chat-list, .task-list, .suggestion-list, .metric-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-height: 320px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+.message {
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: color-mix(in oklab, #ffffff 3%, var(--card-bg));
+}
+.metric-card {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: color-mix(in oklab, var(--accent-3) 8%, transparent);
+}
+.admin-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 1.5rem;
+}
+.notice {
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid color-mix(in oklab, var(--warning) 45%, var(--border));
+  background: color-mix(in oklab, var(--warning) 12%, var(--panel-bg));
+  color: color-mix(in oklab, var(--warning) 90%, #000);
+}
+hr {
+  border: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+  margin: 1.25rem 0;
+}
+.small { color: var(--fg-muted); font-size: .9rem; }
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+````
+
+## File: ui/js/api.js
+````javascript
+const TOKEN_KEY = 'holo_jwt';
+let memoryToken = null;
+const getAPIBase = () => window.__CONFIG__?.API_BASE || 'https://holo-work.dbarcelloz.workers.dev'
+export function getToken() {
+  if (memoryToken) return memoryToken;
+  memoryToken = sessionStorage.getItem(TOKEN_KEY);
+  return memoryToken;
+}
+export function setToken(token) {
+  memoryToken = token;
+  if (token) {
+    sessionStorage.setItem(TOKEN_KEY, token);
+  } else {
+    sessionStorage.removeItem(TOKEN_KEY);
+  }
+}
+export function ensureAuth() {
+  if (!getToken()) {
+    window.location.href = 'index.html';
+  }
+}
+export async function apiFetch(path, options = {}) {
+  const headers = new Headers(options.headers || {});
+  const token = getToken();
+  if (token) {
+    headers.set('authorization', `Bearer ${token}`);
+  }
+  if (options.body && !headers.has('content-type')) {
+    headers.set('content-type', 'application/json');
+  }
+  const url = buildUrl(path);
+  const response = await fetch(url, { ...options, headers });
+  if (response.status === 401) {
+    setToken(null);
+    window.location.href = 'index.html';
+    return null;
+  }
+  if (!response.ok) {
+    let details;
+    try {
+      details = await response.json();
+    } catch (err) {
+      details = { error: response.statusText };
+    }
+    throw new Error(details.error || 'Request failed');
+  }
+  if (response.status === 204) return null;
+  return response.json();
+}
+function buildUrl(path) {
+  if (path.startsWith('http')) return path;
+  const base = getAPIBase()
+  if (!base) return path;
+  if (path.startsWith('/')) {
+    return `${base}${path}`;
+  }
+  return `${base}/${path}`;
+}
+export function formToJSON(form) {
+  const data = new FormData(form);
+  return Object.fromEntries(data.entries());
+}
+````
+
+## File: ui/admin.html
+````html
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>holo.work — admin local</title>
+    <link rel="stylesheet" href="./css/style.css" />
+    <script src="./js/config.js"></script>
+  </head>
+  <body>
+    <main>
+      <section class="card" style="margin-bottom:1.5rem;">
+        <h1>Admin local</h1>
+        <p id="gateNotice">Carregando...</p>
+        <button id="backBtn" style="background:#94a3b8;">Voltar</button>
+      </section>
+      <section class="admin-grid">
+        <form id="roomAdminForm" class="card">
+          <h3>Nova sala</h3>
+          <div class="input-group">
+            <label>Nome</label>
+            <input type="text" name="name" placeholder="Focus Lab" required />
+          </div>
+          <div class="input-group">
+            <label>Map seed</label>
+            <input type="text" name="map_seed" placeholder="grid:16x16:lab" />
+          </div>
+          <button type="submit">Criar sala</button>
+        </form>
+        <form id="deviceForm" class="card">
+          <h3>Emitir device</h3>
+          <div class="input-group">
+            <label>Sala</label>
+            <select name="room_id" id="deviceRoom"></select>
+          </div>
+          <div class="input-group">
+            <label>Nome</label>
+            <input type="text" name="name" placeholder="Beacon 01" required />
+          </div>
+          <button type="submit">Gerar device</button>
+          <p id="secretBox" style="margin-top:1rem; color:var(--accent);"></p>
+        </form>
+        <div class="card">
+          <h3>Devices ativos</h3>
+          <div id="deviceList" class="task-list"></div>
+        </div>
+      </section>
+    </main>
+    <script type="module" src="./js/admin.js"></script>
+  </body>
+</html>
+````
+
+## File: ui/index.html
+````html
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>holo.work — login</title>
+    <link rel="stylesheet" href="./css/style.css" />
+    <script src="./js/config.js"></script>
+  </head>
+  <body>
+    <main>
+      <section class="card">
+        <h1>holo.work</h1>
+        <p>Hub híbrido com presença, chat, tasks, IoT e agente que cuida do ritmo.</p>
+        <div class="login-grid">
+          <form id="loginForm">
+            <div class="input-group">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="dev@holo.work" required />
+            </div>
+            <div class="input-group">
+              <label for="password">Senha</label>
+              <input id="password" name="password" type="password" placeholder="••••••" required />
+            </div>
+            <div style="display:flex; gap:0.75rem; margin-top:1rem;">
+              <button type="submit" style="flex:1;">Entrar</button>
+              <button type="button" id="registerBtn" style="flex:1; background:#0ea5e9;">Registrar</button>
+            </div>
+            <p class="notice" style="margin-top:1rem;">
+              Use admin@holo.work / admin (PEPPER=dev-pepper) para seed local.
+            </p>
+          </form>
+          <div>
+            <h3>Como funciona?</h3>
+            <p>
+              1) Faz login → 2) Escolhe sala → 3) Marca presença, conversa e acompanha tarefas.
+              O simulador IoT injeta temperatura, ruído e luz; o agente sugere pausas, pairing e ajustes.
+            </p>
+            <p>
+              Depois de logar, compartilhe o token entre abas (sessionStorage). Para sair, limpe o token em
+              <code>sessionStorage</code> ou clique em "sair" no header da sala.
+            </p>
+          </div>
+        </div>
+        <p id="status" style="margin-top:1rem; color:var(--accent);"></p>
+      </section>
+    </main>
+    <script type="module" src="./js/index.js"></script>
+  </body>
+</html>
+````
+
+## File: ui/room.html
+````html
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>holo.work — sala</title>
+    <link rel="stylesheet" href="./css/style.css" />
+    <script src="./js/config.js"></script>
+  </head>
+  <body>
+    <main>
+      <section class="card" style="margin-bottom:1.5rem;">
+        <header style="display:flex; gap:1rem; align-items:center;">
+          <h2 style="flex:1;">Sala</h2>
+          <select id="roomSelect" style="flex:2;"></select>
+          <button id="logoutBtn" style="background:#f43f5e;">Sair</button>
+        </header>
+        <form id="checkinForm" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:1rem; margin-top:1rem;">
+          <div class="input-group">
+            <label>Mood</label>
+            <input type="range" min="1" max="5" step="1" name="mood" value="3" />
+          </div>
+          <div class="input-group">
+            <label>Energia</label>
+            <input type="range" min="1" max="5" step="1" name="energy" value="3" />
+          </div>
+          <div class="input-group">
+            <label>Status</label>
+            <select name="status">
+              <option value="focus">Focus</option>
+              <option value="solo">Solo</option>
+              <option value="pair">Pair</option>
+              <option value="afk">AFK</option>
+            </select>
+          </div>
+          <button type="submit">Check-in</button>
+        </form>
+        <p id="roomStatus" style="margin-top:0.75rem; color:var(--muted);"></p>
+      </section>
+      <section class="room-layout">
+        <div class="map-card">
+          <canvas id="roomGrid"></canvas>
+          <h4 style="margin-top:1rem;">Presenças recentes</h4>
+          <div id="presenceList" class="presence-list"></div>
+        </div>
+        <div class="card">
+          <div class="tabs">
+            <button data-tab="chat" class="active">Chat</button>
+            <button data-tab="tasks">Tasks</button>
+            <button data-tab="ambiente">Ambiente</button>
+            <button data-tab="sugestoes">Sugestões</button>
+          </div>
+          <div id="chat" class="panel active">
+            <div id="chatList" class="chat-list"></div>
+            <form id="messageForm" style="margin-top:1rem; display:flex; gap:0.5rem;">
+              <input id="messageBody" type="text" placeholder="Compartilhe algo" required style="flex:1;" />
+              <button type="submit">Enviar</button>
+            </form>
+          </div>
+          <div id="tasks" class="panel">
+            <div id="tasksList" class="task-list"></div>
+            <form id="taskForm" style="margin-top:1rem; display:flex; gap:0.5rem;">
+              <input name="title" type="text" placeholder="Nova task" required style="flex:1;" />
+              <button type="submit">Adicionar</button>
+            </form>
+          </div>
+          <div id="ambiente" class="panel">
+            <div id="metricList" class="metric-list"></div>
+          </div>
+          <div id="sugestoes" class="panel">
+            <div id="suggestionList" class="suggestion-list"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script type="module" src="./js/room.js"></script>
+  </body>
+</html>
+````
+
+## File: worker/src/assets.ts
+````typescript
+import type { HandlerContext } from './types'
+const toAB = (u8: Uint8Array): ArrayBuffer => {
+  const ab = new ArrayBuffer(u8.byteLength)
+  new Uint8Array(ab).set(u8)
+  return ab
+}
+const crc32 = (bytes: Uint8Array) => {
+  let c = ~0 >>> 0
+  for (let i = 0; i < bytes.length; i++) {
+    c ^= bytes[i]
+    for (let k = 0; k < 8; k++) c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) >>> 0 : (c >>> 1) >>> 0
+  }
+  return (~c) >>> 0
+}
+const u32 = (v: number) => new Uint8Array([ (v>>>24)&255, (v>>>16)&255, (v>>>8)&255, v&255 ])
+const chunk = (type: string, data: Uint8Array) => {
+  const out = new Uint8Array(8 + 4 + data.length + 4)
+  out.set(u32(data.length), 0)
+  out.set(new TextEncoder().encode(type), 4)
+  out.set(data, 8)
+  out.set(u32(crc32(out.subarray(4, 8 + data.length))), 8 + data.length)
+  return out
+}
+async function deflate(raw: Uint8Array) {
+  const cs = new CompressionStream('deflate')
+  const ab = toAB(raw)
+  const s = new Blob([ab]).stream().pipeThrough(cs)
+  const out = new Uint8Array(await new Response(s).arrayBuffer())
+  return out
+}
+async function encodePNG(rgba: Uint8ClampedArray, w: number, h: number): Promise<Uint8Array> {
+  const scan = new Uint8Array((w*4 + 1) * h)
+  for (let y=0; y<h; y++){
+    scan[(w*4+1)*y] = 0
+    scan.set(rgba.subarray(y*w*4, (y+1)*w*4), (w*4+1)*y + 1)
+  }
+  const sig = new Uint8Array([137,80,78,71,13,10,26,10])
+  const ihdr = new Uint8Array(13)
+  ihdr.set(u32(w), 0)
+  ihdr.set(u32(h), 4)
+  ihdr[8] = 8
+  ihdr[9] = 6
+  ihdr[10] = 0
+  ihdr[11] = 0
+  ihdr[12] = 0
+  const idat = await deflate(scan)
+  const iend = new Uint8Array(0)
+  const parts = [sig, chunk('IHDR', ihdr), chunk('IDAT', idat), chunk('IEND', iend)]
+  const total = parts.reduce((n,p)=>n+p.length,0)
+  const png = new Uint8Array(total)
+  let off=0; for (const p of parts){ png.set(p, off); off+=p.length }
+  return png
+}
+export async function handleAvatar({ request, env }: HandlerContext): Promise<Response> {
+  const u = new URL(request.url)
+  const seed = u.searchParams.get('seed') || 'anon'
+  const s = Math.min(parseInt(u.searchParams.get('s')||'128',10), 512)
+  const key = `asset:avatar:${seed}:${s}`
+  const hit = await env.KV.get(key, 'arrayBuffer')
+  if (hit) return new Response(hit, { headers:{'content-type':'image/png','cache-control':'public, max-age=2592000'} })
+  const b = new TextEncoder().encode(seed)
+  let h = 2166136261 >>> 0; for (const x of b){ h ^= x; h = (h>>>0)*16777619>>>0 }
+  const fg = [h&255, (h>>>8)&255, (h>>>16)&255, 255]
+  const bg = [0,0,0,0]
+  const px = 5, scale = Math.max(1, Math.floor(s/px))
+  const w = px*scale, hh = px*scale
+  const buf = new Uint8ClampedArray(w*hh*4)
+  for (let y=0;y<px;y++){
+    for (let x=0;x<px;x++){
+      const on = (((h>>>((x%4)*3)) & 7) > 2)
+      const xx = x<=2? x : 4-x
+      for (let yy=0; yy<scale; yy++){
+        for (let xx2=0; xx2<scale; xx2++){
+          const i = ((y*scale+yy)*w + (xx*scale+xx2))*4
+          const col = on ? fg : bg
+          buf[i]=col[0]; buf[i+1]=col[1]; buf[i+2]=col[2]; buf[i+3]=col[3]
+        }
+      }
+    }
+  }
+  const png = await encodePNG(buf, w, hh)
+  const pngAb = toAB(png)
+  await env.KV.put(key, pngAb, { expirationTtl: 60*60*24*30 })
+  return new Response(pngAb, { headers: { 'content-type': 'image/png' } })
+}
+export const handleTile = async ({ request, env }: HandlerContext) => {
+  const u = new URL(request.url)
+  const seed = u.searchParams.get('seed') || 'default'
+  const s = Math.min(parseInt(u.searchParams.get('s')||'64',10), 256)
+  const key = `asset:tile:${seed}:${s}`
+  const cached = await env.KV.get(key, 'arrayBuffer')
+  if (cached) return new Response(cached, { headers:{'content-type':'image/png','cache-control':'public, max-age=2592000'} })
+  const te = new TextEncoder()
+  const bytes = te.encode(seed)
+  let h = 2166136261 >>> 0
+  for (const b of bytes) { h ^= b; h = Math.imul(h, 16777619) >>> 0 }
+  const grid = Array.from({length:64}, (_,i)=> ((h>>((i%6))) & 7) > 3)
+  const fg = [h&255, (h>>8)&255, (h>>16)&255, 255]
+  const bg = [255, 255, 255, 255]
+  const px = 8, scale = Math.max(1, Math.floor(s/px))
+  const w = px*scale, hgt = px*scale
+  const buf = new Uint8ClampedArray(w*hgt*4)
+  for (let y=0;y<px;y++){
+    for (let x=0;x<px;x++){
+      const col = grid[y*8 + x] ? fg : bg
+      for (let yy=0; yy<scale; yy++){
+        for (let xx2=0; xx2<scale; xx2++){
+          const i = ((y*scale+yy)*w + (x*scale+xx2))*4
+          buf[i]=col[0]; buf[i+1]=col[1]; buf[i+2]=col[2]; buf[i+3]=col[3]
+        }
+      }
+    }
+  }
+  const png = await encodePNG(buf, w, hgt)
+  const ab = toAB(png)
+  await env.KV.put(key, ab, { expirationTtl: 60*60*24*30 })
+  return new Response(ab, { headers:{'content-type':'image/png'} })
+}
+export const handleAtlas = async ({ request, env }: HandlerContext) => {
+  const u = new URL(request.url)
+  const seeds = (u.searchParams.get('seeds') || 'a,b,c,d').split(',').slice(0, 16)
+  const s = Math.min(parseInt(u.searchParams.get('s')||'64',10), 256)
+  const key = `asset:atlas:${seeds.join('-')}:${s}`
+  const cached = await env.KV.get(key, 'arrayBuffer')
+  if (cached) return new Response(cached, { headers:{'content-type':'image/png','cache-control':'public, max-age=2592000'} })
+  const cols = Math.ceil(Math.sqrt(seeds.length))
+  const rows = Math.ceil(seeds.length / cols)
+  const tileSize = Math.max(1, Math.floor(s / cols))
+  const w = cols * tileSize
+  const hgt = rows * tileSize
+  const buf = new Uint8ClampedArray(w*hgt*4)
+  for (let idx = 0; idx < seeds.length; idx++) {
+    const seed = seeds[idx]
+    const te = new TextEncoder()
+    const bytes = te.encode(seed)
+    let h = 2166136261 >>> 0
+    for (const b of bytes) { h ^= b; h = Math.imul(h, 16777619) >>> 0 }
+    const row = Math.floor(idx / cols)
+    const col = idx % cols
+    const baseX = col * tileSize
+    const baseY = row * tileSize
+    const fg = [h&255, (h>>8)&255, (h>>16)&255, 255]
+    const bg = [0,0,0,0]
+    for (let y=0;y<5;y++){
+      for (let x=0;x<5;x++){
+        const xx = x<=2? x : 4-x
+        const on = (((h>>>((x%4)*3)) & 7) > 2)
+        const col_color = on ? fg : bg
+        const scaleFactor = Math.max(1, tileSize / 5)
+        for (let yy=0; yy<scaleFactor; yy++){
+          for (let xx2=0; xx2<scaleFactor; xx2++){
+            const px = baseX + (xx*scaleFactor + xx2)
+            const py = baseY + (y*scaleFactor + yy)
+            if (px < w && py < hgt) {
+              const i = (py*w + px)*4
+              buf[i]=col_color[0]; buf[i+1]=col_color[1]; buf[i+2]=col_color[2]; buf[i+3]=col_color[3]
+            }
+          }
+        }
+      }
+    }
+  }
+  const png = await encodePNG(buf, w, hgt)
+  const ab = toAB(png)
+  await env.KV.put(key, ab, { expirationTtl: 60*60*24*30 })
+  return new Response(ab, { headers:{'content-type':'image/png'} })
+}
+````
+
+## File: worker/src/index.ts
+````typescript
+import { Env, Handler, HandlerContext } from './types';
+import { consumeRateLimit } from './kv';
+import { jsonResponse, errorResponse, HttpError, getIp } from './utils';
+import { handleRegister, handleLogin, handleMe, authenticateRequest } from './auth';
+import {
+  handleListRooms,
+  handleGetRoom,
+  handleCreateRoom,
+  handleJoinRoom,
+  handleListMessages,
+  handlePostMessage,
+  handleListTasks,
+  handleCreateTask,
+  handleUpdateTask,
+  handlePostCheckin,
+  handleGetCheckins,
+} from './rooms';
+import { handleCreateDevice, handleListDevices, handleIngest, handleGetReadings } from './iot';
+import { handleGetSuggestions } from './agent';
+import { handleAvatar, handleTile, handleAtlas } from './assets';
+interface Route {
+  method: string;
+  pattern: string;
+  handler: Handler;
+  auth?: 'optional' | 'user';
+  skipRateLimit?: boolean;
+}
+const routes: Route[] = [
+  { method: 'GET', pattern: '/health', handler: handleHealth, auth: 'optional', skipRateLimit: true },
+  { method: 'POST', pattern: '/api/auth/register', handler: handleRegister, auth: 'optional' },
+  { method: 'POST', pattern: '/api/auth/login', handler: handleLogin, auth: 'optional' },
+  { method: 'GET', pattern: '/api/auth/me', handler: handleMe, auth: 'user' },
+  { method: 'GET', pattern: '/api/rooms', handler: handleListRooms, auth: 'optional' },
+  { method: 'GET', pattern: '/api/rooms/:roomId', handler: handleGetRoom, auth: 'optional' },
+  { method: 'POST', pattern: '/api/rooms', handler: handleCreateRoom, auth: 'user' },
+  { method: 'POST', pattern: '/api/rooms/:roomId/join', handler: handleJoinRoom, auth: 'user' },
+  { method: 'GET', pattern: '/api/rooms/:roomId/messages', handler: handleListMessages, auth: 'user' },
+  { method: 'POST', pattern: '/api/rooms/:roomId/messages', handler: handlePostMessage, auth: 'user' },
+  { method: 'GET', pattern: '/api/rooms/:roomId/tasks', handler: handleListTasks, auth: 'user' },
+  { method: 'POST', pattern: '/api/rooms/:roomId/tasks', handler: handleCreateTask, auth: 'user' },
+  { method: 'PUT', pattern: '/api/tasks/:taskId', handler: handleUpdateTask, auth: 'user' },
+  { method: 'POST', pattern: '/api/rooms/:roomId/checkins', handler: handlePostCheckin, auth: 'user' },
+  { method: 'GET', pattern: '/api/rooms/:roomId/checkins', handler: handleGetCheckins, auth: 'user' },
+  { method: 'GET', pattern: '/api/rooms/:roomId/readings', handler: handleGetReadings, auth: 'user' },
+  { method: 'GET', pattern: '/api/rooms/:roomId/suggestions', handler: handleGetSuggestions, auth: 'user' },
+  { method: 'POST', pattern: '/api/devices', handler: handleCreateDevice, auth: 'user' },
+  { method: 'GET', pattern: '/api/devices', handler: handleListDevices, auth: 'user' },
+  { method: 'POST', pattern: '/api/iot/ingest', handler: handleIngest, auth: 'optional', skipRateLimit: true },
+  { method:'GET', pattern:'/api/assets/avatar', handler: handleAvatar, auth:'optional', skipRateLimit: true },
+  { method:'GET', pattern:'/api/assets/tile', handler: handleTile, auth:'optional', skipRateLimit: true },
+  { method:'GET', pattern:'/api/assets/atlas', handler: handleAtlas, auth:'optional', skipRateLimit: true },
+];
+const corsHeaders = {
+  'access-control-allow-origin': '*',
+  'access-control-allow-methods': 'GET,POST,PUT,OPTIONS',
+  'access-control-allow-headers': 'content-type,authorization,x-device-secret',
+};
+export default {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+    if (request.method === 'OPTIONS') {
+      return new Response(null, { status: 204, headers: corsHeaders });
+    }
+    try {
+      const url = new URL(request.url);
+      const match = findRoute(request.method, url.pathname);
+      if (!match) {
+        return withCors(errorResponse('Not Found', 404));
+      }
+      if (!match.route.skipRateLimit) {
+        const ip = getIp(request);
+        const rate = await consumeRateLimit(env, `rate:${ip}`, 60, 60);
+        if (!rate.allowed) {
+          return withCors(errorResponse('Too many requests', 429));
+        }
+      }
+      const user = await authenticateRequest(request, env);
+      if (match.route.auth === 'user' && !user) {
+        return withCors(errorResponse('Unauthorized', 401));
+      }
+      const ctxPayload: HandlerContext = {
+        env,
+        request,
+        params: match.params,
+        user: user ?? null,
+        waitUntil: (promise) => ctx.waitUntil(promise),
+      };
+      const response = await match.route.handler(ctxPayload);
+      return withCors(response);
+    } catch (err) {
+      if (err instanceof HttpError) {
+        return withCors(errorResponse(err.message, err.status, err.details));
+      }
+      console.error('Unhandled worker error', err);
+      return withCors(errorResponse('Internal Error', 500));
+    }
+  },
+};
+function withCors(response: Response): Response {
+  const headers = new Headers(response.headers);
+  Object.entries(corsHeaders).forEach(([key, value]) => headers.set(key, value));
+  return new Response(response.body, { status: response.status, headers });
+}
+function findRoute(method: string, pathname: string) {
+  for (const route of routes) {
+    if (route.method !== method) continue;
+    const params = matchPath(route.pattern, pathname);
+    if (params) {
+      return { route, params };
+    }
+  }
+  return null;
+}
+function matchPath(pattern: string, pathname: string): Record<string, string> | null {
+  const patternParts = trim(pattern).split('/');
+  const pathParts = trim(pathname).split('/');
+  if (patternParts.length !== pathParts.length) return null;
+  const params: Record<string, string> = {};
+  for (let i = 0; i < patternParts.length; i += 1) {
+    const expected = patternParts[i];
+    const actual = pathParts[i];
+    if (expected.startsWith(':')) {
+      params[expected.slice(1)] = decodeURIComponent(actual);
+    } else if (expected !== actual) {
+      return null;
+    }
+  }
+  return params;
+}
+function trim(path: string): string {
+  const clean = path.replace(/^\/+|\/+$|\s+/g, '');
+  return clean ? clean : '';
+}
+async function handleHealth(ctx: HandlerContext): Promise<Response> {
+  return jsonResponse({ ok: true });
+}
+````
+
+## File: package.json
+````json
+{
+  "name": "holo-work",
+  "version": "0.1.0",
+  "description": "Hybrid workspace hub with presence, chat, tasks, IoT comfort data, and actionable agent nudges. Cloudflare Workers + D1 + KV.",
+  "type": "module",
+  "main": "worker/src/index.ts",
+  "scripts": {
+    "dev": "wrangler dev --config worker/wrangler.toml",
+    "deploy": "wrangler deploy --config worker/wrangler.toml",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest watch"
+  },
+  "keywords": [
+    "cloudflare",
+    "workers",
+    "iot",
+    "agent",
+    "collaboration"
+  ],
+  "author": "Daniel Alexandre Barcellos de Brito",
+  "license": "MIT",
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240208.0",
+    "@types/node": "^24.10.0",
+    "typescript": "^5.4.0",
+    "vitest": "^1.3.1",
+    "wrangler": "^4.46.0"
+  }
+}
+````
+
+## File: worker/src/auth.ts
+````typescript
+import { HandlerContext, AuthUser, Env } from './types';
+import {
+  readJson,
+  jsonResponse,
+  HttpError,
+  ensure,
+  encodeText,
+  base64UrlEncode,
+  decodeBase64Url,
+  getUserRecord,
+  toBase64,
+  fromBase64,
+  timingSafeEqual,
+} from './utils';
+import { first } from './db';
+const SALT_LENGTH = 16;
+const PBKDF2_ITERATIONS = 200000;
+const PBKDF2_LENGTH = 32;
+const textEncoder = new TextEncoder();
+interface JwtPayload {
+  sub: string;
+  email: string;
+  role: 'user' | 'admin';
+  exp: number;
+  iat: number;
+}
+export async function hashPassword(password: string, pepper: string): Promise<string> {
+  const combined = password + pepper;
+  const bytes = encodeText(combined);
+  const ab = toArrayBuffer(bytes);
+  const digest = await crypto.subtle.digest('SHA-256', ab);
+  const hash = toBase64(new Uint8Array(digest));
+  return `sha256:${hash}`;
+}
+export async function verifyPassword(password: string, pepper: string, hash: string): Promise<boolean> {
+  if (hash.startsWith('sha256:')) {
+    const stored = hash.slice(7);
+    const combined = password + pepper;
+    const bytes = encodeText(combined);
+    const ab = toArrayBuffer(bytes);
+    const digest = await crypto.subtle.digest('SHA-256', ab);
+    const computed = toBase64(new Uint8Array(digest));
+    return computed === stored;
+  }
+  const parts = hash.split('$');
+  if (parts.length !== 4 || parts[0] !== 'pbkdf2') {
+    return false;
+  }
+  const iterations = Number(parts[1]);
+  if (!Number.isSafeInteger(iterations) || iterations <= 0) {
+    return false;
+  }
+  const salt = fromBase64(parts[2]);
+  const expected = fromBase64(parts[3]);
+  const actual = await deriveKey(password, pepper, salt, iterations);
+  return timingSafeEqual(actual, expected);
+}
+export async function handleRegister(ctx: HandlerContext): Promise<Response> {
+  try {
+    const body = await readJson<{ email?: string; password?: string }>(ctx.request);
+    const email = body.email?.trim().toLowerCase();
+    const password = body.password?.trim();
+    ensure(email && email.includes('@'), 400, 'Valid email required');
+    ensure(password && password.length >= 6, 400, 'Password must be at least 6 chars');
+    const existing = await first<{ id: string }>(ctx.env.DB, 'SELECT id FROM users WHERE email = ?', [email]);
+    ensure(!existing, 409, 'Email already registered');
+    const id = crypto.randomUUID();
+    const passHash = await hashPassword(password!, ctx.env.PEPPER);
+    const createdAt = Date.now();
+    await ctx.env.DB
+      .prepare('INSERT INTO users (id, email, pass_hash, role, created_at) VALUES (?, ?, ?, ?, ?)')
+      .bind(id, email, passHash, 'user', createdAt)
+      .run();
+    const user: AuthUser = { id, email, role: 'user' };
+    const jwt = await issueJwt(user, ctx.env);
+    return jsonResponse({ user, jwt });
+  } catch (err) {
+    console.error('[register]', err);
+    throw err;
+  }
+}
+export async function handleLogin(ctx: HandlerContext): Promise<Response> {
+  try {
+    const body = await readJson<{ email?: string; password?: string }>(ctx.request);
+    const email = body.email?.trim().toLowerCase();
+    const password = body.password?.trim();
+    ensure(email && password, 400, 'Email and password required');
+    const record = await first<{ id: string; email: string; role: 'user' | 'admin'; pass_hash: string }>(
+      ctx.env.DB,
+      'SELECT id, email, role, pass_hash FROM users WHERE email = ?',
+      [email]
+    );
+    ensure(record, 401, 'Invalid credentials');
+    const valid = await verifyPassword(password!, ctx.env.PEPPER, record!.pass_hash);
+    ensure(valid, 401, 'Invalid credentials');
+    const user: AuthUser = { id: record!.id, email: record!.email, role: record!.role };
+    const jwt = await issueJwt(user, ctx.env);
+    return jsonResponse({ user, jwt });
+  } catch (err) {
+    console.error('[login]', err);
+    throw err;
+  }
+}
+export async function handleMe(ctx: HandlerContext): Promise<Response> {
+  ensure(ctx.user, 401, 'Unauthorized');
+  const dbUser = await getUserRecord(ctx.env, ctx.user!.id);
+  ensure(dbUser, 401, 'User not found');
+  return jsonResponse({ user: { id: dbUser!.id, email: dbUser!.email, role: dbUser!.role } });
+}
+export async function authenticateRequest(request: Request, env: Env): Promise<AuthUser | null> {
+  const authHeader = request.headers.get('authorization');
+  if (!authHeader) {
+    return null;
+  }
+  const [, token] = authHeader.split(' ');
+  if (!token) return null;
+  const payload = await verifyJwt(token, env.JWT_SECRET);
+  if (!payload) return null;
+  return { id: payload.sub, email: payload.email, role: payload.role };
+}
+async function issueJwt(user: AuthUser, env: Env): Promise<string> {
+  const ttl = Number(env.JWT_TTL_MINUTES ?? '15');
+  const now = Math.floor(Date.now() / 1000);
+  const payload: JwtPayload = {
+    sub: user.id,
+    email: user.email,
+    role: user.role,
+    iat: now,
+    exp: now + ttl * 60,
+  };
+  return signJwt(payload, env.JWT_SECRET);
+}
+async function signJwt(payload: JwtPayload, secret: string): Promise<string> {
+  const header = { alg: 'HS256', typ: 'JWT' };
+  const headerBytes = encodeText(JSON.stringify(header));
+  const payloadBytes = encodeText(JSON.stringify(payload));
+  const encodedHeader = base64UrlEncode(headerBytes);
+  const encodedPayload = base64UrlEncode(payloadBytes);
+  const data = `${encodedHeader}.${encodedPayload}`;
+  const keyBuffer = toArrayBuffer(encodeText(secret));
+  const key = await crypto.subtle.importKey('raw', keyBuffer, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+  const dataBuffer = toArrayBuffer(encodeText(data));
+  const signature = await crypto.subtle.sign('HMAC', key, dataBuffer);
+  return `${data}.${base64UrlEncode(new Uint8Array(signature))}`;
+}
+async function verifyJwt(token: string, secret: string): Promise<JwtPayload | null> {
+  const segments = token.split('.');
+  if (segments.length !== 3) return null;
+  const [encodedHeader, encodedPayload, encodedSignature] = segments;
+  const data = `${encodedHeader}.${encodedPayload}`;
+  const keyBuffer = toArrayBuffer(encodeText(secret));
+  const key = await crypto.subtle.importKey('raw', keyBuffer, { name: 'HMAC', hash: 'SHA-256' }, false, ['verify']);
+  const signatureBuffer = toArrayBuffer(decodeBase64Url(encodedSignature));
+  const dataBuffer = toArrayBuffer(encodeText(data));
+  const valid = await crypto.subtle.verify('HMAC', key, signatureBuffer, dataBuffer);
+  if (!valid) return null;
+  try {
+    const payload = JSON.parse(new TextDecoder().decode(decodeBase64Url(encodedPayload)));
+    if (!payload.exp || payload.exp < Math.floor(Date.now() / 1000)) {
+      return null;
+    }
+    return payload as JwtPayload;
+  } catch (err) {
+    console.error('jwt parse failed', err);
+    return null;
+  }
+}
+function toArrayBuffer(bytes: Uint8Array): ArrayBuffer {
+  const ab = new ArrayBuffer(bytes.byteLength)
+  new Uint8Array(ab).set(bytes)
+  return ab
+}
+async function deriveKey(password: string, pepper: string, salt: Uint8Array, iterations: number): Promise<Uint8Array> {
+  const keyMaterial = await crypto.subtle.importKey('raw', toArrayBuffer(encodeText(password + pepper)), 'PBKDF2', false, [
+    'deriveBits',
+  ]);
+  const bits = await crypto.subtle.deriveBits(
+    {
+      name: 'PBKDF2',
+      hash: 'SHA-256',
+      salt: toArrayBuffer(salt),
+      iterations,
+    },
+    keyMaterial,
+    PBKDF2_LENGTH * 8
+  );
+  return new Uint8Array(bits);
+}
+````
+
+## File: worker/wrangler.toml
+````toml
+name = "holo-work"
+main = "src/index.ts"
+compatibility_date = "2025-11-10"
+compatibility_flags = ["nodejs_compat"]
+workers_dev = true
+
+routes = [
+  { pattern = "holowork.knocis.xyz/*", zone_name = "knocis.xyz" }
+]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "holo_work"
+database_id = "4911f880-cd22-4064-bfce-f17a5aac42eb"
+
+[[kv_namespaces]]
+binding = "KV"
+id = "5584069c6e5943b5a08621671e70ed3a"
 ````
 
 ## File: README.md

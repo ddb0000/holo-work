@@ -127,7 +127,6 @@ button:active { transform: translateY(0); }
 /* room layout */
 .room-layout {
   display: grid;
-  grid-template-columns: 420px 1fr;
   gap: 1.5rem;
 }
 
