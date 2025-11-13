@@ -65,3 +65,9 @@
 
 ## 15. Definition of Done
 - [x] Local demo + IoT sim verificados; docs de deploy/tests/pacote asseguram handoff cloud + zip.
+
+## 16. Edge-as-Hell a0.1 follow-ups
+- [ ] Finalize Argon2id + pepper helper (replace PBKDF2 shim once WASM bundle ready).
+- [ ] Add dashboard/ETag e2e script (register → join room → poll `/api/rooms/:roomId/dashboard` → verify 304 logic).
+- [ ] Move cached avatar/tile assets into `core/public/assets` with immutable filenames and document on Pages deploy.
+- [ ] Validate presence/polling flow with anonymous `Bearer anon:<uid>` join (one more browser tab + simulate check-in/readings).

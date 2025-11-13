@@ -37,266 +37,272 @@ The content is organized as follows:
 
 # Directory Structure
 ```
-docs/
-  figma/
-    jam/
-      holo.work — agente (heurística v1).jam
-      holo.work — agente (heurística v1).jam:Zone.Identifier
-      holo.work — agente (heurística v1).pdf:Zone.Identifier
-      holo.work — agente (heurística v1).png:Zone.Identifier
-      holo.work — arquitetura.jam
-      holo.work — arquitetura.jam:Zone.Identifier
-      holo.work — arquitetura.pdf:Zone.Identifier
-      holo.work — arquitetura.png:Zone.Identifier
-      holo.work — deploy.jam
-      holo.work — deploy.jam:Zone.Identifier
-      holo.work — deploy.pdf:Zone.Identifier
-      holo.work — deploy.png:Zone.Identifier
-      holo.work — endpoints.jam
-      holo.work — endpoints.jam:Zone.Identifier
-      holo.work — endpoints.pdf:Zone.Identifier
-      holo.work — endpoints.png:Zone.Identifier
-      holo.work — estados de presença.jam
-      holo.work — estados de presença.jam:Zone.Identifier
-      holo.work — estados de presença.pdf:Zone.Identifier
-      holo.work — estados de presença.png:Zone.Identifier
-      holo.work — fluxo principal.jam
-      holo.work — fluxo principal.jam:Zone.Identifier
-      holo.work — fluxo principal.pdf:Zone.Identifier
-      holo.work — fluxo principal.png:Zone.Identifier
-      holo.work — ingestão iot.jam
-      holo.work — ingestão iot.jam:Zone.Identifier
-      holo.work — ingestão iot.pdf:Zone.Identifier
-      holo.work — ingestão iot.png:Zone.Identifier
-    pdf/
-      holo.work — agente (heurística v1).pdf
-      holo.work — arquitetura.pdf
-      holo.work — deploy.pdf
-      holo.work — endpoints.pdf
-      holo.work — estados de presença.pdf
-      holo.work — fluxo principal.pdf
-      holo.work — ingestão iot.pdf
-    png/
-      holo.work — agente (heurística v1).png
-      holo.work — arquitetura.png
-      holo.work — deploy.png
-      holo.work — endpoints.png
-      holo.work — estados de presença.png
-      holo.work — fluxo principal.png
-      holo.work — ingestão iot.png
-  mermaid/
-    agent.mmd
-    arq.mmd
-    deploy.mmd
-    endpoints.mmd
-    erd.mmd
-    flow.mmd
-    iot.mmd
-    states.mmd
-  DEPLOY.md
-  e2e.sh
-  ENV.md
-  FIAP_PACKAGE.md
-  PDF-Turing-HoloWork-GS2-2025.pdf
-  pitch-script.md
-  PRD.md
-  todo.md
-scripts/
-  iot_sim.py
-sql/
-  schema.sql
-  seed.sql
-ui/
-  css/
-    style.css
-  js/
-    admin.js
-    api.js
-    config.js
-    index.js
-    room.js
-  admin.html
-  index.html
-  room.html
-worker/
-  src/
-    access.ts
-    agent.ts
-    assets.ts
-    auth.ts
-    db.ts
-    index.ts
-    iot.ts
-    kv.ts
-    rooms.ts
-    types.ts
-    utils.ts
-  test/
-    agent.test.ts
-    auth.test.ts
-  .dev.vars
-  wrangler.toml
-.editorconfig
+fiap/
+  docs/
+    figma/
+      jam/
+        holo.work — agente (heurística v1).jam
+        holo.work — agente (heurística v1).jam:Zone.Identifier
+        holo.work — agente (heurística v1).pdf:Zone.Identifier
+        holo.work — agente (heurística v1).png:Zone.Identifier
+        holo.work — arquitetura.jam
+        holo.work — arquitetura.jam:Zone.Identifier
+        holo.work — arquitetura.pdf:Zone.Identifier
+        holo.work — arquitetura.png:Zone.Identifier
+        holo.work — deploy.jam
+        holo.work — deploy.jam:Zone.Identifier
+        holo.work — deploy.pdf:Zone.Identifier
+        holo.work — deploy.png:Zone.Identifier
+        holo.work — endpoints.jam
+        holo.work — endpoints.jam:Zone.Identifier
+        holo.work — endpoints.pdf:Zone.Identifier
+        holo.work — endpoints.png:Zone.Identifier
+        holo.work — estados de presença.jam
+        holo.work — estados de presença.jam:Zone.Identifier
+        holo.work — estados de presença.pdf:Zone.Identifier
+        holo.work — estados de presença.png:Zone.Identifier
+        holo.work — fluxo principal.jam
+        holo.work — fluxo principal.jam:Zone.Identifier
+        holo.work — fluxo principal.pdf:Zone.Identifier
+        holo.work — fluxo principal.png:Zone.Identifier
+        holo.work — ingestão iot.jam
+        holo.work — ingestão iot.jam:Zone.Identifier
+        holo.work — ingestão iot.pdf:Zone.Identifier
+        holo.work — ingestão iot.png:Zone.Identifier
+      pdf/
+        holo.work — agente (heurística v1).pdf
+        holo.work — arquitetura.pdf
+        holo.work — deploy.pdf
+        holo.work — endpoints.pdf
+        holo.work — estados de presença.pdf
+        holo.work — fluxo principal.pdf
+        holo.work — ingestão iot.pdf
+      png/
+        holo.work — agente (heurística v1).png
+        holo.work — arquitetura.png
+        holo.work — deploy.png
+        holo.work — endpoints.png
+        holo.work — estados de presença.png
+        holo.work — fluxo principal.png
+        holo.work — ingestão iot.png
+    mermaid/
+      agent.mmd
+      arq.mmd
+      deploy.mmd
+      endpoints.mmd
+      erd.mmd
+      flow.mmd
+      iot.mmd
+      states.mmd
+    DEPLOY.md
+    e2e.sh
+    ENV.md
+    FIAP_PACKAGE.md
+    PDF-Turing-HoloWork-GS2-2025.pdf
+    pitch-script.md
+    PRD.md
+    todo.md
+  scripts/
+    iot_sim.py
+  sql/
+    schema.sql
+    seed.sql
+  ui/
+    css/
+      style.css
+    js/
+      admin.js
+      api.js
+      config.js
+      index.js
+      room.js
+    admin.html
+    index.html
+    room.html
+  worker/
+    src/
+      access.ts
+      agent.ts
+      assets.ts
+      auth.ts
+      db.ts
+      index.ts
+      iot.ts
+      kv.ts
+      rooms.ts
+      types.ts
+      utils.ts
+    test/
+      agent.test.ts
+      auth.test.ts
+    .dev.vars
+    wrangler.toml
+  AGENTS.md
+  LICENSE
+  package.json
+  README.md
+  tsconfig.json
 .gitignore
 AGENTS.md
 CHANGELOG.md
+dump.md
 LICENSE
-p.md
-package.json
+PRD.md
 README.md
+todo.md
 tsconfig.json
 ```
 
 # Files
 
-## File: docs/figma/jam/holo.work — agente (heurística v1).jam:Zone.Identifier
+## File: fiap/docs/figma/jam/holo.work — agente (heurística v1).jam:Zone.Identifier
 ````
 [ZoneTransfer]
 ZoneId=3
 HostUrl=about:internet
 ````
 
-## File: docs/figma/jam/holo.work — agente (heurística v1).pdf:Zone.Identifier
+## File: fiap/docs/figma/jam/holo.work — agente (heurística v1).pdf:Zone.Identifier
 ````
 [ZoneTransfer]
 ZoneId=3
 HostUrl=about:internet
 ````
 
-## File: docs/figma/jam/holo.work — agente (heurística v1).png:Zone.Identifier
+## File: fiap/docs/figma/jam/holo.work — agente (heurística v1).png:Zone.Identifier
 ````
 [ZoneTransfer]
 ZoneId=3
 HostUrl=about:internet
 ````
 
-## File: docs/figma/jam/holo.work — arquitetura.jam:Zone.Identifier
+## File: fiap/docs/figma/jam/holo.work — arquitetura.jam:Zone.Identifier
 ````
 [ZoneTransfer]
 ZoneId=3
 HostUrl=about:internet
 ````
 
-## File: docs/figma/jam/holo.work — arquitetura.pdf:Zone.Identifier
+## File: fiap/docs/figma/jam/holo.work — arquitetura.pdf:Zone.Identifier
 ````
 [ZoneTransfer]
 ZoneId=3
 HostUrl=about:internet
 ````
 
-## File: docs/figma/jam/holo.work — arquitetura.png:Zone.Identifier
+## File: fiap/docs/figma/jam/holo.work — arquitetura.png:Zone.Identifier
 ````
 [ZoneTransfer]
 ZoneId=3
 HostUrl=about:internet
 ````
 
-## File: docs/figma/jam/holo.work — deploy.jam:Zone.Identifier
+## File: fiap/docs/figma/jam/holo.work — deploy.jam:Zone.Identifier
 ````
 [ZoneTransfer]
 ZoneId=3
 HostUrl=about:internet
 ````
 
-## File: docs/figma/jam/holo.work — deploy.pdf:Zone.Identifier
+## File: fiap/docs/figma/jam/holo.work — deploy.pdf:Zone.Identifier
 ````
 [ZoneTransfer]
 ZoneId=3
 HostUrl=about:internet
 ````
 
-## File: docs/figma/jam/holo.work — deploy.png:Zone.Identifier
+## File: fiap/docs/figma/jam/holo.work — deploy.png:Zone.Identifier
 ````
 [ZoneTransfer]
 ZoneId=3
 HostUrl=about:internet
 ````
 
-## File: docs/figma/jam/holo.work — endpoints.jam:Zone.Identifier
+## File: fiap/docs/figma/jam/holo.work — endpoints.jam:Zone.Identifier
 ````
 [ZoneTransfer]
 ZoneId=3
 HostUrl=about:internet
 ````
 
-## File: docs/figma/jam/holo.work — endpoints.pdf:Zone.Identifier
+## File: fiap/docs/figma/jam/holo.work — endpoints.pdf:Zone.Identifier
 ````
 [ZoneTransfer]
 ZoneId=3
 HostUrl=about:internet
 ````
 
-## File: docs/figma/jam/holo.work — endpoints.png:Zone.Identifier
+## File: fiap/docs/figma/jam/holo.work — endpoints.png:Zone.Identifier
 ````
 [ZoneTransfer]
 ZoneId=3
 HostUrl=about:internet
 ````
 
-## File: docs/figma/jam/holo.work — estados de presença.jam:Zone.Identifier
+## File: fiap/docs/figma/jam/holo.work — estados de presença.jam:Zone.Identifier
 ````
 [ZoneTransfer]
 ZoneId=3
 HostUrl=about:internet
 ````
 
-## File: docs/figma/jam/holo.work — estados de presença.pdf:Zone.Identifier
+## File: fiap/docs/figma/jam/holo.work — estados de presença.pdf:Zone.Identifier
 ````
 [ZoneTransfer]
 ZoneId=3
 HostUrl=about:internet
 ````
 
-## File: docs/figma/jam/holo.work — estados de presença.png:Zone.Identifier
+## File: fiap/docs/figma/jam/holo.work — estados de presença.png:Zone.Identifier
 ````
 [ZoneTransfer]
 ZoneId=3
 HostUrl=about:internet
 ````
 
-## File: docs/figma/jam/holo.work — fluxo principal.jam:Zone.Identifier
+## File: fiap/docs/figma/jam/holo.work — fluxo principal.jam:Zone.Identifier
 ````
 [ZoneTransfer]
 ZoneId=3
 HostUrl=about:internet
 ````
 
-## File: docs/figma/jam/holo.work — fluxo principal.pdf:Zone.Identifier
+## File: fiap/docs/figma/jam/holo.work — fluxo principal.pdf:Zone.Identifier
 ````
 [ZoneTransfer]
 ZoneId=3
 HostUrl=about:internet
 ````
 
-## File: docs/figma/jam/holo.work — fluxo principal.png:Zone.Identifier
+## File: fiap/docs/figma/jam/holo.work — fluxo principal.png:Zone.Identifier
 ````
 [ZoneTransfer]
 ZoneId=3
 HostUrl=about:internet
 ````
 
-## File: docs/figma/jam/holo.work — ingestão iot.jam:Zone.Identifier
+## File: fiap/docs/figma/jam/holo.work — ingestão iot.jam:Zone.Identifier
 ````
 [ZoneTransfer]
 ZoneId=3
 HostUrl=about:internet
 ````
 
-## File: docs/figma/jam/holo.work — ingestão iot.pdf:Zone.Identifier
+## File: fiap/docs/figma/jam/holo.work — ingestão iot.pdf:Zone.Identifier
 ````
 [ZoneTransfer]
 ZoneId=3
 HostUrl=about:internet
 ````
 
-## File: docs/figma/jam/holo.work — ingestão iot.png:Zone.Identifier
+## File: fiap/docs/figma/jam/holo.work — ingestão iot.png:Zone.Identifier
 ````
 [ZoneTransfer]
 ZoneId=3
 HostUrl=about:internet
 ````
 
-## File: docs/mermaid/agent.mmd
+## File: fiap/docs/mermaid/agent.mmd
 ````
 %% regra do agente — decisão simplificada
 flowchart TD
@@ -311,7 +317,7 @@ flowchart TD
   P -- no --> SX[sem sugestão]
 ````
 
-## File: docs/mermaid/arq.mmd
+## File: fiap/docs/mermaid/arq.mmd
 ````
 %% arquitetura — visão macro
 flowchart LR
@@ -337,7 +343,7 @@ flowchart LR
   IOT -->|X-Device-Secret| B
 ````
 
-## File: docs/mermaid/deploy.mmd
+## File: fiap/docs/mermaid/deploy.mmd
 ````
 %% deploy — visão mínima
 flowchart LR
@@ -350,7 +356,7 @@ flowchart LR
   IOTSIM[iot_sim] --> CF
 ````
 
-## File: docs/mermaid/endpoints.mmd
+## File: fiap/docs/mermaid/endpoints.mmd
 ````
 %% mapa de endpoints — agrupados
 graph TD
@@ -388,7 +394,7 @@ graph TD
   end
 ````
 
-## File: docs/mermaid/erd.mmd
+## File: fiap/docs/mermaid/erd.mmd
 ````
 %% erd — d1/sqlite
 erDiagram
@@ -482,7 +488,7 @@ erDiagram
   USERS ||--o{ SUGGESTIONS : target_optional
 ````
 
-## File: docs/mermaid/flow.mmd
+## File: fiap/docs/mermaid/flow.mmd
 ````
 %% fluxo principal — navegação do usuário
 sequenceDiagram
@@ -516,7 +522,7 @@ sequenceDiagram
   API-->>C: [{kind,text}]
 ````
 
-## File: docs/mermaid/iot.mmd
+## File: fiap/docs/mermaid/iot.mmd
 ````
 %% ingestão iot — validação + persistência
 sequenceDiagram
@@ -533,7 +539,7 @@ sequenceDiagram
   API-->>DEV: 202 accepted
 ````
 
-## File: docs/mermaid/states.mmd
+## File: fiap/docs/mermaid/states.mmd
 ````
 %% estados de presença — client
 stateDiagram-v2
@@ -545,7 +551,50 @@ stateDiagram-v2
   any --> afk: idle timeout
 ````
 
-## File: docs/e2e.sh
+## File: fiap/docs/DEPLOY.md
+````markdown
+# Deploy Guide
+
+## Prereqs
+- Cloudflare account with Workers + D1 + KV enabled
+- `wrangler` (v4+) installed locally
+- D1 + KV resources already created (see `worker/wrangler.toml` bindings)
+
+## Steps
+1. **Secrets**
+   ```bash
+   npx wrangler secret put JWT_SECRET --config worker/wrangler.toml
+   npx wrangler secret put PEPPER --config worker/wrangler.toml
+   # optional
+   npx wrangler secret put ZAI_API_KEY --config worker/wrangler.toml
+   ```
+2. **Database schema + seed**
+   ```bash
+   npx wrangler d1 execute holo_work --config worker/wrangler.toml --file=sql/schema.sql --remote
+   npx wrangler d1 execute holo_work --config worker/wrangler.toml --file=sql/seed.sql --remote
+   ```
+3. **Publish Worker**
+   ```bash
+   npx wrangler deploy --config worker/wrangler.toml
+   ```
+4. **Static UI**
+   - Option A (Pages): deploy `ui/` as a Pages project; set API origin to the Worker subdomain and ensure CORS (already `*`).
+   - Option B (Worker): serve `ui` via Wrangler Assets or add a static handler to `worker/src/index.ts`.
+5. **Smoke tests**
+   ```bash
+   curl https://<worker-domain>/health
+   curl https://<worker-domain>/api/rooms
+   ```
+6. **IoT simulator (prod)**
+   ```bash
+   INGEST_URL="https://<worker-domain>/api/iot/ingest" \
+   DEVICE_ID="device-holo-01" \
+   DEVICE_SECRET="DEVSECRET123" \
+   python3 scripts/iot_sim.py
+   ```
+````
+
+## File: fiap/docs/e2e.sh
 ````bash
 set -euo pipefail
 BASE_URL=${BASE_URL:-"http://127.0.0.1:8787"}
@@ -581,7 +630,7 @@ log "# fetch suggestions"
 curl -sS "$BASE_URL/api/rooms/$ROOM/suggestions" -H "authorization: Bearer $JWT" | tee -a "$EVIDENCES_FILE"
 ````
 
-## File: docs/ENV.md
+## File: fiap/docs/ENV.md
 ````markdown
 # Environment Checklist
 
@@ -604,7 +653,7 @@ curl -sS "$BASE_URL/api/rooms/$ROOM/suggestions" -H "authorization: Bearer $JWT"
 - Use `wrangler secret put ... --config worker/wrangler.toml` per `docs/DEPLOY.md`.
 ````
 
-## File: docs/FIAP_PACKAGE.md
+## File: fiap/docs/FIAP_PACKAGE.md
 ````markdown
 # FIAP Package Checklist
 
@@ -629,7 +678,7 @@ curl -sS "$BASE_URL/api/rooms/$ROOM/suggestions" -H "authorization: Bearer $JWT"
    - TXT with RM/Name/Pitch
 ````
 
-## File: docs/pitch-script.md
+## File: fiap/docs/pitch-script.md
 ````markdown
 # Pitch Script (3 min)
 
@@ -640,7 +689,7 @@ curl -sS "$BASE_URL/api/rooms/$ROOM/suggestions" -H "authorization: Bearer $JWT"
 - **2:45–3:00 CTA**: convite para piloto + próximos passos (AI assets, FIAP requirements).
 ````
 
-## File: docs/PRD.md
+## File: fiap/docs/PRD.md
 ````markdown
 # prd.md — holo.work (v1)
 
@@ -866,7 +915,78 @@ jwt no header Authorization. rate-limit por ip em kv. argon2id para hash.
 ---
 ````
 
-## File: scripts/iot_sim.py
+## File: fiap/docs/todo.md
+````markdown
+# Execução v1 Checklist
+
+## 0. Repo hygiene
+- [x] Create repo `holo.work` with `/worker`, `/ui`, `/sql`, `/scripts`, `/docs` scaffolding.
+- [x] Add MIT `LICENSE`, succinct `README`, project `.gitignore`, and `.editorconfig` with LF/ts defaults.
+
+## 1. Infra
+- [x] Author `wrangler.toml` (main entry, compatibility date, bindings for DB/KV) per AGENTS spec.
+- [x] Run `wrangler d1 create holo_work` and `wrangler kv namespace create KV`, capture IDs into config.
+
+
+## 2. Database
+- [x] Apply `/sql/schema.sql` via `wrangler d1 execute`.
+- [x] Create `/sql/seed.sql` with admin user (`admin@holo.work` / "admin" dev pw), two rooms, one device + shared secret.
+
+## 3. Auth
+- [ ] Implement Argon2id hash/verify with `PEPPER` (currently using PBKDF2-SHA256 as a temporary fallback while we wire deterministic WASM support), short helper tests.
+- [x] Implement JWT issue/verify (15 min TTL) + middleware.
+- [x] Ship `/auth/register`, `/auth/login`, `/auth/me` routes with validation + rate-limit hooks.
+
+## 4. Rooms/Core
+- [x] CRUD for rooms (admin create, anyone list/join) with ownership guard.
+- [x] Chat: GET last N messages + POST with html-escape + basic flood control.
+- [x] Tasks: GET/POST/PUT with assignee + status tracking.
+- [x] Check-ins: POST mood/energy/status slider payload + GET last 30 min per room.
+
+## 5. IoT
+- [x] Admin POST to issue device id + secret (persist hashed secret) and list existing devices.
+- [x] `/iot/ingest` POST verifying `X-Device-Secret`, storing readings (temp/noise/lux) keyed by room, limited to 15 min retention.
+- [x] `/rooms/:id/readings` GET returning sliding-window telemetry.
+
+## 6. Agent
+- [x] Implement `computeSuggestions(room_id)` per spec (15 min readings + 30 min check-ins, dedupe within 10 min window, idempotent insert).
+- [x] Expose suggestions GET route and ensure ingest/check-in paths trigger compute when new data arrives.
+
+## 7. UI
+- [x] `index.html`: login form → fetch auth → store JWT in memory + `sessionStorage`.
+- [x] `room.html`: 16x16 grid map + presence dots, tabs para chat/tasks/ambiente/sugestões, check-in slider + status select.
+- [x] `admin.html`: `?local=1` guard, forms p/ criar rooms/devices + lista de secrets (local only).
+- [x] Shared ES modules (API client/state) + CSS utilitário leve (sem frameworks).
+
+## 8. Scripts
+- [x] `scripts/iot_sim.py` using stdlib `urllib` to read `INGEST_URL`, `DEVICE_ID`, `DEVICE_SECRET`, and send payload every 5 s (temp 20-32 °C etc.).
+
+## 9. Security
+- [x] Central JSON validator + body size cap, sanitize chat HTML, enforce 60 rpm/IP via KV counter.
+- [x] Ensure secrets never logged; use environment vars `JWT_SECRET`, `PEPPER`, optional `ZAI_API_KEY` stub (ver README + `docs/ENV.md`, `.dev.vars` para dev).
+
+## 10. Tests & Evidence
+- [x] Unit tests for hash/verify and `computeSuggestions` helpers.
+- [x] `./docs/e2e.sh` curl flow: register → login → create room → post message → ingest → read suggestions; script grava em `./docs/evidencias.txt`.
+
+## 11. Deploy
+- [x] `wrangler publish` playbook em `docs/DEPLOY.md` (bindings, secrets, schema, smoke). `wrangler dev` validado local.
+- [x] Serve `/ui` via Pages ou worker assets (detalhado em README/DEPLOY).
+
+## 12. Fiap package
+- [x] Checklist em `docs/FIAP_PACKAGE.md` (zip, PDF mapping, TXT com RM/nome/pitch-link).
+
+## 13. Pitch script
+- [x] Roteiro (`docs/pitch-script.md`) cobre problema/demo/arquitetura/ODS/CTA.
+
+## 14. Env checklist
+- [x] `docs/ENV.md` + README explicam secrets (`JWT_SECRET`, `PEPPER`, `ZAI_API_KEY` opcional) e uso de `.dev.vars`.
+
+## 15. Definition of Done
+- [x] Local demo + IoT sim verificados; docs de deploy/tests/pacote asseguram handoff cloud + zip.
+````
+
+## File: fiap/scripts/iot_sim.py
 ````python
 from __future__ import annotations
 import json
@@ -908,7 +1028,7 @@ while True:
   time.sleep(5)
 ````
 
-## File: sql/schema.sql
+## File: fiap/sql/schema.sql
 ````sql
 PRAGMA foreign_keys = ON;
 CREATE TABLE IF NOT EXISTS users (
@@ -1009,7 +1129,221 @@ CREATE TABLE IF NOT EXISTS events (
 );
 ````
 
-## File: ui/js/admin.js
+## File: fiap/sql/seed.sql
+````sql
+PRAGMA foreign_keys = OFF;
+DELETE FROM users;
+DELETE FROM rooms;
+DELETE FROM room_members;
+DELETE FROM messages;
+DELETE FROM tasks;
+DELETE FROM checkins;
+DELETE FROM devices;
+DELETE FROM readings;
+DELETE FROM suggestions;
+DELETE FROM events;
+INSERT INTO users (id, email, pass_hash, role, created_at)
+VALUES ('user-admin', 'admin@holo.work', 'pbkdf2$200000$kutwS1jQDWsYX0xQex7HSQ==$eMuaYN6F3q9ZAUVDt4U2JBDD7SxXkgkVlrJ12jFckO0=', 'admin', strftime('%s','now')*1000);
+INSERT INTO rooms (id, name, slug, map_seed, created_at)
+VALUES
+  ('room-holo', 'Holo Hub', 'holo-hub', 'grid:16x16:hub', strftime('%s','now')*1000),
+  ('room-lab', 'Lab Norte', 'lab-norte', 'grid:16x16:lab', strftime('%s','now')*1000);
+INSERT INTO room_members (user_id, room_id, joined_at) VALUES
+  ('user-admin', 'room-holo', strftime('%s','now')*1000),
+  ('user-admin', 'room-lab', strftime('%s','now')*1000);
+INSERT INTO devices (id, room_id, name, kind, secret_hash, created_at)
+VALUES ('device-holo-01', 'room-holo', 'Env Beacon 01', 'environment', '92ae2a030fb7b169cf2612db1e8a4819fb03b9356f714be39c2a4ffe2d127f71', strftime('%s','now')*1000);
+````
+
+## File: fiap/ui/css/style.css
+````css
+:root {
+  --bg: #0b0b0c;
+  --bg-1: #111114;
+  --bg-2: #17171b;
+  --fg: #e8e8ef;
+  --fg-muted: #b4b4c3;
+  --muted: #7d7d8c;
+  --border: #2a2a33;
+  --plum-core: #422d41;
+  --accent: #22e3b3;
+  --accent-2: #7aa2ff;
+  --accent-3: #b58cff;
+  --ring: color-mix(in oklab, var(--accent) 20%, transparent);
+  --grid-line: color-mix(in oklab, var(--accent-2) 18%, transparent);
+  --card-bg: #1a1a21;
+  --panel-bg: #15151a;
+  --elev: 0 20px 45px rgba(0,0,0,.45), 0 0 0 1px var(--border);
+  --success: #30e39a;
+  --warning: #f6c56a;
+  --danger:  #ff6b7a;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--fg);
+  background:
+    radial-gradient(1200px 600px at 50% -10%, var(--plum-core) 0%, transparent 60%),
+    radial-gradient(1000px 800px at 120% 0%, #13212a 0%, transparent 50%),
+    var(--bg);
+  background-color: var(--bg);
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+a {
+  color: var(--accent-2);
+  text-decoration: none;
+  transition: color .15s ease, opacity .15s ease;
+}
+a:hover { color: var(--accent); }
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+.card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  box-shadow: var(--elev);
+  padding: 2rem;
+}
+button, input, select, textarea {
+  font: inherit;
+  padding: 0.65rem 0.85rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--panel-bg);
+  color: var(--fg);
+  outline: none;
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease, background .15s ease;
+}
+input:focus, select:focus, textarea:focus { box-shadow: 0 0 0 3px var(--ring); border-color: var(--accent-2); }
+button {
+  background: linear-gradient(180deg, color-mix(in oklab, var(--accent) 92%, #0a0a0a) 0%, var(--accent) 100%);
+  color: #0b0b0c;
+  border: none;
+  cursor: pointer;
+}
+button:hover { transform: translateY(-1px); box-shadow: 0 10px 28px color-mix(in oklab, var(--accent) 35%, transparent); }
+button:active { transform: translateY(0); }
+.login-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+}
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  color: var(--fg-muted);
+}
+.tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.tabs button {
+  flex: 1;
+  background: var(--panel-bg);
+  color: var(--muted);
+  border: 1px solid var(--border);
+}
+.tabs button.active {
+  background: linear-gradient(180deg, color-mix(in oklab, var(--accent-2) 85%, #0a0a0a) 0%, var(--accent-2) 100%);
+  color: #0b0b0c;
+}
+.panel { display: none; }
+.panel.active { display: block; }
+.room-layout {
+  display: grid;
+  gap: 1.5rem;
+}
+.map-card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  padding: 1rem;
+  min-height: 500px;
+}
+#roomGrid {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+  background:
+    repeating-linear-gradient(90deg, var(--grid-line) 0, var(--grid-line) 1px, transparent 1px, transparent calc(100% / 16)),
+    repeating-linear-gradient(0deg, var(--grid-line) 0, var(--grid-line) 1px, transparent 1px, transparent calc(100% / 16));
+}
+.presence-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+.presence-dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: color-mix(in oklab, var(--accent-2) 18%, transparent);
+  color: var(--accent-2);
+  font-weight: 600;
+  border: 1px solid var(--border);
+}
+.chat-list, .task-list, .suggestion-list, .metric-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-height: 320px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+.message {
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: color-mix(in oklab, #ffffff 3%, var(--card-bg));
+}
+.metric-card {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: color-mix(in oklab, var(--accent-3) 8%, transparent);
+}
+.admin-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 1.5rem;
+}
+.notice {
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid color-mix(in oklab, var(--warning) 45%, var(--border));
+  background: color-mix(in oklab, var(--warning) 12%, var(--panel-bg));
+  color: color-mix(in oklab, var(--warning) 90%, #000);
+}
+hr {
+  border: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+  margin: 1.25rem 0;
+}
+.small { color: var(--fg-muted); font-size: .9rem; }
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+````
+
+## File: fiap/ui/js/admin.js
 ````javascript
 import { apiFetch, ensureAuth } from './api.js';
 const allowed = new URLSearchParams(window.location.search).get('local') === '1';
@@ -1084,7 +1418,73 @@ async function loadDevices() {
 }
 ````
 
-## File: ui/js/config.js
+## File: fiap/ui/js/api.js
+````javascript
+const TOKEN_KEY = 'holo_jwt';
+let memoryToken = null;
+const getAPIBase = () => window.__CONFIG__?.API_BASE || 'https://holo-work.dbarcelloz.workers.dev'
+export function getToken() {
+  if (memoryToken) return memoryToken;
+  memoryToken = sessionStorage.getItem(TOKEN_KEY);
+  return memoryToken;
+}
+export function setToken(token) {
+  memoryToken = token;
+  if (token) {
+    sessionStorage.setItem(TOKEN_KEY, token);
+  } else {
+    sessionStorage.removeItem(TOKEN_KEY);
+  }
+}
+export function ensureAuth() {
+  if (!getToken()) {
+    window.location.href = 'index.html';
+  }
+}
+export async function apiFetch(path, options = {}) {
+  const headers = new Headers(options.headers || {});
+  const token = getToken();
+  if (token) {
+    headers.set('authorization', `Bearer ${token}`);
+  }
+  if (options.body && !headers.has('content-type')) {
+    headers.set('content-type', 'application/json');
+  }
+  const url = buildUrl(path);
+  const response = await fetch(url, { ...options, headers });
+  if (response.status === 401) {
+    setToken(null);
+    window.location.href = 'index.html';
+    return null;
+  }
+  if (!response.ok) {
+    let details;
+    try {
+      details = await response.json();
+    } catch (err) {
+      details = { error: response.statusText };
+    }
+    throw new Error(details.error || 'Request failed');
+  }
+  if (response.status === 204) return null;
+  return response.json();
+}
+function buildUrl(path) {
+  if (path.startsWith('http')) return path;
+  const base = getAPIBase()
+  if (!base) return path;
+  if (path.startsWith('/')) {
+    return `${base}${path}`;
+  }
+  return `${base}/${path}`;
+}
+export function formToJSON(form) {
+  const data = new FormData(form);
+  return Object.fromEntries(data.entries());
+}
+````
+
+## File: fiap/ui/js/config.js
 ````javascript
 (function(){
   const h = location.hostname
@@ -1102,7 +1502,7 @@ async function loadDevices() {
 })()
 ````
 
-## File: ui/js/index.js
+## File: fiap/ui/js/index.js
 ````javascript
 import { apiFetch, setToken } from './api.js';
 const loginForm = document.querySelector('#loginForm');
@@ -1138,7 +1538,7 @@ async function authRequest(path, payload) {
 }
 ````
 
-## File: ui/js/room.js
+## File: fiap/ui/js/room.js
 ````javascript
 import { apiFetch, ensureAuth, setToken } from './api.js';
 const state = {
@@ -1401,7 +1801,198 @@ function setupTabs() {
 }
 ````
 
-## File: worker/src/access.ts
+## File: fiap/ui/admin.html
+````html
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>holo.work — admin local</title>
+    <link rel="stylesheet" href="./css/style.css" />
+    <script src="./js/config.js"></script>
+  </head>
+  <body>
+    <main>
+      <section class="card" style="margin-bottom:1.5rem;">
+        <h1>Admin local</h1>
+        <p id="gateNotice">Carregando...</p>
+        <button id="backBtn" style="background:#94a3b8;">Voltar</button>
+      </section>
+      <section class="admin-grid">
+        <form id="roomAdminForm" class="card">
+          <h3>Nova sala</h3>
+          <div class="input-group">
+            <label>Nome</label>
+            <input type="text" name="name" placeholder="Focus Lab" required />
+          </div>
+          <div class="input-group">
+            <label>Map seed</label>
+            <input type="text" name="map_seed" placeholder="grid:16x16:lab" />
+          </div>
+          <button type="submit">Criar sala</button>
+        </form>
+        <form id="deviceForm" class="card">
+          <h3>Emitir device</h3>
+          <div class="input-group">
+            <label>Sala</label>
+            <select name="room_id" id="deviceRoom"></select>
+          </div>
+          <div class="input-group">
+            <label>Nome</label>
+            <input type="text" name="name" placeholder="Beacon 01" required />
+          </div>
+          <button type="submit">Gerar device</button>
+          <p id="secretBox" style="margin-top:1rem; color:var(--accent);"></p>
+        </form>
+        <div class="card">
+          <h3>Devices ativos</h3>
+          <div id="deviceList" class="task-list"></div>
+        </div>
+      </section>
+    </main>
+    <script type="module" src="./js/admin.js"></script>
+  </body>
+</html>
+````
+
+## File: fiap/ui/index.html
+````html
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>holo.work — login</title>
+    <link rel="stylesheet" href="./css/style.css" />
+    <script src="./js/config.js"></script>
+  </head>
+  <body>
+    <main>
+      <section class="card">
+        <h1>holo.work</h1>
+        <p>Hub híbrido com presença, chat, tasks, IoT e agente que cuida do ritmo.</p>
+        <div class="login-grid">
+          <form id="loginForm">
+            <div class="input-group">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="dev@holo.work" required />
+            </div>
+            <div class="input-group">
+              <label for="password">Senha</label>
+              <input id="password" name="password" type="password" placeholder="••••••" required />
+            </div>
+            <div style="display:flex; gap:0.75rem; margin-top:1rem;">
+              <button type="submit" style="flex:1;">Entrar</button>
+              <button type="button" id="registerBtn" style="flex:1; background:#0ea5e9;">Registrar</button>
+            </div>
+            <p class="notice" style="margin-top:1rem;">
+              Use admin@holo.work / admin (PEPPER=dev-pepper) para seed local.
+            </p>
+          </form>
+          <div>
+            <h3>Como funciona?</h3>
+            <p>
+              1) Faz login → 2) Escolhe sala → 3) Marca presença, conversa e acompanha tarefas.
+              O simulador IoT injeta temperatura, ruído e luz; o agente sugere pausas, pairing e ajustes.
+            </p>
+            <p>
+              Depois de logar, compartilhe o token entre abas (sessionStorage). Para sair, limpe o token em
+              <code>sessionStorage</code> ou clique em "sair" no header da sala.
+            </p>
+          </div>
+        </div>
+        <p id="status" style="margin-top:1rem; color:var(--accent);"></p>
+      </section>
+    </main>
+    <script type="module" src="./js/index.js"></script>
+  </body>
+</html>
+````
+
+## File: fiap/ui/room.html
+````html
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>holo.work — sala</title>
+    <link rel="stylesheet" href="./css/style.css" />
+    <script src="./js/config.js"></script>
+  </head>
+  <body>
+    <main>
+      <section class="card" style="margin-bottom:1.5rem;">
+        <header style="display:flex; gap:1rem; align-items:center;">
+          <h2 style="flex:1;">Sala</h2>
+          <select id="roomSelect" style="flex:2;"></select>
+          <button id="logoutBtn" style="background:#f43f5e;">Sair</button>
+        </header>
+        <form id="checkinForm" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:1rem; margin-top:1rem;">
+          <div class="input-group">
+            <label>Mood</label>
+            <input type="range" min="1" max="5" step="1" name="mood" value="3" />
+          </div>
+          <div class="input-group">
+            <label>Energia</label>
+            <input type="range" min="1" max="5" step="1" name="energy" value="3" />
+          </div>
+          <div class="input-group">
+            <label>Status</label>
+            <select name="status">
+              <option value="focus">Focus</option>
+              <option value="solo">Solo</option>
+              <option value="pair">Pair</option>
+              <option value="afk">AFK</option>
+            </select>
+          </div>
+          <button type="submit">Check-in</button>
+        </form>
+        <p id="roomStatus" style="margin-top:0.75rem; color:var(--muted);"></p>
+      </section>
+      <section class="room-layout">
+        <div class="map-card">
+          <canvas id="roomGrid"></canvas>
+          <h4 style="margin-top:1rem;">Presenças recentes</h4>
+          <div id="presenceList" class="presence-list"></div>
+        </div>
+        <div class="card">
+          <div class="tabs">
+            <button data-tab="chat" class="active">Chat</button>
+            <button data-tab="tasks">Tasks</button>
+            <button data-tab="ambiente">Ambiente</button>
+            <button data-tab="sugestoes">Sugestões</button>
+          </div>
+          <div id="chat" class="panel active">
+            <div id="chatList" class="chat-list"></div>
+            <form id="messageForm" style="margin-top:1rem; display:flex; gap:0.5rem;">
+              <input id="messageBody" type="text" placeholder="Compartilhe algo" required style="flex:1;" />
+              <button type="submit">Enviar</button>
+            </form>
+          </div>
+          <div id="tasks" class="panel">
+            <div id="tasksList" class="task-list"></div>
+            <form id="taskForm" style="margin-top:1rem; display:flex; gap:0.5rem;">
+              <input name="title" type="text" placeholder="Nova task" required style="flex:1;" />
+              <button type="submit">Adicionar</button>
+            </form>
+          </div>
+          <div id="ambiente" class="panel">
+            <div id="metricList" class="metric-list"></div>
+          </div>
+          <div id="sugestoes" class="panel">
+            <div id="suggestionList" class="suggestion-list"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script type="module" src="./js/room.js"></script>
+  </body>
+</html>
+````
+
+## File: fiap/worker/src/access.ts
 ````typescript
 import { Env } from './types';
 import { ensure } from './utils';
@@ -1419,7 +2010,7 @@ export async function requireRoomMembership(env: Env, roomKey: string, userId: s
 }
 ````
 
-## File: worker/src/agent.ts
+## File: fiap/worker/src/agent.ts
 ````typescript
 import { HandlerContext, Env } from './types';
 import { all, first, run } from './db';
@@ -1517,7 +2108,370 @@ export async function handleGetSuggestions(ctx: HandlerContext): Promise<Respons
 }
 ````
 
-## File: worker/src/db.ts
+## File: fiap/worker/src/assets.ts
+````typescript
+import type { HandlerContext } from './types'
+const toAB = (u8: Uint8Array): ArrayBuffer => {
+  const ab = new ArrayBuffer(u8.byteLength)
+  new Uint8Array(ab).set(u8)
+  return ab
+}
+const crc32 = (bytes: Uint8Array) => {
+  let c = ~0 >>> 0
+  for (let i = 0; i < bytes.length; i++) {
+    c ^= bytes[i]
+    for (let k = 0; k < 8; k++) c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) >>> 0 : (c >>> 1) >>> 0
+  }
+  return (~c) >>> 0
+}
+const u32 = (v: number) => new Uint8Array([ (v>>>24)&255, (v>>>16)&255, (v>>>8)&255, v&255 ])
+const chunk = (type: string, data: Uint8Array) => {
+  const out = new Uint8Array(8 + 4 + data.length + 4)
+  out.set(u32(data.length), 0)
+  out.set(new TextEncoder().encode(type), 4)
+  out.set(data, 8)
+  out.set(u32(crc32(out.subarray(4, 8 + data.length))), 8 + data.length)
+  return out
+}
+async function deflate(raw: Uint8Array) {
+  const cs = new CompressionStream('deflate')
+  const ab = toAB(raw)
+  const s = new Blob([ab]).stream().pipeThrough(cs)
+  const out = new Uint8Array(await new Response(s).arrayBuffer())
+  return out
+}
+async function encodePNG(rgba: Uint8ClampedArray, w: number, h: number): Promise<Uint8Array> {
+  const scan = new Uint8Array((w*4 + 1) * h)
+  for (let y=0; y<h; y++){
+    scan[(w*4+1)*y] = 0
+    scan.set(rgba.subarray(y*w*4, (y+1)*w*4), (w*4+1)*y + 1)
+  }
+  const sig = new Uint8Array([137,80,78,71,13,10,26,10])
+  const ihdr = new Uint8Array(13)
+  ihdr.set(u32(w), 0)
+  ihdr.set(u32(h), 4)
+  ihdr[8] = 8
+  ihdr[9] = 6
+  ihdr[10] = 0
+  ihdr[11] = 0
+  ihdr[12] = 0
+  const idat = await deflate(scan)
+  const iend = new Uint8Array(0)
+  const parts = [sig, chunk('IHDR', ihdr), chunk('IDAT', idat), chunk('IEND', iend)]
+  const total = parts.reduce((n,p)=>n+p.length,0)
+  const png = new Uint8Array(total)
+  let off=0; for (const p of parts){ png.set(p, off); off+=p.length }
+  return png
+}
+export async function handleAvatar({ request, env }: HandlerContext): Promise<Response> {
+  const u = new URL(request.url)
+  const seed = u.searchParams.get('seed') || 'anon'
+  const s = Math.min(parseInt(u.searchParams.get('s')||'128',10), 512)
+  const key = `asset:avatar:${seed}:${s}`
+  const hit = await env.KV.get(key, 'arrayBuffer')
+  if (hit) return new Response(hit, { headers:{'content-type':'image/png','cache-control':'public, max-age=2592000'} })
+  const b = new TextEncoder().encode(seed)
+  let h = 2166136261 >>> 0; for (const x of b){ h ^= x; h = (h>>>0)*16777619>>>0 }
+  const fg = [h&255, (h>>>8)&255, (h>>>16)&255, 255]
+  const bg = [0,0,0,0]
+  const px = 5, scale = Math.max(1, Math.floor(s/px))
+  const w = px*scale, hh = px*scale
+  const buf = new Uint8ClampedArray(w*hh*4)
+  for (let y=0;y<px;y++){
+    for (let x=0;x<px;x++){
+      const on = (((h>>>((x%4)*3)) & 7) > 2)
+      const xx = x<=2? x : 4-x
+      for (let yy=0; yy<scale; yy++){
+        for (let xx2=0; xx2<scale; xx2++){
+          const i = ((y*scale+yy)*w + (xx*scale+xx2))*4
+          const col = on ? fg : bg
+          buf[i]=col[0]; buf[i+1]=col[1]; buf[i+2]=col[2]; buf[i+3]=col[3]
+        }
+      }
+    }
+  }
+  const png = await encodePNG(buf, w, hh)
+  const pngAb = toAB(png)
+  await env.KV.put(key, pngAb, { expirationTtl: 60*60*24*30 })
+  return new Response(pngAb, { headers: { 'content-type': 'image/png' } })
+}
+export const handleTile = async ({ request, env }: HandlerContext) => {
+  const u = new URL(request.url)
+  const seed = u.searchParams.get('seed') || 'default'
+  const s = Math.min(parseInt(u.searchParams.get('s')||'64',10), 256)
+  const key = `asset:tile:${seed}:${s}`
+  const cached = await env.KV.get(key, 'arrayBuffer')
+  if (cached) return new Response(cached, { headers:{'content-type':'image/png','cache-control':'public, max-age=2592000'} })
+  const te = new TextEncoder()
+  const bytes = te.encode(seed)
+  let h = 2166136261 >>> 0
+  for (const b of bytes) { h ^= b; h = Math.imul(h, 16777619) >>> 0 }
+  const grid = Array.from({length:64}, (_,i)=> ((h>>((i%6))) & 7) > 3)
+  const fg = [h&255, (h>>8)&255, (h>>16)&255, 255]
+  const bg = [255, 255, 255, 255]
+  const px = 8, scale = Math.max(1, Math.floor(s/px))
+  const w = px*scale, hgt = px*scale
+  const buf = new Uint8ClampedArray(w*hgt*4)
+  for (let y=0;y<px;y++){
+    for (let x=0;x<px;x++){
+      const col = grid[y*8 + x] ? fg : bg
+      for (let yy=0; yy<scale; yy++){
+        for (let xx2=0; xx2<scale; xx2++){
+          const i = ((y*scale+yy)*w + (x*scale+xx2))*4
+          buf[i]=col[0]; buf[i+1]=col[1]; buf[i+2]=col[2]; buf[i+3]=col[3]
+        }
+      }
+    }
+  }
+  const png = await encodePNG(buf, w, hgt)
+  const ab = toAB(png)
+  await env.KV.put(key, ab, { expirationTtl: 60*60*24*30 })
+  return new Response(ab, { headers:{'content-type':'image/png'} })
+}
+export const handleAtlas = async ({ request, env }: HandlerContext) => {
+  const u = new URL(request.url)
+  const seeds = (u.searchParams.get('seeds') || 'a,b,c,d').split(',').slice(0, 16)
+  const s = Math.min(parseInt(u.searchParams.get('s')||'64',10), 256)
+  const key = `asset:atlas:${seeds.join('-')}:${s}`
+  const cached = await env.KV.get(key, 'arrayBuffer')
+  if (cached) return new Response(cached, { headers:{'content-type':'image/png','cache-control':'public, max-age=2592000'} })
+  const cols = Math.ceil(Math.sqrt(seeds.length))
+  const rows = Math.ceil(seeds.length / cols)
+  const tileSize = Math.max(1, Math.floor(s / cols))
+  const w = cols * tileSize
+  const hgt = rows * tileSize
+  const buf = new Uint8ClampedArray(w*hgt*4)
+  for (let idx = 0; idx < seeds.length; idx++) {
+    const seed = seeds[idx]
+    const te = new TextEncoder()
+    const bytes = te.encode(seed)
+    let h = 2166136261 >>> 0
+    for (const b of bytes) { h ^= b; h = Math.imul(h, 16777619) >>> 0 }
+    const row = Math.floor(idx / cols)
+    const col = idx % cols
+    const baseX = col * tileSize
+    const baseY = row * tileSize
+    const fg = [h&255, (h>>8)&255, (h>>16)&255, 255]
+    const bg = [0,0,0,0]
+    for (let y=0;y<5;y++){
+      for (let x=0;x<5;x++){
+        const xx = x<=2? x : 4-x
+        const on = (((h>>>((x%4)*3)) & 7) > 2)
+        const col_color = on ? fg : bg
+        const scaleFactor = Math.max(1, tileSize / 5)
+        for (let yy=0; yy<scaleFactor; yy++){
+          for (let xx2=0; xx2<scaleFactor; xx2++){
+            const px = baseX + (xx*scaleFactor + xx2)
+            const py = baseY + (y*scaleFactor + yy)
+            if (px < w && py < hgt) {
+              const i = (py*w + px)*4
+              buf[i]=col_color[0]; buf[i+1]=col_color[1]; buf[i+2]=col_color[2]; buf[i+3]=col_color[3]
+            }
+          }
+        }
+      }
+    }
+  }
+  const png = await encodePNG(buf, w, hgt)
+  const ab = toAB(png)
+  await env.KV.put(key, ab, { expirationTtl: 60*60*24*30 })
+  return new Response(ab, { headers:{'content-type':'image/png'} })
+}
+````
+
+## File: fiap/worker/src/auth.ts
+````typescript
+import { HandlerContext, AuthUser, Env } from './types';
+import {
+  readJson,
+  jsonResponse,
+  HttpError,
+  ensure,
+  encodeText,
+  base64UrlEncode,
+  decodeBase64Url,
+  getUserRecord,
+  toBase64,
+  fromBase64,
+  timingSafeEqual,
+} from './utils';
+import { first } from './db';
+const SALT_LENGTH = 16;
+const PBKDF2_ITERATIONS = 200000;
+const PBKDF2_LENGTH = 32;
+const textEncoder = new TextEncoder();
+interface JwtPayload {
+  sub: string;
+  email: string;
+  role: 'user' | 'admin';
+  exp: number;
+  iat: number;
+}
+export async function hashPassword(password: string, pepper: string): Promise<string> {
+  const combined = password + pepper;
+  const bytes = encodeText(combined);
+  const ab = toArrayBuffer(bytes);
+  const digest = await crypto.subtle.digest('SHA-256', ab);
+  const hash = toBase64(new Uint8Array(digest));
+  return `sha256:${hash}`;
+}
+export async function verifyPassword(password: string, pepper: string, hash: string): Promise<boolean> {
+  if (hash.startsWith('sha256:')) {
+    const stored = hash.slice(7);
+    const combined = password + pepper;
+    const bytes = encodeText(combined);
+    const ab = toArrayBuffer(bytes);
+    const digest = await crypto.subtle.digest('SHA-256', ab);
+    const computed = toBase64(new Uint8Array(digest));
+    return computed === stored;
+  }
+  const parts = hash.split('$');
+  if (parts.length !== 4 || parts[0] !== 'pbkdf2') {
+    return false;
+  }
+  const iterations = Number(parts[1]);
+  if (!Number.isSafeInteger(iterations) || iterations <= 0) {
+    return false;
+  }
+  const salt = fromBase64(parts[2]);
+  const expected = fromBase64(parts[3]);
+  const actual = await deriveKey(password, pepper, salt, iterations);
+  return timingSafeEqual(actual, expected);
+}
+export async function handleRegister(ctx: HandlerContext): Promise<Response> {
+  try {
+    const body = await readJson<{ email?: string; password?: string }>(ctx.request);
+    const email = body.email?.trim().toLowerCase();
+    const password = body.password?.trim();
+    ensure(email && email.includes('@'), 400, 'Valid email required');
+    ensure(password && password.length >= 6, 400, 'Password must be at least 6 chars');
+    const existing = await first<{ id: string }>(ctx.env.DB, 'SELECT id FROM users WHERE email = ?', [email]);
+    ensure(!existing, 409, 'Email already registered');
+    const id = crypto.randomUUID();
+    const passHash = await hashPassword(password!, ctx.env.PEPPER);
+    const createdAt = Date.now();
+    await ctx.env.DB
+      .prepare('INSERT INTO users (id, email, pass_hash, role, created_at) VALUES (?, ?, ?, ?, ?)')
+      .bind(id, email, passHash, 'user', createdAt)
+      .run();
+    const user: AuthUser = { id, email, role: 'user' };
+    const jwt = await issueJwt(user, ctx.env);
+    return jsonResponse({ user, jwt });
+  } catch (err) {
+    console.error('[register]', err);
+    throw err;
+  }
+}
+export async function handleLogin(ctx: HandlerContext): Promise<Response> {
+  try {
+    const body = await readJson<{ email?: string; password?: string }>(ctx.request);
+    const email = body.email?.trim().toLowerCase();
+    const password = body.password?.trim();
+    ensure(email && password, 400, 'Email and password required');
+    const record = await first<{ id: string; email: string; role: 'user' | 'admin'; pass_hash: string }>(
+      ctx.env.DB,
+      'SELECT id, email, role, pass_hash FROM users WHERE email = ?',
+      [email]
+    );
+    ensure(record, 401, 'Invalid credentials');
+    const valid = await verifyPassword(password!, ctx.env.PEPPER, record!.pass_hash);
+    ensure(valid, 401, 'Invalid credentials');
+    const user: AuthUser = { id: record!.id, email: record!.email, role: record!.role };
+    const jwt = await issueJwt(user, ctx.env);
+    return jsonResponse({ user, jwt });
+  } catch (err) {
+    console.error('[login]', err);
+    throw err;
+  }
+}
+export async function handleMe(ctx: HandlerContext): Promise<Response> {
+  ensure(ctx.user, 401, 'Unauthorized');
+  const dbUser = await getUserRecord(ctx.env, ctx.user!.id);
+  ensure(dbUser, 401, 'User not found');
+  return jsonResponse({ user: { id: dbUser!.id, email: dbUser!.email, role: dbUser!.role } });
+}
+export async function authenticateRequest(request: Request, env: Env): Promise<AuthUser | null> {
+  const authHeader = request.headers.get('authorization');
+  if (!authHeader) {
+    return null;
+  }
+  const [, token] = authHeader.split(' ');
+  if (!token) return null;
+  const payload = await verifyJwt(token, env.JWT_SECRET);
+  if (!payload) return null;
+  return { id: payload.sub, email: payload.email, role: payload.role };
+}
+async function issueJwt(user: AuthUser, env: Env): Promise<string> {
+  const ttl = Number(env.JWT_TTL_MINUTES ?? '15');
+  const now = Math.floor(Date.now() / 1000);
+  const payload: JwtPayload = {
+    sub: user.id,
+    email: user.email,
+    role: user.role,
+    iat: now,
+    exp: now + ttl * 60,
+  };
+  return signJwt(payload, env.JWT_SECRET);
+}
+async function signJwt(payload: JwtPayload, secret: string): Promise<string> {
+  const header = { alg: 'HS256', typ: 'JWT' };
+  const headerBytes = encodeText(JSON.stringify(header));
+  const payloadBytes = encodeText(JSON.stringify(payload));
+  const encodedHeader = base64UrlEncode(headerBytes);
+  const encodedPayload = base64UrlEncode(payloadBytes);
+  const data = `${encodedHeader}.${encodedPayload}`;
+  const keyBuffer = toArrayBuffer(encodeText(secret));
+  const key = await crypto.subtle.importKey('raw', keyBuffer, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+  const dataBuffer = toArrayBuffer(encodeText(data));
+  const signature = await crypto.subtle.sign('HMAC', key, dataBuffer);
+  return `${data}.${base64UrlEncode(new Uint8Array(signature))}`;
+}
+async function verifyJwt(token: string, secret: string): Promise<JwtPayload | null> {
+  const segments = token.split('.');
+  if (segments.length !== 3) return null;
+  const [encodedHeader, encodedPayload, encodedSignature] = segments;
+  const data = `${encodedHeader}.${encodedPayload}`;
+  const keyBuffer = toArrayBuffer(encodeText(secret));
+  const key = await crypto.subtle.importKey('raw', keyBuffer, { name: 'HMAC', hash: 'SHA-256' }, false, ['verify']);
+  const signatureBuffer = toArrayBuffer(decodeBase64Url(encodedSignature));
+  const dataBuffer = toArrayBuffer(encodeText(data));
+  const valid = await crypto.subtle.verify('HMAC', key, signatureBuffer, dataBuffer);
+  if (!valid) return null;
+  try {
+    const payload = JSON.parse(new TextDecoder().decode(decodeBase64Url(encodedPayload)));
+    if (!payload.exp || payload.exp < Math.floor(Date.now() / 1000)) {
+      return null;
+    }
+    return payload as JwtPayload;
+  } catch (err) {
+    console.error('jwt parse failed', err);
+    return null;
+  }
+}
+function toArrayBuffer(bytes: Uint8Array): ArrayBuffer {
+  const ab = new ArrayBuffer(bytes.byteLength)
+  new Uint8Array(ab).set(bytes)
+  return ab
+}
+async function deriveKey(password: string, pepper: string, salt: Uint8Array, iterations: number): Promise<Uint8Array> {
+  const keyMaterial = await crypto.subtle.importKey('raw', toArrayBuffer(encodeText(password + pepper)), 'PBKDF2', false, [
+    'deriveBits',
+  ]);
+  const bits = await crypto.subtle.deriveBits(
+    {
+      name: 'PBKDF2',
+      hash: 'SHA-256',
+      salt: toArrayBuffer(salt),
+      iterations,
+    },
+    keyMaterial,
+    PBKDF2_LENGTH * 8
+  );
+  return new Uint8Array(bits);
+}
+````
+
+## File: fiap/worker/src/db.ts
 ````typescript
 export async function first<T>(db: D1Database, query: string, bindings: unknown[] = []): Promise<T | null> {
   const result = await db.prepare(query).bind(...bindings).first<T>();
@@ -1532,7 +2486,146 @@ export async function run(db: D1Database, query: string, bindings: unknown[] = [
 }
 ````
 
-## File: worker/src/iot.ts
+## File: fiap/worker/src/index.ts
+````typescript
+import { Env, Handler, HandlerContext } from './types';
+import { consumeRateLimit } from './kv';
+import { jsonResponse, errorResponse, HttpError, getIp } from './utils';
+import { handleRegister, handleLogin, handleMe, authenticateRequest } from './auth';
+import {
+  handleListRooms,
+  handleGetRoom,
+  handleCreateRoom,
+  handleJoinRoom,
+  handleListMessages,
+  handlePostMessage,
+  handleListTasks,
+  handleCreateTask,
+  handleUpdateTask,
+  handlePostCheckin,
+  handleGetCheckins,
+} from './rooms';
+import { handleCreateDevice, handleListDevices, handleIngest, handleGetReadings } from './iot';
+import { handleGetSuggestions } from './agent';
+import { handleAvatar, handleTile, handleAtlas } from './assets';
+interface Route {
+  method: string;
+  pattern: string;
+  handler: Handler;
+  auth?: 'optional' | 'user';
+  skipRateLimit?: boolean;
+}
+const routes: Route[] = [
+  { method: 'GET', pattern: '/health', handler: handleHealth, auth: 'optional', skipRateLimit: true },
+  { method: 'POST', pattern: '/api/auth/register', handler: handleRegister, auth: 'optional' },
+  { method: 'POST', pattern: '/api/auth/login', handler: handleLogin, auth: 'optional' },
+  { method: 'GET', pattern: '/api/auth/me', handler: handleMe, auth: 'user' },
+  { method: 'GET', pattern: '/api/rooms', handler: handleListRooms, auth: 'optional' },
+  { method: 'GET', pattern: '/api/rooms/:roomId', handler: handleGetRoom, auth: 'optional' },
+  { method: 'POST', pattern: '/api/rooms', handler: handleCreateRoom, auth: 'user' },
+  { method: 'POST', pattern: '/api/rooms/:roomId/join', handler: handleJoinRoom, auth: 'user' },
+  { method: 'GET', pattern: '/api/rooms/:roomId/messages', handler: handleListMessages, auth: 'user' },
+  { method: 'POST', pattern: '/api/rooms/:roomId/messages', handler: handlePostMessage, auth: 'user' },
+  { method: 'GET', pattern: '/api/rooms/:roomId/tasks', handler: handleListTasks, auth: 'user' },
+  { method: 'POST', pattern: '/api/rooms/:roomId/tasks', handler: handleCreateTask, auth: 'user' },
+  { method: 'PUT', pattern: '/api/tasks/:taskId', handler: handleUpdateTask, auth: 'user' },
+  { method: 'POST', pattern: '/api/rooms/:roomId/checkins', handler: handlePostCheckin, auth: 'user' },
+  { method: 'GET', pattern: '/api/rooms/:roomId/checkins', handler: handleGetCheckins, auth: 'user' },
+  { method: 'GET', pattern: '/api/rooms/:roomId/readings', handler: handleGetReadings, auth: 'user' },
+  { method: 'GET', pattern: '/api/rooms/:roomId/suggestions', handler: handleGetSuggestions, auth: 'user' },
+  { method: 'POST', pattern: '/api/devices', handler: handleCreateDevice, auth: 'user' },
+  { method: 'GET', pattern: '/api/devices', handler: handleListDevices, auth: 'user' },
+  { method: 'POST', pattern: '/api/iot/ingest', handler: handleIngest, auth: 'optional', skipRateLimit: true },
+  { method:'GET', pattern:'/api/assets/avatar', handler: handleAvatar, auth:'optional', skipRateLimit: true },
+  { method:'GET', pattern:'/api/assets/tile', handler: handleTile, auth:'optional', skipRateLimit: true },
+  { method:'GET', pattern:'/api/assets/atlas', handler: handleAtlas, auth:'optional', skipRateLimit: true },
+];
+const corsHeaders = {
+  'access-control-allow-origin': '*',
+  'access-control-allow-methods': 'GET,POST,PUT,OPTIONS',
+  'access-control-allow-headers': 'content-type,authorization,x-device-secret',
+};
+export default {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+    if (request.method === 'OPTIONS') {
+      return new Response(null, { status: 204, headers: corsHeaders });
+    }
+    try {
+      const url = new URL(request.url);
+      const match = findRoute(request.method, url.pathname);
+      if (!match) {
+        return withCors(errorResponse('Not Found', 404));
+      }
+      if (!match.route.skipRateLimit) {
+        const ip = getIp(request);
+        const rate = await consumeRateLimit(env, `rate:${ip}`, 60, 60);
+        if (!rate.allowed) {
+          return withCors(errorResponse('Too many requests', 429));
+        }
+      }
+      const user = await authenticateRequest(request, env);
+      if (match.route.auth === 'user' && !user) {
+        return withCors(errorResponse('Unauthorized', 401));
+      }
+      const ctxPayload: HandlerContext = {
+        env,
+        request,
+        params: match.params,
+        user: user ?? null,
+        waitUntil: (promise) => ctx.waitUntil(promise),
+      };
+      const response = await match.route.handler(ctxPayload);
+      return withCors(response);
+    } catch (err) {
+      if (err instanceof HttpError) {
+        return withCors(errorResponse(err.message, err.status, err.details));
+      }
+      console.error('Unhandled worker error', err);
+      return withCors(errorResponse('Internal Error', 500));
+    }
+  },
+};
+function withCors(response: Response): Response {
+  const headers = new Headers(response.headers);
+  Object.entries(corsHeaders).forEach(([key, value]) => headers.set(key, value));
+  return new Response(response.body, { status: response.status, headers });
+}
+function findRoute(method: string, pathname: string) {
+  for (const route of routes) {
+    if (route.method !== method) continue;
+    const params = matchPath(route.pattern, pathname);
+    if (params) {
+      return { route, params };
+    }
+  }
+  return null;
+}
+function matchPath(pattern: string, pathname: string): Record<string, string> | null {
+  const patternParts = trim(pattern).split('/');
+  const pathParts = trim(pathname).split('/');
+  if (patternParts.length !== pathParts.length) return null;
+  const params: Record<string, string> = {};
+  for (let i = 0; i < patternParts.length; i += 1) {
+    const expected = patternParts[i];
+    const actual = pathParts[i];
+    if (expected.startsWith(':')) {
+      params[expected.slice(1)] = decodeURIComponent(actual);
+    } else if (expected !== actual) {
+      return null;
+    }
+  }
+  return params;
+}
+function trim(path: string): string {
+  const clean = path.replace(/^\/+|\/+$|\s+/g, '');
+  return clean ? clean : '';
+}
+async function handleHealth(ctx: HandlerContext): Promise<Response> {
+  return jsonResponse({ ok: true });
+}
+````
+
+## File: fiap/worker/src/iot.ts
 ````typescript
 import { HandlerContext } from './types';
 import { readJson, jsonResponse, ensure, nowMs, sha256Hex, clamp } from './utils';
@@ -1657,7 +2750,7 @@ async function hashDeviceSecret(secret: string, pepper: string): Promise<string>
 }
 ````
 
-## File: worker/src/kv.ts
+## File: fiap/worker/src/kv.ts
 ````typescript
 import { Env } from './types';
 export interface RateLimitResult {
@@ -1691,7 +2784,7 @@ export async function incrementCounter(env: Env, key: string, ttlSeconds?: numbe
 }
 ````
 
-## File: worker/src/rooms.ts
+## File: fiap/worker/src/rooms.ts
 ````typescript
 import { HandlerContext } from './types';
 import { readJson, jsonResponse, ensure, slugify, randomId, escapeHtml, clamp, nowMs } from './utils';
@@ -1901,7 +2994,7 @@ export async function handleGetCheckins(ctx: HandlerContext): Promise<Response> 
 }
 ````
 
-## File: worker/src/types.ts
+## File: fiap/worker/src/types.ts
 ````typescript
 export interface Env {
   DB: D1Database;
@@ -1926,7 +3019,7 @@ export interface HandlerContext {
 export type Handler = (ctx: HandlerContext) => Promise<Response>;
 ````
 
-## File: worker/src/utils.ts
+## File: fiap/worker/src/utils.ts
 ````typescript
 import { Env } from './types';
 const encoder = new TextEncoder();
@@ -2092,7 +3185,7 @@ export function timingSafeEqual(a: Uint8Array, b: Uint8Array): boolean {
 }
 ````
 
-## File: worker/test/agent.test.ts
+## File: fiap/worker/test/agent.test.ts
 ````typescript
 import { describe, expect, it } from 'vitest';
 import { buildCandidates } from '../src/agent';
@@ -2112,7 +3205,7 @@ describe('agent heuristics', () => {
 });
 ````
 
-## File: worker/test/auth.test.ts
+## File: fiap/worker/test/auth.test.ts
 ````typescript
 import { webcrypto } from 'node:crypto';
 import { describe, expect, it, beforeAll } from 'vitest';
@@ -2137,43 +3230,37 @@ describe('auth hashing', () => {
 });
 ````
 
-## File: worker/.dev.vars
+## File: fiap/worker/.dev.vars
 ````
 JWT_SECRET=dev-jwt-secret-please-change
 PEPPER=dev-pepper
 ````
 
-## File: .editorconfig
-````
-root = true
+## File: fiap/worker/wrangler.toml
+````toml
+name = "holo-work"
+main = "src/index.ts"
+compatibility_date = "2025-11-10"
+compatibility_flags = ["nodejs_compat"]
+workers_dev = true
 
-[*]
-end_of_line = lf
-insert_final_newline = true
-charset = utf-8
-indent_style = space
-indent_size = 2
-trim_trailing_whitespace = true
+routes = [
+  { pattern = "holowork.knocis.xyz/*", zone_name = "knocis.xyz" }
+]
 
-[*.{ts,js,json,html,css,md}]
-indent_size = 2
-````
+[[d1_databases]]
+binding = "DB"
+database_name = "holo_work"
+database_id = "4911f880-cd22-4064-bfce-f17a5aac42eb"
 
-## File: .gitignore
-````
-node_modules/
-.wrangler/
-dist/
-.vscode/
-.DS_Store
-*.log
-coverage/
-.venv/
+[[kv_namespaces]]
+binding = "KV"
+id = "5584069c6e5943b5a08621671e70ed3a"
 ````
 
-## File: AGENTS.md
+## File: fiap/AGENTS.md
 ````markdown
-# agents.md — holo.work (para codex)
+# agents.md — holo.work
 
 ## objetivo
 
@@ -2304,18 +3391,211 @@ JWT_SECRET, PEPPER, ZAI_API_KEY
 ---
 ````
 
+## File: fiap/LICENSE
+````
+MIT License
+
+Copyright (c) 2025 Daniel Alexandre Barcellos de Brito
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to do so, subject to the
+following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+````
+
+## File: fiap/package.json
+````json
+{
+  "name": "holo-work",
+  "version": "0.1.0",
+  "description": "Hybrid workspace hub with presence, chat, tasks, IoT comfort data, and actionable agent nudges. Cloudflare Workers + D1 + KV.",
+  "type": "module",
+  "main": "worker/src/index.ts",
+  "scripts": {
+    "dev": "wrangler dev --config worker/wrangler.toml",
+    "deploy": "wrangler deploy --config worker/wrangler.toml",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest watch"
+  },
+  "keywords": [
+    "cloudflare",
+    "workers",
+    "iot",
+    "agent",
+    "collaboration"
+  ],
+  "author": "Daniel Alexandre Barcellos de Brito",
+  "license": "MIT",
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240208.0",
+    "@types/node": "^24.10.0",
+    "typescript": "^5.4.0",
+    "vitest": "^1.3.1",
+    "wrangler": "^4.46.0"
+  }
+}
+````
+
+## File: fiap/README.md
+````markdown
+# holo.work
+
+Workspace hub blending lightweight presence, chat, tasks, IoT comfort readings, and an agent that nudges healthier rhythms. Built for Cloudflare Workers + D1 + KV with zero heavy frameworks.
+
+## Stack
+- API: Cloudflare Worker (TypeScript) + D1 (SQLite) + KV for rate limiting + counters
+- UI: Static HTML/CSS/ES modules served via Pages or worker static handler
+- IoT: Python simulator posting telemetry (temp/noise/lux)
+- Auth: PBKDF2-SHA256 password hashing (peppered) until Argon2id is wired through a bundled WASM module that plays nicely with Workers local dev
+
+## Quickstart
+1. Install deps: `npm install`
+2. Create CF resources:
+   ```bash
+   npx wrangler d1 create holo_work
+   npx wrangler kv namespace create KV
+   ```
+3. Apply schema + seed:
+   ```bash
+   npx wrangler d1 execute holo_work --file=sql/schema.sql
+   npx wrangler d1 execute holo_work --file=sql/seed.sql
+   ```
+4. Secrets (use `dev-pepper` locally so the seeded admin hash matches; no secrets are logged anywhere):
+   ```bash
+   npx wrangler secret put JWT_SECRET
+   npx wrangler secret put PEPPER # dev-pepper
+   npx wrangler secret put ZAI_API_KEY # optional
+   ```
+   - Local dev: drop the same values into `worker/.dev.vars` so Miniflare picks them up.
+5. Dev server: `npm run dev`
+6. IoT sim (after ingest route ready):
+   ```bash
+   export INGEST_URL="http://127.0.0.1:8787/api/iot/ingest"
+   export DEVICE_ID="dev-device"
+   export DEVICE_SECRET="DEVSECRET123"
+   python3 scripts/iot_sim.py
+   ```
+
+## Repo map
+```
+worker/   # CF worker source
+ui/       # static pages + assets
+sql/      # schema + seed
+scripts/  # supporting tools (iot simulator)
+docs/     # PRD, checklist, evidence scripts
+```
+
+## Status
+Track ongoing build in `docs/todo.md`. Major changes recorded in `CHANGELOG.md`.
+
+## Google Docs
+https://docs.google.com/document/d/1F9tRff_lB-MnmA13ewMS0pY-iBQUIUU8DEj7wG71gXE/edit?tab=t.0#heading=h.5vb5hai8clmd
+
+## Figma
+#### arq
+https://www.figma.com/board/RnpSFs6Rj2zN0iZb2tXIOD/holo.work-%E2%80%94-arquitetura?node-id=0-1&p=f&t=VWsvSS78qQ1gCTcg-0
+
+#### flow
+https://www.figma.com/board/NNopmsqV4eYfyfd5nySpRw/holo.work-%E2%80%94-fluxo-principal?node-id=0-1&p=f&t=iG38V2JQwoyfJE1M-0
+
+#### iot_ingestion
+https://www.figma.com/board/mylZk4aj3JyOLpGGkBRlSu/holo.work-%E2%80%94-ingest%C3%A3o-iot?node-id=0-1&p=f&t=2DMRjlxAXgXkMxgB-0
+
+#### agent flow
+https://www.figma.com/board/3xvZqC9J1M4GLaLdsNPxiQ/holo.work-%E2%80%94-agente--heur%C3%ADstica-v1-?node-id=0-1&p=f&t=vpBNqo9dF7BoIBS6-0
+
+#### endpoints
+https://www.figma.com/board/z6YClh3FALBOUO9w3RJStd/holo.work-%E2%80%94-endpoints?node-id=0-1&p=f&t=pnMyQjh6VPEO661z-0
+
+#### states
+https://www.figma.com/board/jNwcCSkh9w1BCVxbgYzbte/holo.work-%E2%80%94-estados-de-presen%C3%A7a?node-id=0-1&p=f&t=a47lx0mnsAQObMfl-0
+
+#### deploy
+https://www.figma.com/board/QAiEky9luSHOt6u4moFLea/holo.work-%E2%80%94-deploy?node-id=0-1&p=f&t=t7kQnDRCOIKkI5cD-0
+````
+
+## File: fiap/tsconfig.json
+````json
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ES2020",
+    "lib": ["ES2020", "WebWorker"],
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "types": ["@cloudflare/workers-types"],
+    "resolveJsonModule": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": "."
+  },
+  "include": ["worker/src", "worker/test"]
+}
+````
+
+## File: .gitignore
+````
+node_modules/
+.wrangler/
+dist/
+.vscode/
+.DS_Store
+*.log
+coverage/
+.venv/
+````
+
 ## File: CHANGELOG.md
 ````markdown
 # Changelog
 
+## devlog 
 ## devlog
+### 12-nov-25
+  - building a0.1
+  - ditch kv etc & some features from FIAP ver. (redo later for pdf reqs.)
 ### 11-nov-25
-- bootstrap repo layout (worker/ui/sql/scripts/docs)
-- add base docs + checklist + config files
-- add D1 schema/seed, worker auth/rooms/iot/agent routes, rate-limit + JSON guards
-- ship static UI (login/room/admin), CSS utility, ES modules
-- add IoT simulator script + vitest coverage for hashing + agent heuristics
-- replace Argon2 (blocked by WASM restrictions in local dev) with PBKDF2-SHA256 + peppered storage until WASM pipeline is in place
+  - bootstrap repo layout (worker/ui/sql/scripts/docs)
+  - add base docs + checklist + config files
+  - add D1 schema/seed, worker auth/rooms/iot/agent routes, rate-limit + JSON guards
+  - ship static UI (login/room/admin), CSS utility, ES modules
+  - add IoT simulator script + vitest coverage for hashing + agent heuristics
+  - replace Argon2 (blocked by WASM restrictions in local dev) with PBKDF2-SHA256 + peppered storage until WASM pipeline is in place
+````
+
+## File: dump.md
+````markdown
+arq
+https://www.figma.com/board/RnpSFs6Rj2zN0iZb2tXIOD/holo.work-%E2%80%94-arquitetura?node-id=0-1&p=f&t=VWsvSS78qQ1gCTcg-0
+flow
+https://www.figma.com/board/NNopmsqV4eYfyfd5nySpRw/holo.work-%E2%80%94-fluxo-principal?node-id=0-1&p=f&t=iG38V2JQwoyfJE1M-0
+iot_ingestion
+https://www.figma.com/board/mylZk4aj3JyOLpGGkBRlSu/holo.work-%E2%80%94-ingest%C3%A3o-iot?node-id=0-1&p=f&t=2DMRjlxAXgXkMxgB-0
+agent flow
+https://www.figma.com/board/3xvZqC9J1M4GLaLdsNPxiQ/holo.work-%E2%80%94-agente--heur%C3%ADstica-v1-?node-id=0-1&p=f&t=vpBNqo9dF7BoIBS6-0
+endpoints
+https://www.figma.com/board/z6YClh3FALBOUO9w3RJStd/holo.work-%E2%80%94-endpoints?node-id=0-1&p=f&t=pnMyQjh6VPEO661z-0
+states
+https://www.figma.com/board/jNwcCSkh9w1BCVxbgYzbte/holo.work-%E2%80%94-estados-de-presen%C3%A7a?node-id=0-1&p=f&t=a47lx0mnsAQObMfl-0
+deploy
+https://www.figma.com/board/QAiEky9luSHOt6u4moFLea/holo.work-%E2%80%94-deploy?node-id=0-1&p=f&t=t7kQnDRCOIKkI5cD-0
 ````
 
 ## File: LICENSE
@@ -2343,174 +3623,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ````
 
-## File: p.md
-````markdown
-nice. deploy is mostly green. couple fixes + the pixel-asset flow:
-
-### 0) upgrade + bindings
-
-```
-npm i -g wrangler@4.47.0
-```
-
-drop the kv id into `worker/wrangler.toml` → `kv_namespaces` (id was printed: `077d828e...ae1`). keep `DB` binding name as `holo_work`. 
-
-### 1) secrets / tokens (dev + prod)
-
-local dev: set in `worker/.dev.vars`. prod: use wrangler secrets.
-
-```
-# randoms
-openssl rand -base64 48 | tr -d '\n'   # use as JWT_SECRET
-openssl rand -base64 48 | tr -d '\n'   # use as PEPPER
-
-# prod
-npx wrangler secret put JWT_SECRET --config worker/wrangler.toml
-npx wrangler secret put PEPPER --config worker/wrangler.toml
-# optional ai
-npx wrangler secret put GEMINI_API_KEY --config worker/wrangler.toml
-npx wrangler secret put OPENROUTER_API_KEY --config worker/wrangler.toml
-```
-
-readme notes using `dev-pepper` locally so the seeded admin hash matches. so: set `PEPPER=dev-pepper` in `.dev.vars` for local runs. 
-
-### 2) seed error (remote txn)
-
-remote `d1 execute` choked on `BEGIN TRANSACTION` in `sql/seed.sql`. fast fixes:
-
-* **easiest**: run seed **locally** (no `--remote`) with config flag:
-
-```
-npx wrangler d1 execute holo_work --config worker/wrangler.toml --file=sql/schema.sql
-npx wrangler d1 execute holo_work --config worker/wrangler.toml --file=sql/seed.sql
-```
-
-(readme shows local apply) 
-
-* **or** make `sql/seed.nobegin.sql` (same file without `BEGIN/COMMIT`) and execute that with `--remote`. the current seed has `BEGIN TRANSACTION; ... COMMIT;`. 
-
-### 3) 404 on `/api/assets/avatar`
-
-route isn’t implemented yet; ui already calls it. add a tiny deterministic svg “pixel” identicon so we’ve got avatars for chat/presença and tiles later.
-
-**worker/src/index.ts** (add before the default 404):
-
-```ts
-if (url.pathname === "/api/assets/avatar") {
-  const seed = (url.searchParams.get("seed") || "anon").trim();
-  const s = Math.max(16, Math.min(512, +(url.searchParams.get("s")||"128")));
-  // 5x5 mirror grid → svg
-  const h = new Uint32Array(5);
-  let x=2166136261; for (let i=0;i<seed.length;i++) { x ^= seed.charCodeAt(i); x = Math.imul(x,16777619); }
-  for (let i=0;i<5;i++){ x ^= x<<13; x ^= x>>>17; x ^= x<<5; h[i]=x>>>0; }
-  const cell = Math.floor(s/5);
-  const fg = `hsl(${h[0]%360} 70% 45%)`, bg = "#0f1220";
-  let rects = `<rect width="${s}" height="${s}" fill="${bg}"/>`;
-  for (let r=0;r<5;r++){
-    for (let c=0;c<3;c++){
-      const bit = (h[r]>>(c*3))&1;
-      if (!bit) continue;
-      const x1=c*cell, x2=(4-c)*cell, y=r*cell;
-      const rr = `<rect x="%x" y="${y}" width="${cell}" height="${cell}" rx="${Math.floor(cell*0.15)}" fill="${fg}"/>`;
-      rects += rr.replace("%x", String(x1)) + rr.replace("%x", String(x2));
-    }
-  }
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${s} ${s}" width="${s}" height="${s}">${rects}</svg>`;
-  return new Response(svg, { headers: { "content-type": "image/svg+xml", "cache-control":"public, max-age=31536000" }});
-}
-```
-
-now the `/api/assets/avatar?seed=foo&s=128` calls in the log will return images. route exists in prd as “optional assets”, so this wires it for real. (prd/docs mention assets endpoint as optional; deploy doc shows static-ui note.) 
-
-### 4) pixel art pipeline (tiles/sprites)
-
-minimal, fast, reversible:
-
-* folder: `ui/assets/tiles/`
-
-  * `floor.png` `wall.png` `desk.png` `plant.png` etc, all **16×16** or **32×32**.
-* atlas json (optional v1): `ui/assets/tiles/atlas.json` → name → x,y,w,h if packing later.
-* render: keep the current 2d canvas map; load tiles once, draw by indices from a `map_seed` (string like `grid:16x16:hub`) → translate to a 2d int grid. map_seed already sits in `rooms.map_seed`. 
-
-quick asset sources:
-
-* aseprite export → 16×16 pngs
-* kenney roguelike packs (cc0) → trim to 16×16
-
-### 5) gemini/openrouter generate (v1 dev-mode)
-
-wire a **dev-only** passthrough (rate-limited per ip in kv) for prototyping npc avatars/backgrounds:
-
-**worker/src/index.ts** (sketch):
-
-```ts
-if (url.pathname==="/api/assets/generate" && req.method==="POST") {
-  if (env.OPENROUTER_API_KEY) {
-    const body = await req.json();
-    const r = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-      method:"POST",
-      headers:{ "authorization":`Bearer ${env.OPENROUTER_API_KEY}`, "content-type":"application/json" },
-      body: JSON.stringify({
-        model: "google/gemini-2.5-flash-image-preview",
-        messages:[{role:"user", content: body.prompt }],
-        modalities: ["image","text"],
-        image_config: { aspect_ratio: "1:1" }
-      })
-    });
-    const j = await r.json();
-    return Response.json(j);
-  }
-  if (env.GEMINI_API_KEY) {
-    const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:streamGenerateContent?key=${env.GEMINI_API_KEY}`, {
-      method:"POST", headers:{ "content-type":"application/json" },
-      body: JSON.stringify({ contents:[{role:"user", parts:[{text: (await req.json()).prompt}]}], generationConfig:{ responseModalities:["IMAGE","TEXT"], imageConfig:{ image_size:"1K" }}})
-    });
-    return new Response(await r.text(), { headers:{ "content-type":"application/json" }});
-  }
-  return new Response("image gen not configured", { status: 501 });
-}
-```
-
-policy: v1 dev → only for us; v2 → same but rate-limited and behind a feature flag; v3 → byo key path; v4 → paid tier with our key + byok fallback. matches the staged plan. (deploy doc already has secrets step; extend it to include these two keys.) 
-
-### 6) end-to-end checklist
-
-1. wrangler 4.47.0, bindings up to date.
-2. local seed without `--remote` **or** remote seed without the transaction block.
-3. secrets: set local `.dev.vars` (`PEPPER=dev-pepper`, `JWT_SECRET=<rand>`). prod via `wrangler secret`. 
-4. add `/api/assets/avatar` route (above).
-5. drop initial tiles in `ui/assets/tiles/*`, load them in `room.js` to render the map.
-6. optional: `/api/assets/generate` for image-gen dev mode (kv rate limit later).
-
-### 7) sanity probes
-
-```
-curl http://127.0.0.1:8787/api/rooms
-curl -I "http://127.0.0.1:8787/api/assets/avatar?seed=dan&s=128"
-```
-
-deploy guide smoke calls are already listed. 
-
-small `docs/ASSETS.md` with tile specs + palette so art stays coherent with the ui grid.
-
----
-
-arq
-https://www.figma.com/board/RnpSFs6Rj2zN0iZb2tXIOD/holo.work-%E2%80%94-arquitetura?node-id=0-1&p=f&t=VWsvSS78qQ1gCTcg-0
-flow
-https://www.figma.com/board/NNopmsqV4eYfyfd5nySpRw/holo.work-%E2%80%94-fluxo-principal?node-id=0-1&p=f&t=iG38V2JQwoyfJE1M-0
-iot_ingestion
-https://www.figma.com/board/mylZk4aj3JyOLpGGkBRlSu/holo.work-%E2%80%94-ingest%C3%A3o-iot?node-id=0-1&p=f&t=2DMRjlxAXgXkMxgB-0
-agent flow
-https://www.figma.com/board/3xvZqC9J1M4GLaLdsNPxiQ/holo.work-%E2%80%94-agente--heur%C3%ADstica-v1-?node-id=0-1&p=f&t=vpBNqo9dF7BoIBS6-0
-endpoints
-https://www.figma.com/board/z6YClh3FALBOUO9w3RJStd/holo.work-%E2%80%94-endpoints?node-id=0-1&p=f&t=pnMyQjh6VPEO661z-0
-states
-https://www.figma.com/board/jNwcCSkh9w1BCVxbgYzbte/holo.work-%E2%80%94-estados-de-presen%C3%A7a?node-id=0-1&p=f&t=a47lx0mnsAQObMfl-0
-deploy
-https://www.figma.com/board/QAiEky9luSHOt6u4moFLea/holo.work-%E2%80%94-deploy?node-id=0-1&p=f&t=t7kQnDRCOIKkI5cD-0
-````
-
 ## File: tsconfig.json
 ````json
 {
@@ -2533,50 +3645,366 @@ https://www.figma.com/board/QAiEky9luSHOt6u4moFLea/holo.work-%E2%80%94-deploy?no
 }
 ````
 
-## File: docs/DEPLOY.md
+## File: AGENTS.md
 ````markdown
-# Deploy Guide
+# agents.md — holo.work
 
-## Prereqs
-- Cloudflare account with Workers + D1 + KV enabled
-- `wrangler` (v4+) installed locally
-- D1 + KV resources already created (see `worker/wrangler.toml` bindings)
+## objetivo
 
-## Steps
-1. **Secrets**
-   ```bash
-   npx wrangler secret put JWT_SECRET --config worker/wrangler.toml
-   npx wrangler secret put PEPPER --config worker/wrangler.toml
-   # optional
-   npx wrangler secret put ZAI_API_KEY --config worker/wrangler.toml
-   ```
-2. **Database schema + seed**
-   ```bash
-   npx wrangler d1 execute holo_work --config worker/wrangler.toml --file=sql/schema.sql --remote
-   npx wrangler d1 execute holo_work --config worker/wrangler.toml --file=sql/seed.sql --remote
-   ```
-3. **Publish Worker**
-   ```bash
-   npx wrangler deploy --config worker/wrangler.toml
-   ```
-4. **Static UI**
-   - Option A (Pages): deploy `ui/` as a Pages project; set API origin to the Worker subdomain and ensure CORS (already `*`).
-   - Option B (Worker): serve `ui` via Wrangler Assets or add a static handler to `worker/src/index.ts`.
-5. **Smoke tests**
-   ```bash
-   curl https://<worker-domain>/health
-   curl https://<worker-domain>/api/rooms
-   ```
-6. **IoT simulator (prod)**
-   ```bash
-   INGEST_URL="https://<worker-domain>/api/iot/ingest" \
-   DEVICE_ID="device-holo-01" \
-   DEVICE_SECRET="DEVSECRET123" \
-   python3 scripts/iot_sim.py
-   ```
+gerar v1 funcional no nosso stack (cloudflare workers + d1 + kv + html/css/js), com admin local e iot_sim. evitar frameworks.
+
+## layout do repo
+
+```
+/worker                 # api (ts)
+  /src
+    index.ts            # router
+    auth.ts             # login/register/jwt
+    rooms.ts            # rooms/messages/tasks
+    iot.ts              # devices/ingest
+    agent.ts            # sugestões
+    db.ts               # d1 helpers
+    kv.ts               # rate-limit/counters
+  wrangler.toml
+/sql
+  schema.sql
+  seed.sql
+/ui                     # static pages (pages)
+  index.html            # login
+  room.html             # mapa/presença/chat/tasks
+  admin.html            # admin local (sem auth externa)
+  /css
+  /js
+/scripts
+  iot_sim.py            # simulador
+/docs
+  PRD.md
+  TODO.md
+```
+
+## padrões
+
+* ts alvo: workers runtime. nenhuma lib além do que for estritamente necessário.
+* ui: es modules, fetch, canvas 2d simples ou dom.
+* css: utilitário leve (próprio). sem tailwind.
+* commits: curtos, escopados.
+
+## wrangler.toml (base)
+
+```toml
+name = "holo-work"
+main = "worker/src/index.ts"
+compatibility_date = "2025-11-10"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "holo_work"
+database_id = "REPLACE"
+
+[[kv_namespaces]]
+binding = "KV"
+id = "REPLACE"
+```
+
+## bootstrap
+
+* criar tabelas com /sql/schema.sql via `wrangler d1 execute`.
+* seeds mínimos: 1 admin, 2 rooms, 1 device com secret.
+
+## rotas obrigatórias
+
+implementar exatamente conforme prd (auth, rooms, messages, tasks, checkins, devices, iot/ingest, suggestions).
+
+## lógica do agente
+
+exportar `computeSuggestions(room_id)` que:
+
+* busca últimos 15min de readings + últimos 30min de checkins.
+* aplica heurísticas e grava em `suggestions` se ainda não existir similar em 10min.
+* idempotente.
+
+## ui
+
+* index.html: login -> salvar jwt em memory + sessionStorage.
+* room.html:
+
+  * left: mapa e presenças (bolinhas com iniciais).
+  * right tabs: chat, tasks, ambiente (temp/noise/lux), sugestões.
+  * check-in top: slider mood/energy + select status.
+* admin.html: forms simples para criar room/device e listar secrets (somente local, gated por `?local=1`).
+
+## iot_sim.py
+
+* lê env `INGEST_URL`, `DEVICE_ID`, `DEVICE_SECRET`.
+* envia a cada 5s: t_c (20..32 com ruído), noise_db (40..75), lux (50..600).
+
+## testes
+
+* unit: função de hash/verify; função de agente.
+* e2e: curl script: registrar, login, criar room (admin), postar msg, ingest, ler sugestões.
+* evidências: salvar stdout para pdf.
+
+## build ordem (one-shot)
+
+1. schema + seed.
+2. auth + jwt.
+3. rooms + messages + tasks + checkins.
+4. devices + ingest.
+5. agent.
+6. ui minimal.
+7. iot_sim.
+8. rate-limit + sane.
+9. deploy.
+
+## envs (names only)
+
+JWT_SECRET, PEPPER, ZAI_API_KEY
+
+## deploy
+
+* `wrangler dev` local.
+* `wrangler publish` prod.
+* pages para `/ui` ou servir `/ui` estático via worker.
+
+## geração de assets (opcional)
+
+* endpoint `/api/assets/avatar?seed=xyz` → gera sprite 2d procedural (sem ia) v1.
+* se `ZAI_API_KEY` existir, stub para futura geração com ia (não bloquear mvp).
+
+## fiap-mode
+
+* manter branch `fiap-mode` com mesmas rotas e pdf mapeando requisitos.
+
+---
 ````
 
-## File: docs/todo.md
+## File: PRD.md
+````markdown
+# prd.md — holo.work (v1)
+
+## visão
+
+um espaço de trabalho híbrido leve (2d/pixel), com presença, chat e quadros de tarefas, que integra leituras iot (simuladas) e um agente de recomendação para ritmo saudável e pairing. web/mobile responsivo, cloudflare-first, dados em d1, eventos em kv. sem framework pesado.
+
+## problema
+
+trabalho distribuído fragmenta sinal: status, foco, conforto, saúde. reuniões viram ruído. precisamos de um hub que enxergue contexto e sugira ações práticas sem fricção.
+
+## objetivos
+
+* reduzir atrito de colaboração remota.
+* dar visibilidade de conforto/ambiente via iot simulado.
+* promover pausas e pairing guiados por dados.
+* mvp executável em 1 click com wrangler.
+
+## escopo (v1)
+
+* espaços (rooms) com mapa 2d leve (tiles/png), presença, chat, tasks.
+* check-in de humor/energia (1..5) e status (focus, solo, pair, afk).
+* ingest de iot: temperatura, ruído, luminosidade (mock) por device.
+* agente: recomenda pausas, pairing e sala mais “confortável”.
+* auth: e-mail + senha com hash; roles: admin, user.
+* admin web local (sem login externo) para CRUD rápido de rooms/devices.
+
+fora do escopo v1: voz, video, 3d, calendário integrado, oauth.
+
+## personas
+
+* dev/design: quer foco, pairing rápido, status claro.
+* gestor: quer visibilidade de conforto e carga do time.
+* ops: quer quedas/alertas simples de ambiente.
+
+## fluxos principais
+
+1. login -> escolher room -> ver mapa/presenças -> chat/tasks -> check-in -> agente sugere ação.
+2. admin local gera room, device e seeds de mapa.
+3. iot_sim envia POST periódico em /api/iot/ingest.
+
+## arquitetura
+
+* ui: html+css+js (es modules), render 2d canvas/pixel; pwa básico.
+* api: cloudflare worker (ts) com rotas rest, jwt, rate-limit kv.
+* dados: d1 (sqlite). kv: sessions, rate, agent-cache, stream buffers.
+* iot: script python envia leituras; worker valida device_secret.
+* agente: função no worker que lê leituras+checkins e gera recomendações simples (regras + score).
+
+```
+[ui] <-> [/api/* worker] <-> [d1]
+                      \-> [kv]
+[iot_sim] -> [/api/iot/ingest]
+```
+
+## modelo de dados (mínimo)
+
+* users(id, email, pass_hash, role, created_at)
+* rooms(id, name, slug, map_seed, created_at)
+* room_members(user_id, room_id, joined_at)
+* messages(id, room_id, user_id, body, created_at)
+* tasks(id, room_id, title, status, assignee_id, created_at)
+* checkins(id, user_id, room_id, mood, energy, status, created_at)
+* devices(id, room_id, name, kind, secret, created_at)
+* readings(id, device_id, t_c, noise_db, lux, created_at)
+* suggestions(id, room_id, user_id, kind, text, created_at)
+
+## sql (d1/sqlite)
+
+```sql
+create table users (
+  id text primary key,
+  email text unique not null,
+  pass_hash text not null,
+  role text not null default 'user',
+  created_at integer not null
+);
+create table rooms (
+  id text primary key,
+  name text not null,
+  slug text unique not null,
+  map_seed text,
+  created_at integer not null
+);
+create table room_members (
+  user_id text not null,
+  room_id text not null,
+  joined_at integer not null,
+  primary key(user_id, room_id)
+);
+create table messages (
+  id text primary key,
+  room_id text not null,
+  user_id text not null,
+  body text not null,
+  created_at integer not null
+);
+create table tasks (
+  id text primary key,
+  room_id text not null,
+  title text not null,
+  status text not null default 'todo',
+  assignee_id text,
+  created_at integer not null
+);
+create table checkins (
+  id text primary key,
+  user_id text not null,
+  room_id text not null,
+  mood integer,
+  energy integer,
+  status text, -- focus|solo|pair|afk
+  created_at integer not null
+);
+create table devices (
+  id text primary key,
+  room_id text not null,
+  name text not null,
+  kind text not null, -- env
+  secret text not null,
+  created_at integer not null
+);
+create table readings (
+  id text primary key,
+  device_id text not null,
+  t_c real,
+  noise_db real,
+  lux real,
+  created_at integer not null
+);
+create table suggestions (
+  id text primary key,
+  room_id text not null,
+  user_id text,
+  kind text not null, -- pause|pair|move
+  text text not null,
+  created_at integer not null
+);
+```
+
+## api (rest)
+
+* auth
+
+  * POST /api/auth/register {email, password}
+  * POST /api/auth/login {email, password} -> {jwt}
+  * GET  /api/auth/me -> user
+* rooms
+
+  * GET /api/rooms
+  * POST /api/rooms (admin)
+  * GET /api/rooms/:id
+  * POST /api/rooms/:id/join
+* messages
+
+  * GET /api/rooms/:id/messages?cursor=...
+  * POST /api/rooms/:id/messages {body}
+* tasks
+
+  * GET/POST /api/rooms/:id/tasks
+  * PUT /api/tasks/:id {status, assignee_id}
+* checkins
+
+  * POST /api/rooms/:id/checkins {mood, energy, status}
+  * GET  /api/rooms/:id/checkins?since=ts
+* devices/iot
+
+  * POST /api/devices (admin) -> {id, secret}
+  * POST /api/iot/ingest {device_id, t_c, noise_db, lux, ts} header: X-Device-Secret
+  * GET  /api/rooms/:id/readings?window=15m
+* agente
+
+  * GET /api/rooms/:id/suggestions
+
+jwt no header Authorization. rate-limit por ip em kv. argon2id para hash.
+
+## agente (heurística v1)
+
+* se noise_db>65 e energy<3 -> move para sala X com menor ruído.
+* se t_c>27 e mood<=2 -> pausa 5min + água.
+* se 2 usuários com status focus>30min no mesmo room e tasks relacionadas -> sugerir pairing.
+* se lux<200 -> ajustar iluminação (nota).
+
+## segurança
+
+* hash: argon2id; pepper em secret.
+* jwt curto (15min) + refresh opcional em cookie httpOnly (v1 opcional).
+* validação de input, limitar body 32KB, sane de html no chat.
+* secrets: wrangler secret. no repo só nomes.
+
+## nfr
+
+* p50 api < 100ms; p95 < 300ms.
+* primeiro byte ui < 200ms via pages.
+* ingest suporta 10 req/s no free.
+
+## telemetria
+
+* counters no kv: logins, msgs, tasks_move, sugestões aceitas.
+
+## critérios de sucesso
+
+* demo com 2 rooms, 3 usuários, iot_sim rodando.
+* sugestões aparecem reagindo a leituras e checkins.
+* zip+pdf+pitch de 3min.
+
+## env vars
+
+* JWT_SECRET
+* PEPPER
+* DEVICE_INGEST_RATE_MAX (opcional)
+* ZAI_API_KEY (geração de assets opcional)
+
+## fiap mapping
+
+1. banco: sql acima (>=4 entidades).
+2. api: rotas rest (>=5 endpoints).
+3. testes: plano e 3 execuções (unit simples + curl evidências).
+4. mobile: pwa responsivo 3 telas (login, room, tasks).
+5. segurança: hash, roles, validação, rate-limit.
+6. iot: iot_sim + ingest + uso em sugestões e painel.
+
+---
+````
+
+## File: todo.md
 ````markdown
 # Execução v1 Checklist
 
@@ -2645,1035 +4073,6 @@ https://www.figma.com/board/QAiEky9luSHOt6u4moFLea/holo.work-%E2%80%94-deploy?no
 
 ## 15. Definition of Done
 - [x] Local demo + IoT sim verificados; docs de deploy/tests/pacote asseguram handoff cloud + zip.
-````
-
-## File: sql/seed.sql
-````sql
-PRAGMA foreign_keys = OFF;
-DELETE FROM users;
-DELETE FROM rooms;
-DELETE FROM room_members;
-DELETE FROM messages;
-DELETE FROM tasks;
-DELETE FROM checkins;
-DELETE FROM devices;
-DELETE FROM readings;
-DELETE FROM suggestions;
-DELETE FROM events;
-INSERT INTO users (id, email, pass_hash, role, created_at)
-VALUES ('user-admin', 'admin@holo.work', 'pbkdf2$200000$kutwS1jQDWsYX0xQex7HSQ==$eMuaYN6F3q9ZAUVDt4U2JBDD7SxXkgkVlrJ12jFckO0=', 'admin', strftime('%s','now')*1000);
-INSERT INTO rooms (id, name, slug, map_seed, created_at)
-VALUES
-  ('room-holo', 'Holo Hub', 'holo-hub', 'grid:16x16:hub', strftime('%s','now')*1000),
-  ('room-lab', 'Lab Norte', 'lab-norte', 'grid:16x16:lab', strftime('%s','now')*1000);
-INSERT INTO room_members (user_id, room_id, joined_at) VALUES
-  ('user-admin', 'room-holo', strftime('%s','now')*1000),
-  ('user-admin', 'room-lab', strftime('%s','now')*1000);
-INSERT INTO devices (id, room_id, name, kind, secret_hash, created_at)
-VALUES ('device-holo-01', 'room-holo', 'Env Beacon 01', 'environment', '92ae2a030fb7b169cf2612db1e8a4819fb03b9356f714be39c2a4ffe2d127f71', strftime('%s','now')*1000);
-````
-
-## File: ui/js/api.js
-````javascript
-const TOKEN_KEY = 'holo_jwt';
-let memoryToken = null;
-const getAPIBase = () => window.__CONFIG__?.API_BASE || 'https://holo-work.dbarcelloz.workers.dev'
-export function getToken() {
-  if (memoryToken) return memoryToken;
-  memoryToken = sessionStorage.getItem(TOKEN_KEY);
-  return memoryToken;
-}
-export function setToken(token) {
-  memoryToken = token;
-  if (token) {
-    sessionStorage.setItem(TOKEN_KEY, token);
-  } else {
-    sessionStorage.removeItem(TOKEN_KEY);
-  }
-}
-export function ensureAuth() {
-  if (!getToken()) {
-    window.location.href = 'index.html';
-  }
-}
-export async function apiFetch(path, options = {}) {
-  const headers = new Headers(options.headers || {});
-  const token = getToken();
-  if (token) {
-    headers.set('authorization', `Bearer ${token}`);
-  }
-  if (options.body && !headers.has('content-type')) {
-    headers.set('content-type', 'application/json');
-  }
-  const url = buildUrl(path);
-  const response = await fetch(url, { ...options, headers });
-  if (response.status === 401) {
-    setToken(null);
-    window.location.href = 'index.html';
-    return null;
-  }
-  if (!response.ok) {
-    let details;
-    try {
-      details = await response.json();
-    } catch (err) {
-      details = { error: response.statusText };
-    }
-    throw new Error(details.error || 'Request failed');
-  }
-  if (response.status === 204) return null;
-  return response.json();
-}
-function buildUrl(path) {
-  if (path.startsWith('http')) return path;
-  const base = getAPIBase()
-  if (!base) return path;
-  if (path.startsWith('/')) {
-    return `${base}${path}`;
-  }
-  return `${base}/${path}`;
-}
-export function formToJSON(form) {
-  const data = new FormData(form);
-  return Object.fromEntries(data.entries());
-}
-````
-
-## File: ui/admin.html
-````html
-<!DOCTYPE html>
-<html lang="pt-BR">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>holo.work — admin local</title>
-    <link rel="stylesheet" href="./css/style.css" />
-    <script src="./js/config.js"></script>
-  </head>
-  <body>
-    <main>
-      <section class="card" style="margin-bottom:1.5rem;">
-        <h1>Admin local</h1>
-        <p id="gateNotice">Carregando...</p>
-        <button id="backBtn" style="background:#94a3b8;">Voltar</button>
-      </section>
-      <section class="admin-grid">
-        <form id="roomAdminForm" class="card">
-          <h3>Nova sala</h3>
-          <div class="input-group">
-            <label>Nome</label>
-            <input type="text" name="name" placeholder="Focus Lab" required />
-          </div>
-          <div class="input-group">
-            <label>Map seed</label>
-            <input type="text" name="map_seed" placeholder="grid:16x16:lab" />
-          </div>
-          <button type="submit">Criar sala</button>
-        </form>
-        <form id="deviceForm" class="card">
-          <h3>Emitir device</h3>
-          <div class="input-group">
-            <label>Sala</label>
-            <select name="room_id" id="deviceRoom"></select>
-          </div>
-          <div class="input-group">
-            <label>Nome</label>
-            <input type="text" name="name" placeholder="Beacon 01" required />
-          </div>
-          <button type="submit">Gerar device</button>
-          <p id="secretBox" style="margin-top:1rem; color:var(--accent);"></p>
-        </form>
-        <div class="card">
-          <h3>Devices ativos</h3>
-          <div id="deviceList" class="task-list"></div>
-        </div>
-      </section>
-    </main>
-    <script type="module" src="./js/admin.js"></script>
-  </body>
-</html>
-````
-
-## File: ui/index.html
-````html
-<!DOCTYPE html>
-<html lang="pt-BR">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>holo.work — login</title>
-    <link rel="stylesheet" href="./css/style.css" />
-    <script src="./js/config.js"></script>
-  </head>
-  <body>
-    <main>
-      <section class="card">
-        <h1>holo.work</h1>
-        <p>Hub híbrido com presença, chat, tasks, IoT e agente que cuida do ritmo.</p>
-        <div class="login-grid">
-          <form id="loginForm">
-            <div class="input-group">
-              <label for="email">Email</label>
-              <input id="email" name="email" type="email" placeholder="dev@holo.work" required />
-            </div>
-            <div class="input-group">
-              <label for="password">Senha</label>
-              <input id="password" name="password" type="password" placeholder="••••••" required />
-            </div>
-            <div style="display:flex; gap:0.75rem; margin-top:1rem;">
-              <button type="submit" style="flex:1;">Entrar</button>
-              <button type="button" id="registerBtn" style="flex:1; background:#0ea5e9;">Registrar</button>
-            </div>
-            <p class="notice" style="margin-top:1rem;">
-              Use admin@holo.work / admin (PEPPER=dev-pepper) para seed local.
-            </p>
-          </form>
-          <div>
-            <h3>Como funciona?</h3>
-            <p>
-              1) Faz login → 2) Escolhe sala → 3) Marca presença, conversa e acompanha tarefas.
-              O simulador IoT injeta temperatura, ruído e luz; o agente sugere pausas, pairing e ajustes.
-            </p>
-            <p>
-              Depois de logar, compartilhe o token entre abas (sessionStorage). Para sair, limpe o token em
-              <code>sessionStorage</code> ou clique em "sair" no header da sala.
-            </p>
-          </div>
-        </div>
-        <p id="status" style="margin-top:1rem; color:var(--accent);"></p>
-      </section>
-    </main>
-    <script type="module" src="./js/index.js"></script>
-  </body>
-</html>
-````
-
-## File: ui/room.html
-````html
-<!DOCTYPE html>
-<html lang="pt-BR">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>holo.work — sala</title>
-    <link rel="stylesheet" href="./css/style.css" />
-    <script src="./js/config.js"></script>
-  </head>
-  <body>
-    <main>
-      <section class="card" style="margin-bottom:1.5rem;">
-        <header style="display:flex; gap:1rem; align-items:center;">
-          <h2 style="flex:1;">Sala</h2>
-          <select id="roomSelect" style="flex:2;"></select>
-          <button id="logoutBtn" style="background:#f43f5e;">Sair</button>
-        </header>
-        <form id="checkinForm" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:1rem; margin-top:1rem;">
-          <div class="input-group">
-            <label>Mood</label>
-            <input type="range" min="1" max="5" step="1" name="mood" value="3" />
-          </div>
-          <div class="input-group">
-            <label>Energia</label>
-            <input type="range" min="1" max="5" step="1" name="energy" value="3" />
-          </div>
-          <div class="input-group">
-            <label>Status</label>
-            <select name="status">
-              <option value="focus">Focus</option>
-              <option value="solo">Solo</option>
-              <option value="pair">Pair</option>
-              <option value="afk">AFK</option>
-            </select>
-          </div>
-          <button type="submit">Check-in</button>
-        </form>
-        <p id="roomStatus" style="margin-top:0.75rem; color:var(--muted);"></p>
-      </section>
-      <section class="room-layout">
-        <div class="map-card">
-          <canvas id="roomGrid"></canvas>
-          <h4 style="margin-top:1rem;">Presenças recentes</h4>
-          <div id="presenceList" class="presence-list"></div>
-        </div>
-        <div class="card">
-          <div class="tabs">
-            <button data-tab="chat" class="active">Chat</button>
-            <button data-tab="tasks">Tasks</button>
-            <button data-tab="ambiente">Ambiente</button>
-            <button data-tab="sugestoes">Sugestões</button>
-          </div>
-          <div id="chat" class="panel active">
-            <div id="chatList" class="chat-list"></div>
-            <form id="messageForm" style="margin-top:1rem; display:flex; gap:0.5rem;">
-              <input id="messageBody" type="text" placeholder="Compartilhe algo" required style="flex:1;" />
-              <button type="submit">Enviar</button>
-            </form>
-          </div>
-          <div id="tasks" class="panel">
-            <div id="tasksList" class="task-list"></div>
-            <form id="taskForm" style="margin-top:1rem; display:flex; gap:0.5rem;">
-              <input name="title" type="text" placeholder="Nova task" required style="flex:1;" />
-              <button type="submit">Adicionar</button>
-            </form>
-          </div>
-          <div id="ambiente" class="panel">
-            <div id="metricList" class="metric-list"></div>
-          </div>
-          <div id="sugestoes" class="panel">
-            <div id="suggestionList" class="suggestion-list"></div>
-          </div>
-        </div>
-      </section>
-    </main>
-    <script type="module" src="./js/room.js"></script>
-  </body>
-</html>
-````
-
-## File: worker/src/assets.ts
-````typescript
-import type { HandlerContext } from './types'
-const toAB = (u8: Uint8Array): ArrayBuffer => {
-  const ab = new ArrayBuffer(u8.byteLength)
-  new Uint8Array(ab).set(u8)
-  return ab
-}
-const crc32 = (bytes: Uint8Array) => {
-  let c = ~0 >>> 0
-  for (let i = 0; i < bytes.length; i++) {
-    c ^= bytes[i]
-    for (let k = 0; k < 8; k++) c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) >>> 0 : (c >>> 1) >>> 0
-  }
-  return (~c) >>> 0
-}
-const u32 = (v: number) => new Uint8Array([ (v>>>24)&255, (v>>>16)&255, (v>>>8)&255, v&255 ])
-const chunk = (type: string, data: Uint8Array) => {
-  const out = new Uint8Array(8 + 4 + data.length + 4)
-  out.set(u32(data.length), 0)
-  out.set(new TextEncoder().encode(type), 4)
-  out.set(data, 8)
-  out.set(u32(crc32(out.subarray(4, 8 + data.length))), 8 + data.length)
-  return out
-}
-async function deflate(raw: Uint8Array) {
-  const cs = new CompressionStream('deflate')
-  const ab = toAB(raw)
-  const s = new Blob([ab]).stream().pipeThrough(cs)
-  const out = new Uint8Array(await new Response(s).arrayBuffer())
-  return out
-}
-async function encodePNG(rgba: Uint8ClampedArray, w: number, h: number): Promise<Uint8Array> {
-  const scan = new Uint8Array((w*4 + 1) * h)
-  for (let y=0; y<h; y++){
-    scan[(w*4+1)*y] = 0
-    scan.set(rgba.subarray(y*w*4, (y+1)*w*4), (w*4+1)*y + 1)
-  }
-  const sig = new Uint8Array([137,80,78,71,13,10,26,10])
-  const ihdr = new Uint8Array(13)
-  ihdr.set(u32(w), 0)
-  ihdr.set(u32(h), 4)
-  ihdr[8] = 8
-  ihdr[9] = 6
-  ihdr[10] = 0
-  ihdr[11] = 0
-  ihdr[12] = 0
-  const idat = await deflate(scan)
-  const iend = new Uint8Array(0)
-  const parts = [sig, chunk('IHDR', ihdr), chunk('IDAT', idat), chunk('IEND', iend)]
-  const total = parts.reduce((n,p)=>n+p.length,0)
-  const png = new Uint8Array(total)
-  let off=0; for (const p of parts){ png.set(p, off); off+=p.length }
-  return png
-}
-export async function handleAvatar({ request, env }: HandlerContext): Promise<Response> {
-  const u = new URL(request.url)
-  const seed = u.searchParams.get('seed') || 'anon'
-  const s = Math.min(parseInt(u.searchParams.get('s')||'128',10), 512)
-  const key = `asset:avatar:${seed}:${s}`
-  const hit = await env.KV.get(key, 'arrayBuffer')
-  if (hit) return new Response(hit, { headers:{'content-type':'image/png','cache-control':'public, max-age=2592000'} })
-  const b = new TextEncoder().encode(seed)
-  let h = 2166136261 >>> 0; for (const x of b){ h ^= x; h = (h>>>0)*16777619>>>0 }
-  const fg = [h&255, (h>>>8)&255, (h>>>16)&255, 255]
-  const bg = [0,0,0,0]
-  const px = 5, scale = Math.max(1, Math.floor(s/px))
-  const w = px*scale, hh = px*scale
-  const buf = new Uint8ClampedArray(w*hh*4)
-  for (let y=0;y<px;y++){
-    for (let x=0;x<px;x++){
-      const on = (((h>>>((x%4)*3)) & 7) > 2)
-      const xx = x<=2? x : 4-x
-      for (let yy=0; yy<scale; yy++){
-        for (let xx2=0; xx2<scale; xx2++){
-          const i = ((y*scale+yy)*w + (xx*scale+xx2))*4
-          const col = on ? fg : bg
-          buf[i]=col[0]; buf[i+1]=col[1]; buf[i+2]=col[2]; buf[i+3]=col[3]
-        }
-      }
-    }
-  }
-  const png = await encodePNG(buf, w, hh)
-  const pngAb = toAB(png)
-  await env.KV.put(key, pngAb, { expirationTtl: 60*60*24*30 })
-  return new Response(pngAb, { headers: { 'content-type': 'image/png' } })
-}
-export const handleTile = async ({ request, env }: HandlerContext) => {
-  const u = new URL(request.url)
-  const seed = u.searchParams.get('seed') || 'default'
-  const s = Math.min(parseInt(u.searchParams.get('s')||'64',10), 256)
-  const key = `asset:tile:${seed}:${s}`
-  const cached = await env.KV.get(key, 'arrayBuffer')
-  if (cached) return new Response(cached, { headers:{'content-type':'image/png','cache-control':'public, max-age=2592000'} })
-  const te = new TextEncoder()
-  const bytes = te.encode(seed)
-  let h = 2166136261 >>> 0
-  for (const b of bytes) { h ^= b; h = Math.imul(h, 16777619) >>> 0 }
-  const grid = Array.from({length:64}, (_,i)=> ((h>>((i%6))) & 7) > 3)
-  const fg = [h&255, (h>>8)&255, (h>>16)&255, 255]
-  const bg = [255, 255, 255, 255]
-  const px = 8, scale = Math.max(1, Math.floor(s/px))
-  const w = px*scale, hgt = px*scale
-  const buf = new Uint8ClampedArray(w*hgt*4)
-  for (let y=0;y<px;y++){
-    for (let x=0;x<px;x++){
-      const col = grid[y*8 + x] ? fg : bg
-      for (let yy=0; yy<scale; yy++){
-        for (let xx2=0; xx2<scale; xx2++){
-          const i = ((y*scale+yy)*w + (x*scale+xx2))*4
-          buf[i]=col[0]; buf[i+1]=col[1]; buf[i+2]=col[2]; buf[i+3]=col[3]
-        }
-      }
-    }
-  }
-  const png = await encodePNG(buf, w, hgt)
-  const ab = toAB(png)
-  await env.KV.put(key, ab, { expirationTtl: 60*60*24*30 })
-  return new Response(ab, { headers:{'content-type':'image/png'} })
-}
-export const handleAtlas = async ({ request, env }: HandlerContext) => {
-  const u = new URL(request.url)
-  const seeds = (u.searchParams.get('seeds') || 'a,b,c,d').split(',').slice(0, 16)
-  const s = Math.min(parseInt(u.searchParams.get('s')||'64',10), 256)
-  const key = `asset:atlas:${seeds.join('-')}:${s}`
-  const cached = await env.KV.get(key, 'arrayBuffer')
-  if (cached) return new Response(cached, { headers:{'content-type':'image/png','cache-control':'public, max-age=2592000'} })
-  const cols = Math.ceil(Math.sqrt(seeds.length))
-  const rows = Math.ceil(seeds.length / cols)
-  const tileSize = Math.max(1, Math.floor(s / cols))
-  const w = cols * tileSize
-  const hgt = rows * tileSize
-  const buf = new Uint8ClampedArray(w*hgt*4)
-  for (let idx = 0; idx < seeds.length; idx++) {
-    const seed = seeds[idx]
-    const te = new TextEncoder()
-    const bytes = te.encode(seed)
-    let h = 2166136261 >>> 0
-    for (const b of bytes) { h ^= b; h = Math.imul(h, 16777619) >>> 0 }
-    const row = Math.floor(idx / cols)
-    const col = idx % cols
-    const baseX = col * tileSize
-    const baseY = row * tileSize
-    const fg = [h&255, (h>>8)&255, (h>>16)&255, 255]
-    const bg = [0,0,0,0]
-    for (let y=0;y<5;y++){
-      for (let x=0;x<5;x++){
-        const xx = x<=2? x : 4-x
-        const on = (((h>>>((x%4)*3)) & 7) > 2)
-        const col_color = on ? fg : bg
-        const scaleFactor = Math.max(1, tileSize / 5)
-        for (let yy=0; yy<scaleFactor; yy++){
-          for (let xx2=0; xx2<scaleFactor; xx2++){
-            const px = baseX + (xx*scaleFactor + xx2)
-            const py = baseY + (y*scaleFactor + yy)
-            if (px < w && py < hgt) {
-              const i = (py*w + px)*4
-              buf[i]=col_color[0]; buf[i+1]=col_color[1]; buf[i+2]=col_color[2]; buf[i+3]=col_color[3]
-            }
-          }
-        }
-      }
-    }
-  }
-  const png = await encodePNG(buf, w, hgt)
-  const ab = toAB(png)
-  await env.KV.put(key, ab, { expirationTtl: 60*60*24*30 })
-  return new Response(ab, { headers:{'content-type':'image/png'} })
-}
-````
-
-## File: worker/src/index.ts
-````typescript
-import { Env, Handler, HandlerContext } from './types';
-import { consumeRateLimit } from './kv';
-import { jsonResponse, errorResponse, HttpError, getIp } from './utils';
-import { handleRegister, handleLogin, handleMe, authenticateRequest } from './auth';
-import {
-  handleListRooms,
-  handleGetRoom,
-  handleCreateRoom,
-  handleJoinRoom,
-  handleListMessages,
-  handlePostMessage,
-  handleListTasks,
-  handleCreateTask,
-  handleUpdateTask,
-  handlePostCheckin,
-  handleGetCheckins,
-} from './rooms';
-import { handleCreateDevice, handleListDevices, handleIngest, handleGetReadings } from './iot';
-import { handleGetSuggestions } from './agent';
-import { handleAvatar, handleTile, handleAtlas } from './assets';
-interface Route {
-  method: string;
-  pattern: string;
-  handler: Handler;
-  auth?: 'optional' | 'user';
-  skipRateLimit?: boolean;
-}
-const routes: Route[] = [
-  { method: 'GET', pattern: '/health', handler: handleHealth, auth: 'optional', skipRateLimit: true },
-  { method: 'POST', pattern: '/api/auth/register', handler: handleRegister, auth: 'optional' },
-  { method: 'POST', pattern: '/api/auth/login', handler: handleLogin, auth: 'optional' },
-  { method: 'GET', pattern: '/api/auth/me', handler: handleMe, auth: 'user' },
-  { method: 'GET', pattern: '/api/rooms', handler: handleListRooms, auth: 'optional' },
-  { method: 'GET', pattern: '/api/rooms/:roomId', handler: handleGetRoom, auth: 'optional' },
-  { method: 'POST', pattern: '/api/rooms', handler: handleCreateRoom, auth: 'user' },
-  { method: 'POST', pattern: '/api/rooms/:roomId/join', handler: handleJoinRoom, auth: 'user' },
-  { method: 'GET', pattern: '/api/rooms/:roomId/messages', handler: handleListMessages, auth: 'user' },
-  { method: 'POST', pattern: '/api/rooms/:roomId/messages', handler: handlePostMessage, auth: 'user' },
-  { method: 'GET', pattern: '/api/rooms/:roomId/tasks', handler: handleListTasks, auth: 'user' },
-  { method: 'POST', pattern: '/api/rooms/:roomId/tasks', handler: handleCreateTask, auth: 'user' },
-  { method: 'PUT', pattern: '/api/tasks/:taskId', handler: handleUpdateTask, auth: 'user' },
-  { method: 'POST', pattern: '/api/rooms/:roomId/checkins', handler: handlePostCheckin, auth: 'user' },
-  { method: 'GET', pattern: '/api/rooms/:roomId/checkins', handler: handleGetCheckins, auth: 'user' },
-  { method: 'GET', pattern: '/api/rooms/:roomId/readings', handler: handleGetReadings, auth: 'user' },
-  { method: 'GET', pattern: '/api/rooms/:roomId/suggestions', handler: handleGetSuggestions, auth: 'user' },
-  { method: 'POST', pattern: '/api/devices', handler: handleCreateDevice, auth: 'user' },
-  { method: 'GET', pattern: '/api/devices', handler: handleListDevices, auth: 'user' },
-  { method: 'POST', pattern: '/api/iot/ingest', handler: handleIngest, auth: 'optional', skipRateLimit: true },
-  { method:'GET', pattern:'/api/assets/avatar', handler: handleAvatar, auth:'optional', skipRateLimit: true },
-  { method:'GET', pattern:'/api/assets/tile', handler: handleTile, auth:'optional', skipRateLimit: true },
-  { method:'GET', pattern:'/api/assets/atlas', handler: handleAtlas, auth:'optional', skipRateLimit: true },
-];
-const corsHeaders = {
-  'access-control-allow-origin': '*',
-  'access-control-allow-methods': 'GET,POST,PUT,OPTIONS',
-  'access-control-allow-headers': 'content-type,authorization,x-device-secret',
-};
-export default {
-  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-    if (request.method === 'OPTIONS') {
-      return new Response(null, { status: 204, headers: corsHeaders });
-    }
-    try {
-      const url = new URL(request.url);
-      const match = findRoute(request.method, url.pathname);
-      if (!match) {
-        return withCors(errorResponse('Not Found', 404));
-      }
-      if (!match.route.skipRateLimit) {
-        const ip = getIp(request);
-        const rate = await consumeRateLimit(env, `rate:${ip}`, 60, 60);
-        if (!rate.allowed) {
-          return withCors(errorResponse('Too many requests', 429));
-        }
-      }
-      const user = await authenticateRequest(request, env);
-      if (match.route.auth === 'user' && !user) {
-        return withCors(errorResponse('Unauthorized', 401));
-      }
-      const ctxPayload: HandlerContext = {
-        env,
-        request,
-        params: match.params,
-        user: user ?? null,
-        waitUntil: (promise) => ctx.waitUntil(promise),
-      };
-      const response = await match.route.handler(ctxPayload);
-      return withCors(response);
-    } catch (err) {
-      if (err instanceof HttpError) {
-        return withCors(errorResponse(err.message, err.status, err.details));
-      }
-      console.error('Unhandled worker error', err);
-      return withCors(errorResponse('Internal Error', 500));
-    }
-  },
-};
-function withCors(response: Response): Response {
-  const headers = new Headers(response.headers);
-  Object.entries(corsHeaders).forEach(([key, value]) => headers.set(key, value));
-  return new Response(response.body, { status: response.status, headers });
-}
-function findRoute(method: string, pathname: string) {
-  for (const route of routes) {
-    if (route.method !== method) continue;
-    const params = matchPath(route.pattern, pathname);
-    if (params) {
-      return { route, params };
-    }
-  }
-  return null;
-}
-function matchPath(pattern: string, pathname: string): Record<string, string> | null {
-  const patternParts = trim(pattern).split('/');
-  const pathParts = trim(pathname).split('/');
-  if (patternParts.length !== pathParts.length) return null;
-  const params: Record<string, string> = {};
-  for (let i = 0; i < patternParts.length; i += 1) {
-    const expected = patternParts[i];
-    const actual = pathParts[i];
-    if (expected.startsWith(':')) {
-      params[expected.slice(1)] = decodeURIComponent(actual);
-    } else if (expected !== actual) {
-      return null;
-    }
-  }
-  return params;
-}
-function trim(path: string): string {
-  const clean = path.replace(/^\/+|\/+$|\s+/g, '');
-  return clean ? clean : '';
-}
-async function handleHealth(ctx: HandlerContext): Promise<Response> {
-  return jsonResponse({ ok: true });
-}
-````
-
-## File: package.json
-````json
-{
-  "name": "holo-work",
-  "version": "0.1.0",
-  "description": "Hybrid workspace hub with presence, chat, tasks, IoT comfort data, and actionable agent nudges. Cloudflare Workers + D1 + KV.",
-  "type": "module",
-  "main": "worker/src/index.ts",
-  "scripts": {
-    "dev": "wrangler dev --config worker/wrangler.toml",
-    "deploy": "wrangler deploy --config worker/wrangler.toml",
-    "typecheck": "tsc --noEmit",
-    "test": "vitest run",
-    "test:watch": "vitest watch"
-  },
-  "keywords": [
-    "cloudflare",
-    "workers",
-    "iot",
-    "agent",
-    "collaboration"
-  ],
-  "author": "Daniel Alexandre Barcellos de Brito",
-  "license": "MIT",
-  "devDependencies": {
-    "@cloudflare/workers-types": "^4.20240208.0",
-    "@types/node": "^24.10.0",
-    "typescript": "^5.4.0",
-    "vitest": "^1.3.1",
-    "wrangler": "^4.46.0"
-  }
-}
-````
-
-## File: ui/css/style.css
-````css
-:root {
-  --bg: #0b0b0c;
-  --bg-1: #111114;
-  --bg-2: #17171b;
-  --fg: #e8e8ef;
-  --fg-muted: #b4b4c3;
-  --muted: #7d7d8c;
-  --border: #2a2a33;
-  --plum-core: #422d41;
-  --accent: #22e3b3;
-  --accent-2: #7aa2ff;
-  --accent-3: #b58cff;
-  --ring: color-mix(in oklab, var(--accent) 20%, transparent);
-  --grid-line: color-mix(in oklab, var(--accent-2) 18%, transparent);
-  --card-bg: #1a1a21;
-  --panel-bg: #15151a;
-  --elev: 0 20px 45px rgba(0,0,0,.45), 0 0 0 1px var(--border);
-  --success: #30e39a;
-  --warning: #f6c56a;
-  --danger:  #ff6b7a;
-}
-* { box-sizing: border-box; }
-html, body { height: 100%; }
-body {
-  margin: 0;
-  min-height: 100vh;
-  color: var(--fg);
-  background:
-    radial-gradient(1200px 600px at 50% -10%, var(--plum-core) 0%, transparent 60%),
-    radial-gradient(1000px 800px at 120% 0%, #13212a 0%, transparent 50%),
-    var(--bg);
-  background-color: var(--bg);
-  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
-a {
-  color: var(--accent-2);
-  text-decoration: none;
-  transition: color .15s ease, opacity .15s ease;
-}
-a:hover { color: var(--accent); }
-main {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
-}
-.card {
-  background: var(--card-bg);
-  border-radius: 16px;
-  border: 1px solid var(--border);
-  box-shadow: var(--elev);
-  padding: 2rem;
-}
-button, input, select, textarea {
-  font: inherit;
-  padding: 0.65rem 0.85rem;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  background: var(--panel-bg);
-  color: var(--fg);
-  outline: none;
-  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease, background .15s ease;
-}
-input:focus, select:focus, textarea:focus { box-shadow: 0 0 0 3px var(--ring); border-color: var(--accent-2); }
-button {
-  background: linear-gradient(180deg, color-mix(in oklab, var(--accent) 92%, #0a0a0a) 0%, var(--accent) 100%);
-  color: #0b0b0c;
-  border: none;
-  cursor: pointer;
-}
-button:hover { transform: translateY(-1px); box-shadow: 0 10px 28px color-mix(in oklab, var(--accent) 35%, transparent); }
-button:active { transform: translateY(0); }
-.login-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 2rem;
-}
-.input-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  color: var(--fg-muted);
-}
-.tabs {
-  display: flex;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-}
-.tabs button {
-  flex: 1;
-  background: var(--panel-bg);
-  color: var(--muted);
-  border: 1px solid var(--border);
-}
-.tabs button.active {
-  background: linear-gradient(180deg, color-mix(in oklab, var(--accent-2) 85%, #0a0a0a) 0%, var(--accent-2) 100%);
-  color: #0b0b0c;
-}
-.panel { display: none; }
-.panel.active { display: block; }
-.room-layout {
-  display: grid;
-  gap: 1.5rem;
-}
-.map-card {
-  background: var(--card-bg);
-  border-radius: 16px;
-  border: 1px solid var(--border);
-  padding: 1rem;
-  min-height: 500px;
-}
-#roomGrid {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  border: 1px dashed var(--border);
-  border-radius: 12px;
-  background:
-    repeating-linear-gradient(90deg, var(--grid-line) 0, var(--grid-line) 1px, transparent 1px, transparent calc(100% / 16)),
-    repeating-linear-gradient(0deg, var(--grid-line) 0, var(--grid-line) 1px, transparent 1px, transparent calc(100% / 16));
-}
-.presence-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 1rem;
-}
-.presence-dot {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: color-mix(in oklab, var(--accent-2) 18%, transparent);
-  color: var(--accent-2);
-  font-weight: 600;
-  border: 1px solid var(--border);
-}
-.chat-list, .task-list, .suggestion-list, .metric-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  max-height: 320px;
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: var(--border) transparent;
-}
-.message {
-  padding: 0.75rem;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: color-mix(in oklab, #ffffff 3%, var(--card-bg));
-}
-.metric-card {
-  display: flex;
-  justify-content: space-between;
-  padding: 0.75rem 1rem;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: color-mix(in oklab, var(--accent-3) 8%, transparent);
-}
-.admin-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-  gap: 1.5rem;
-}
-.notice {
-  padding: 1rem;
-  border-radius: 12px;
-  border: 1px solid color-mix(in oklab, var(--warning) 45%, var(--border));
-  background: color-mix(in oklab, var(--warning) 12%, var(--panel-bg));
-  color: color-mix(in oklab, var(--warning) 90%, #000);
-}
-hr {
-  border: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--border), transparent);
-  margin: 1.25rem 0;
-}
-.small { color: var(--fg-muted); font-size: .9rem; }
-@media (prefers-reduced-motion: reduce) {
-  * { transition: none !important; }
-}
-````
-
-## File: worker/src/auth.ts
-````typescript
-import { HandlerContext, AuthUser, Env } from './types';
-import {
-  readJson,
-  jsonResponse,
-  HttpError,
-  ensure,
-  encodeText,
-  base64UrlEncode,
-  decodeBase64Url,
-  getUserRecord,
-  toBase64,
-  fromBase64,
-  timingSafeEqual,
-} from './utils';
-import { first } from './db';
-const SALT_LENGTH = 16;
-const PBKDF2_ITERATIONS = 200000;
-const PBKDF2_LENGTH = 32;
-const textEncoder = new TextEncoder();
-interface JwtPayload {
-  sub: string;
-  email: string;
-  role: 'user' | 'admin';
-  exp: number;
-  iat: number;
-}
-export async function hashPassword(password: string, pepper: string): Promise<string> {
-  const combined = password + pepper;
-  const bytes = encodeText(combined);
-  const ab = toArrayBuffer(bytes);
-  const digest = await crypto.subtle.digest('SHA-256', ab);
-  const hash = toBase64(new Uint8Array(digest));
-  return `sha256:${hash}`;
-}
-export async function verifyPassword(password: string, pepper: string, hash: string): Promise<boolean> {
-  if (hash.startsWith('sha256:')) {
-    const stored = hash.slice(7);
-    const combined = password + pepper;
-    const bytes = encodeText(combined);
-    const ab = toArrayBuffer(bytes);
-    const digest = await crypto.subtle.digest('SHA-256', ab);
-    const computed = toBase64(new Uint8Array(digest));
-    return computed === stored;
-  }
-  const parts = hash.split('$');
-  if (parts.length !== 4 || parts[0] !== 'pbkdf2') {
-    return false;
-  }
-  const iterations = Number(parts[1]);
-  if (!Number.isSafeInteger(iterations) || iterations <= 0) {
-    return false;
-  }
-  const salt = fromBase64(parts[2]);
-  const expected = fromBase64(parts[3]);
-  const actual = await deriveKey(password, pepper, salt, iterations);
-  return timingSafeEqual(actual, expected);
-}
-export async function handleRegister(ctx: HandlerContext): Promise<Response> {
-  try {
-    const body = await readJson<{ email?: string; password?: string }>(ctx.request);
-    const email = body.email?.trim().toLowerCase();
-    const password = body.password?.trim();
-    ensure(email && email.includes('@'), 400, 'Valid email required');
-    ensure(password && password.length >= 6, 400, 'Password must be at least 6 chars');
-    const existing = await first<{ id: string }>(ctx.env.DB, 'SELECT id FROM users WHERE email = ?', [email]);
-    ensure(!existing, 409, 'Email already registered');
-    const id = crypto.randomUUID();
-    const passHash = await hashPassword(password!, ctx.env.PEPPER);
-    const createdAt = Date.now();
-    await ctx.env.DB
-      .prepare('INSERT INTO users (id, email, pass_hash, role, created_at) VALUES (?, ?, ?, ?, ?)')
-      .bind(id, email, passHash, 'user', createdAt)
-      .run();
-    const user: AuthUser = { id, email, role: 'user' };
-    const jwt = await issueJwt(user, ctx.env);
-    return jsonResponse({ user, jwt });
-  } catch (err) {
-    console.error('[register]', err);
-    throw err;
-  }
-}
-export async function handleLogin(ctx: HandlerContext): Promise<Response> {
-  try {
-    const body = await readJson<{ email?: string; password?: string }>(ctx.request);
-    const email = body.email?.trim().toLowerCase();
-    const password = body.password?.trim();
-    ensure(email && password, 400, 'Email and password required');
-    const record = await first<{ id: string; email: string; role: 'user' | 'admin'; pass_hash: string }>(
-      ctx.env.DB,
-      'SELECT id, email, role, pass_hash FROM users WHERE email = ?',
-      [email]
-    );
-    ensure(record, 401, 'Invalid credentials');
-    const valid = await verifyPassword(password!, ctx.env.PEPPER, record!.pass_hash);
-    ensure(valid, 401, 'Invalid credentials');
-    const user: AuthUser = { id: record!.id, email: record!.email, role: record!.role };
-    const jwt = await issueJwt(user, ctx.env);
-    return jsonResponse({ user, jwt });
-  } catch (err) {
-    console.error('[login]', err);
-    throw err;
-  }
-}
-export async function handleMe(ctx: HandlerContext): Promise<Response> {
-  ensure(ctx.user, 401, 'Unauthorized');
-  const dbUser = await getUserRecord(ctx.env, ctx.user!.id);
-  ensure(dbUser, 401, 'User not found');
-  return jsonResponse({ user: { id: dbUser!.id, email: dbUser!.email, role: dbUser!.role } });
-}
-export async function authenticateRequest(request: Request, env: Env): Promise<AuthUser | null> {
-  const authHeader = request.headers.get('authorization');
-  if (!authHeader) {
-    return null;
-  }
-  const [, token] = authHeader.split(' ');
-  if (!token) return null;
-  const payload = await verifyJwt(token, env.JWT_SECRET);
-  if (!payload) return null;
-  return { id: payload.sub, email: payload.email, role: payload.role };
-}
-async function issueJwt(user: AuthUser, env: Env): Promise<string> {
-  const ttl = Number(env.JWT_TTL_MINUTES ?? '15');
-  const now = Math.floor(Date.now() / 1000);
-  const payload: JwtPayload = {
-    sub: user.id,
-    email: user.email,
-    role: user.role,
-    iat: now,
-    exp: now + ttl * 60,
-  };
-  return signJwt(payload, env.JWT_SECRET);
-}
-async function signJwt(payload: JwtPayload, secret: string): Promise<string> {
-  const header = { alg: 'HS256', typ: 'JWT' };
-  const headerBytes = encodeText(JSON.stringify(header));
-  const payloadBytes = encodeText(JSON.stringify(payload));
-  const encodedHeader = base64UrlEncode(headerBytes);
-  const encodedPayload = base64UrlEncode(payloadBytes);
-  const data = `${encodedHeader}.${encodedPayload}`;
-  const keyBuffer = toArrayBuffer(encodeText(secret));
-  const key = await crypto.subtle.importKey('raw', keyBuffer, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
-  const dataBuffer = toArrayBuffer(encodeText(data));
-  const signature = await crypto.subtle.sign('HMAC', key, dataBuffer);
-  return `${data}.${base64UrlEncode(new Uint8Array(signature))}`;
-}
-async function verifyJwt(token: string, secret: string): Promise<JwtPayload | null> {
-  const segments = token.split('.');
-  if (segments.length !== 3) return null;
-  const [encodedHeader, encodedPayload, encodedSignature] = segments;
-  const data = `${encodedHeader}.${encodedPayload}`;
-  const keyBuffer = toArrayBuffer(encodeText(secret));
-  const key = await crypto.subtle.importKey('raw', keyBuffer, { name: 'HMAC', hash: 'SHA-256' }, false, ['verify']);
-  const signatureBuffer = toArrayBuffer(decodeBase64Url(encodedSignature));
-  const dataBuffer = toArrayBuffer(encodeText(data));
-  const valid = await crypto.subtle.verify('HMAC', key, signatureBuffer, dataBuffer);
-  if (!valid) return null;
-  try {
-    const payload = JSON.parse(new TextDecoder().decode(decodeBase64Url(encodedPayload)));
-    if (!payload.exp || payload.exp < Math.floor(Date.now() / 1000)) {
-      return null;
-    }
-    return payload as JwtPayload;
-  } catch (err) {
-    console.error('jwt parse failed', err);
-    return null;
-  }
-}
-function toArrayBuffer(bytes: Uint8Array): ArrayBuffer {
-  const ab = new ArrayBuffer(bytes.byteLength)
-  new Uint8Array(ab).set(bytes)
-  return ab
-}
-async function deriveKey(password: string, pepper: string, salt: Uint8Array, iterations: number): Promise<Uint8Array> {
-  const keyMaterial = await crypto.subtle.importKey('raw', toArrayBuffer(encodeText(password + pepper)), 'PBKDF2', false, [
-    'deriveBits',
-  ]);
-  const bits = await crypto.subtle.deriveBits(
-    {
-      name: 'PBKDF2',
-      hash: 'SHA-256',
-      salt: toArrayBuffer(salt),
-      iterations,
-    },
-    keyMaterial,
-    PBKDF2_LENGTH * 8
-  );
-  return new Uint8Array(bits);
-}
-````
-
-## File: worker/wrangler.toml
-````toml
-name = "holo-work"
-main = "src/index.ts"
-compatibility_date = "2025-11-10"
-compatibility_flags = ["nodejs_compat"]
-workers_dev = true
-
-routes = [
-  { pattern = "holowork.knocis.xyz/*", zone_name = "knocis.xyz" }
-]
-
-[[d1_databases]]
-binding = "DB"
-database_name = "holo_work"
-database_id = "4911f880-cd22-4064-bfce-f17a5aac42eb"
-
-[[kv_namespaces]]
-binding = "KV"
-id = "5584069c6e5943b5a08621671e70ed3a"
 ````
 
 ## File: README.md

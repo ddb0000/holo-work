@@ -1,0 +1,11 @@
+name = "holo-work-core"
+main = "src/index.ts"
+compatibility_date = "2025-11-10"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "holo_work"
+database_id = "REPLACE"
+
+[observability]
+enabled = true

@@ -1,129 +1,83 @@
 # agents.md — holo.work
 
 ## objetivo
-
-gerar v1 funcional no nosso stack (cloudflare workers + d1 + kv + html/css/js), com admin local e iot_sim. evitar frameworks.
+Entregar a versão a0.1 “Edge as Hell”: worker D1-only com rate limit em memória, dashboard agregado, usuários anônimos e UI estática no Pages. A versão FIAP permanece sob `/fiap` (com KV e assets legados).
 
 ## layout do repo
-
 ```
-/worker                 # api (ts)
-  /src
-    index.ts            # router
-    auth.ts             # login/register/jwt
-    rooms.ts            # rooms/messages/tasks
-    iot.ts              # devices/ingest
-    agent.ts            # sugestões
-    db.ts               # d1 helpers
-    kv.ts               # rate-limit/counters
-  wrangler.toml
-/sql
-  schema.sql
-  seed.sql
-/ui                     # static pages (pages)
-  index.html            # login
-  room.html             # mapa/presença/chat/tasks
-  admin.html            # admin local (sem auth externa)
-  /css
-  /js
-/scripts
-  iot_sim.py            # simulador
-/docs
-  PRD.md
-  TODO.md
+/core                  # Edge-first build (a0.1+)
+  /worker              # worker.ts router/auth/rooms/iot/agent + cache/ratelimit/dashboard helpers
+    /src
+    tsconfig.json
+    wrangler.toml
+  /public              # static UI para Pages (index/room/admin)
+    /css
+    /js
+    /assets            # place avatar/tile/atlas PNGs here
+  /sql                 # schema + seed (anon_users/presence tables)
+  /scripts             # iot_sim.py
+  package.json
+  tsconfig.json
+/fiap                  # legacy KV-backed build (unchanged)
+  /worker
+  /ui
+  /docs
+  /scripts
+  AGENTS.md            # FIAP-specific instructions
 ```
 
-## padrões
+## padrões core
+* TS targeting Workers runtime; zero extra runtimes or frameworks.
+* UI: ES modules, fetch + canvas; keep CSS custom and minimal.
+* Auth: JWT for admin routes, `Authorization: Bearer anon:<uid>` for everyone else (uid stored in localStorage).
+* Rate limit + cache: in-memory `ratelimit.ts` + `cache.ts` modules replace KV throttles.
+* Dashboard: `/api/rooms/:roomId/dashboard` aggregates chat/tasks/readings/suggestions/presence with ETag support and a 30s frontend poll.
 
-* ts alvo: workers runtime. nenhuma lib além do que for estritamente necessário.
-* ui: es modules, fetch, canvas 2d simples ou dom.
-* css: utilitário leve (próprio). sem tailwind.
-* commits: curtos, escopados.
-
-## wrangler.toml (base)
-
+## wrangler (core)
 ```toml
-name = "holo-work"
-main = "worker/src/index.ts"
+name = "holo-work-core"
+main = "src/index.ts"
 compatibility_date = "2025-11-10"
-
 [[d1_databases]]
 binding = "DB"
 database_name = "holo_work"
 database_id = "REPLACE"
-
-[[kv_namespaces]]
-binding = "KV"
-id = "REPLACE"
+[observability]
+enabled = true
 ```
+* Sem `[[kv_namespaces]]`.
 
-## bootstrap
+## bootstrap (core)
+1. Instale deps em `/core`: `npm install`.
+2. Rode as migrações de `core/sql/schema.sql` e `core/sql/seed.sql` com `wrangler d1 execute`.
+3. Configure segredos `JWT_SECRET`, `PEPPER` (use `dev-pepper` local) e `ZAI_API_KEY` (opcional). `core/scripts/iot_sim.py` usa `INGEST_URL`, `DEVICE_ID`, `DEVICE_SECRET`.
 
-* criar tabelas com /sql/schema.sql via `wrangler d1 execute`.
-* seeds mínimos: 1 admin, 2 rooms, 1 device com secret.
-
-## rotas obrigatórias
-
-implementar exatamente conforme prd (auth, rooms, messages, tasks, checkins, devices, iot/ingest, suggestions).
+## rotas obrigatórias (core)
+- `/health` (optional)
+- `/api/auth/register`, `/api/auth/login`, `/api/auth/me`
+- `/api/rooms` (lista, details, criar sala)
+- `/api/rooms/:roomId/join`, `/api/rooms/:roomId/messages`, `/api/tasks/:taskId`, `/api/rooms/:roomId/tasks`, `/api/rooms/:roomId/checkins`, `/api/rooms/:roomId/readings`, `/api/rooms/:roomId/suggestions`
+- `/api/rooms/:roomId/dashboard` (novo) agregando mensagens/tarefas/leitura/sugestões/presença com `Cache-Control` + `ETag`
+- `/api/devices`, `/api/iot/ingest`
 
 ## lógica do agente
+`computeSuggestions(room_id)` segue usando leituras (últimos 15min) + checkins (últimos 30min) e grava sugestões idempotentemente. Continua sendo acionado de `handleCheckin` + ingest hooks.
 
-exportar `computeSuggestions(room_id)` que:
-
-* busca últimos 15min de readings + últimos 30min de checkins.
-* aplica heurísticas e grava em `suggestions` se ainda não existir similar em 10min.
-* idempotente.
-
-## ui
-
-* index.html: login -> salvar jwt em memory + sessionStorage.
-* room.html:
-
-  * left: mapa e presenças (bolinhas com iniciais).
-  * right tabs: chat, tasks, ambiente (temp/noise/lux), sugestões.
-  * check-in top: slider mood/energy + select status.
-* admin.html: forms simples para criar room/device e listar secrets (somente local, gated por `?local=1`).
+## UI core
+* `index.html`: login (JWT) + info; `room.html` pode ser acessada diretamente e sobrescreve os headers com `anon:<uid>` quando não há token.
+* `room.js` agora usa um único `apiFetch` para `/api/rooms/:roomId/dashboard`, roda poll a cada 30s e renderiza chat/tasks/ambiente/sugestões/presença em um só payload.
+* `api.js` mantém token em sessionStorage, gera `uid` no localStorage, envia header `Authorization` apropriado e aplica cache com ETag/304.
+* Assets servidos via `core/public/assets/` em vez de endpoints KV.
 
 ## iot_sim.py
+Idem: lê `INGEST_URL`, `DEVICE_ID`, `DEVICE_SECRET` e envia telemetria a cada 5s com temperatura (20..32), ruído (40..75) e lux (50..600).
 
-* lê env `INGEST_URL`, `DEVICE_ID`, `DEVICE_SECRET`.
-* envia a cada 5s: t_c (20..32 com ruído), noise_db (40..75), lux (50..600).
-
-## testes
-
-* unit: função de hash/verify; função de agente.
-* e2e: curl script: registrar, login, criar room (admin), postar msg, ingest, ler sugestões.
-* evidências: salvar stdout para pdf.
-
-## build ordem (one-shot)
-
-1. schema + seed.
-2. auth + jwt.
-3. rooms + messages + tasks + checkins.
-4. devices + ingest.
-5. agent.
-6. ui minimal.
-7. iot_sim.
-8. rate-limit + sane.
-9. deploy.
-
-## envs (names only)
-
-JWT_SECRET, PEPPER, ZAI_API_KEY
+## envs
+Registrar: `JWT_SECRET`, `PEPPER`, `ZAI_API_KEY` (opcional). Core não usa KV.
 
 ## deploy
-
-* `wrangler dev` local.
-* `wrangler publish` prod.
-* pages para `/ui` ou servir `/ui` estático via worker.
-
-## geração de assets (opcional)
-
-* endpoint `/api/assets/avatar?seed=xyz` → gera sprite 2d procedural (sem ia) v1.
-* se `ZAI_API_KEY` existir, stub para futura geração com ia (não bloquear mvp).
+* `cd core && npm run dev` para `wrangler dev` (Worker). UI servida via Pages (`core/public`).
+* `npm run deploy` em `core/` publica o worker; configure o Pages para apontar para `/core/public` e rotas `/api/*` para o worker.
 
 ## fiap-mode
-
-* manter branch `fiap-mode` com mesmas rotas e pdf mapeando requisitos.
-
----
+O legado FIAP permanece em `/fiap`. Consulte `fiap/AGENTS.md` para manter aquela versão com KV, assets dinâmicos e requisitos escolares.

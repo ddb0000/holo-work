@@ -1,13 +1,13 @@
 {
-  "name": "holo-work",
+  "name": "holo-work-core",
   "version": "0.1.0",
-  "description": "Hybrid workspace hub with presence, chat, tasks, IoT comfort data, and actionable agent nudges. Cloudflare Workers + D1 + KV.",
+  "description": "holo.work core: edge-first workspace hub with anonymous rooms, D1-only persistence, and no KV dependencies.",
   "type": "module",
   "main": "worker/src/index.ts",
   "scripts": {
     "dev": "wrangler dev --config worker/wrangler.toml",
     "deploy": "wrangler deploy --config worker/wrangler.toml",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit --project worker/tsconfig.json",
     "test": "vitest run",
     "test:watch": "vitest watch"
   },
@@ -16,7 +16,7 @@
     "workers",
     "iot",
     "agent",
-    "collaboration"
+    "anonymous"
   ],
   "author": "Daniel Alexandre Barcellos de Brito",
   "license": "MIT",

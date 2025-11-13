@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>holo.work — login</title>
+    <link rel="stylesheet" href="./css/style.css" />
+    <script src="./js/config.js"></script>
+  </head>
+  <body>
+    <main>
+      <section class="card">
+        <h1>holo.work</h1>
+        <p>Hub híbrido com presença, chat, tasks, IoT e agente que cuida do ritmo.</p>
+        <div class="login-grid">
+          <form id="loginForm">
+            <div class="input-group">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="dev@holo.work" required />
+            </div>
+            <div class="input-group">
+              <label for="password">Senha</label>
+              <input id="password" name="password" type="password" placeholder="••••••" required />
+            </div>
+            <div style="display:flex; gap:0.75rem; margin-top:1rem;">
+              <button type="submit" style="flex:1;">Entrar</button>
+              <button type="button" id="registerBtn" style="flex:1; background:#0ea5e9;">Registrar</button>
+            </div>
+            <p class="notice" style="margin-top:1rem;">
+              Use admin@holo.work / admin (PEPPER=dev-pepper) para seed local.
+            </p>
+          </form>
+          <div>
+            <h3>Como funciona?</h3>
+            <p>
+              1) Faz login → 2) Escolhe sala → 3) Marca presença, conversa e acompanha tarefas.
+              O simulador IoT injeta temperatura, ruído e luz; o agente sugere pausas, pairing e ajustes.
+            </p>
+            <p>
+              Depois de logar, compartilhe o token entre abas (sessionStorage). Para sair, limpe o token em
+              <code>sessionStorage</code> ou clique em "sair" no header da sala.
+            </p>
+          </div>
+        </div>
+        <p id="status" style="margin-top:1rem; color:var(--accent);"></p>
+      </section>
+    </main>
+    <script type="module" src="./js/index.js"></script>
+  </body>
+</html>

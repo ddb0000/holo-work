@@ -14,5 +14,5 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": "."
   },
-  "include": ["core/worker/src", "core/worker/test", "fiap/worker/src", "fiap/worker/test"]
+  "include": ["worker/src", "worker/test"]
 }
