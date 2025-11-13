@@ -13,6 +13,7 @@ Entregar a versão a0.1 “Edge as Hell”: worker D1-only com rate limit em mem
   /public              # static UI para Pages (index/room/admin)
     /css
     /js
+    /functions         # Pages Functions (index.ts reexport + _routes.json targeting /api/*)
     /assets            # place avatar/tile/atlas PNGs here
   /sql                 # schema + seed (anon_users/presence tables)
   /scripts             # iot_sim.py
@@ -76,8 +77,21 @@ Idem: lê `INGEST_URL`, `DEVICE_ID`, `DEVICE_SECRET` e envia telemetria a cada 5
 Registrar: `JWT_SECRET`, `PEPPER`, `ZAI_API_KEY` (opcional). Core não usa KV.
 
 ## deploy
-* `cd core && npm run dev` para `wrangler dev` (Worker). UI servida via Pages (`core/public`).
-* `npm run deploy` em `core/` publica o worker; configure o Pages para apontar para `/core/public` e rotas `/api/*` para o worker.
+1. `cd core && npm run dev` para validar local.
+2. Gere segredos e cadastre:
+   ```bash
+   openssl rand -hex 32   # JWT_SECRET
+   printf 'dev-pepper'    # PEPPER (mantém seed compatível)
+   npx wrangler secret put JWT_SECRET
+   npx wrangler secret put PEPPER
+   ```
+   Adicione as mesmas variáveis (e `ZAI_API_KEY` opcional) nas env vars do projeto Pages.
+3. Pages-only deploy:
+   - Root: `core/public`
+   - Build command vazio, output `/`
+   - Em **Functions**, garanta que `/api/*` use `public/functions/index.ts` (já reexporta o worker).
+   - Configure o binding D1 `DB` apontando para o mesmo database.
+4. Push em `main` -> Pages publica UI + API num deploy único, zero KV/custos.
 
 ## fiap-mode
 O legado FIAP permanece em `/fiap`. Consulte `fiap/AGENTS.md` para manter aquela versão com KV, assets dinâmicos e requisitos escolares.

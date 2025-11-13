@@ -41,5 +41,27 @@ Edge-first workspace hub for presence, chat, tasks, IoT telemetry, and heuristic
 - Publish the Worker with `npm run deploy` from `core/`.
 - Host the UI via Cloudflare Pages, pointing build output to `core/public` and routing `/api/*` to the Worker.
 
+## Secrets
+Generate strong secrets once and feed them to both `wrangler` and Pages:
+```bash
+openssl rand -hex 32    # → use as JWT_SECRET
+printf 'dev-pepper'      # reuse pepper locally so the seeded admin login works
+
+cd core
+npx wrangler secret put JWT_SECRET
+npx wrangler secret put PEPPER
+```
+For Pages, add the same `JWT_SECRET` / `PEPPER` (and optional `ZAI_API_KEY`) under **Project → Settings → Environment Variables** so Functions can read them.
+
+## Pages-only deploy (UI + API)
+1. Ensure `core/public/functions/index.ts` exists (it re-exports the Worker entry point) and `_routes.json` includes only `/api/*`.
+2. Import this repo into Cloudflare Pages:
+   - Root directory: `core/public`
+   - Framework preset: *None* (leave build command empty, output `/`)
+3. In Pages → Functions, enable Functions (beta) so `/api/*` executes the worker logic; everything else stays static.
+4. Bind the D1 database (`DB`) and add environment variables (`JWT_SECRET`, `PEPPER`, optional `ZAI_API_KEY`).
+5. Deploy: pushing to `main` publishes both the static site and the API in one go (`https://<project>.pages.dev`).
+6. Local smoke-test with `npx wrangler pages dev core/public`.
+
 ## Legacy FIAP build
 The `/fiap` folder keeps the previous KV-backed version, including the old agent docs, assets, and rate limits. Follow `fiap/AGENTS.md` for that workflow.
