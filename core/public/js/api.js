@@ -2,7 +2,7 @@ const TOKEN_KEY = 'holo_jwt';
 const UID_KEY = 'holo_uid';
 let memoryToken = null;
 
-const getAPIBase = () => window.__CONFIG__?.API_BASE || 'https://holo-work.dbarcelloz.workers.dev';
+const getAPIBase = () => window.__CONFIG__?.API_BASE ?? 'https://holo-work.dbarcelloz.workers.dev';
 
 export function getToken() {
   if (memoryToken) return memoryToken;
